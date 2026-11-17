@@ -6,6 +6,7 @@ import { AboutSection } from './components/sections/AboutSection';
 import { DomainsSection } from './components/sections/DomainsSection';
 import { EventsSection } from './components/sections/EventsSection';
 import { ProjectsSection } from './components/sections/ProjectsSection';
+import { GovernanceSection } from './components/sections/GovernanceSection';
 import { TeamSection } from './components/sections/TeamSection';
 import { GallerySection } from './components/sections/GallerySection';
 import { ContactSection } from './components/sections/ContactSection';
@@ -17,14 +18,13 @@ import { soundEngine } from './audio/soundEngine';
 
 export function App() {
   const [showIntro, setShowIntro] = useState(() => {
-    // Check if intro was already seen this session
     if (typeof window !== 'undefined') {
       return sessionStorage.getItem('vistas_intro_seen') !== 'true';
     }
     return true;
   });
 
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeSection, setActiveSection] = useState('mission');
   const [isSoundMuted, setIsSoundMuted] = useState(soundEngine.getIsMuted());
 
   const handleIntroComplete = () => {
@@ -47,7 +47,7 @@ export function App() {
 
   // Observe active section on scroll
   useEffect(() => {
-    const sections = ['home', 'about', 'domains', 'events', 'projects', 'team', 'gallery', 'contact', 'instagram'];
+    const sections = ['mission', 'profile', 'vision', 'domains', 'launches', 'builds', 'governance', 'crew', 'contact'];
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 250;
       for (const sectionId of sections) {
@@ -68,14 +68,14 @@ export function App() {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-jet text-chrome selection:bg-rose selection:text-white">
+    <div className="relative min-h-screen bg-[#030611] text-chrome selection:bg-rose selection:text-white">
       {/* Cinematic Intro Modal */}
       {showIntro && <CinematicIntro onComplete={handleIntroComplete} />}
 
       {/* Sci-Fi Target Custom Cursor */}
       <CustomCursor />
 
-      {/* Central Command HUD Navigation Bar */}
+      {/* Full-Width Mission Control Header: VISTAS / ACM, Navigation Links, T+ 00:19 */}
       <Navigation
         activeSection={activeSection}
         onNavigate={handleNavigate}
@@ -83,33 +83,36 @@ export function App() {
         onToggleSound={handleToggleSound}
       />
 
-      {/* Main Command Center Experience Sections */}
+      {/* Main Mission Control Experience */}
       <main id="command-center-root">
-        {/* 01. HOME – COMMAND CENTER */}
+        {/* MISSION: Command Center Hero with Space / Telemetry Visuals */}
         <HomeSection onNavigate={handleNavigate} />
 
-        {/* 02. ABOUT ACM – OUR MISSION */}
+        {/* PROFILE & VISION: Chapter Foundation & 4 Operating Pillars */}
         <AboutSection />
 
-        {/* 03. DOMAINS – TECHNOLOGY DIVISIONS */}
+        {/* GALAXY: Technology Divisions / Domains (#domains) */}
         <DomainsSection />
 
-        {/* 04. EVENTS – EVENT COMMAND CENTER */}
+        {/* LAUNCHES: Events, Hackathons & Operations (#launches) */}
         <EventsSection />
 
-        {/* 05. PROJECTS – INNOVATION LAB */}
+        {/* BUILDS: Innovation Lab, Hardware & Prototypes (#builds) */}
         <ProjectsSection />
 
-        {/* 06. TEAM – CREW COMMAND (STRICT PLACEHOLDER ONLY) */}
+        {/* GOVERNANCE: ACM Constitution, Bylaws & Academic Oversight (#governance) */}
+        <GovernanceSection />
+
+        {/* CREW: Team Command Console - STRICT PLACEHOLDER (#crew) */}
         <TeamSection />
 
-        {/* 07. GALLERY – VISUAL ARCHIVE */}
+        {/* VISUAL ARCHIVE: Photo Gallery */}
         <GallerySection />
 
-        {/* 08. CONTACT – CONNECT WITH US */}
+        {/* CONTACT: Communication Terminal & Join Dispatch (#contact) */}
         <ContactSection />
 
-        {/* 09. INSTAGRAM – SOCIAL CONNECTION */}
+        {/* SOCIAL RADAR: Official Instagram */}
         <InstagramSection />
       </main>
 

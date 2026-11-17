@@ -66,21 +66,21 @@ function QuantumCore() {
   });
 
   return (
-    <group position={[0, 0, 0]}>
-      {/* Central Plasma Core */}
+    <group position={[0, -0.9, -1.6]} scale={[0.85, 0.85, 0.85]}>
+      {/* Central Plasma Core - Subtle and non-blinding */}
       <mesh ref={coreRef}>
         <icosahedronGeometry args={[0.9, 3]} />
-        <meshBasicMaterial color="#38BDF8" wireframe transparent opacity={0.85} />
+        <meshBasicMaterial color="#38BDF8" wireframe transparent opacity={0.3} />
       </mesh>
 
       <mesh>
-        <sphereGeometry args={[0.5, 16, 16]} />
-        <meshBasicMaterial color="#FFFFFF" transparent opacity={0.9} />
+        <sphereGeometry args={[0.45, 16, 16]} />
+        <meshBasicMaterial color="#071329" transparent opacity={0.65} />
       </mesh>
 
       {/* Point lights for real-time metallic illumination */}
-      <pointLight color="#38BDF8" intensity={4} distance={15} />
-      <pointLight color="#FF3B9D" intensity={2.5} distance={10} position={[0, 1.5, 1]} />
+      <pointLight color="#38BDF8" intensity={2.5} distance={15} />
+      <pointLight color="#FF3B9D" intensity={1.8} distance={10} position={[0, 1.5, 1]} />
 
       {/* Outer Metallic Gimbal Ring */}
       <group ref={outerRingRef}>

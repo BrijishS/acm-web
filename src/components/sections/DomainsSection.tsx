@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { soundEngine } from '../../audio/soundEngine';
 import { DOMAINS_DATA } from '../../data/chapterData';
 import { Domain } from '../../types';
-import { Cpu, X, Terminal, ArrowUpRight, Sparkles, Layers, ShieldCheck } from 'lucide-react';
+import { Cpu, X, ArrowUpRight, Sparkles, Layers, ShieldCheck, Orbit } from 'lucide-react';
 
 export const DomainsSection: React.FC = () => {
   const [selectedDomain, setSelectedDomain] = useState<Domain | null>(null);
@@ -19,17 +19,17 @@ export const DomainsSection: React.FC = () => {
   };
 
   return (
-    <section id="domains" className="relative py-24 px-4 md:px-8 border-t border-cerulean/15 bg-jet/60">
+    <section id="domains" className="relative py-24 px-4 md:px-8 border-t border-cerulean/15 bg-jet">
       <div className="max-w-6xl mx-auto">
-        {/* Section Header */}
+        {/* Section Header: Matching GALAXY / DOMAINS from user reference */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
             <div className="inline-flex items-center gap-2 font-mono text-xs text-cerulean tracking-widest uppercase mb-2">
-              <span className="w-1.5 h-1.5 bg-rose rounded-full animate-ping" />
-              <span>03 // TECHNOLOGY DIVISIONS</span>
+              <Orbit className="w-4 h-4 text-rose animate-spin" />
+              <span>GALAXY // 08 TECHNOLOGY DIVISIONS</span>
             </div>
             <h2 className="font-heading text-4xl sm:text-5xl md:text-6xl font-extrabold text-white uppercase tracking-wider">
-              HOLOGRAPHIC <span className="text-cerulean glow-blue">DOMAINS.</span>
+              DOMAIN <span className="text-cerulean glow-blue">GALAXY.</span>
             </h2>
           </div>
           <p className="font-sans text-sm md:text-base text-chrome max-w-md leading-relaxed">
@@ -39,7 +39,7 @@ export const DomainsSection: React.FC = () => {
 
         {/* 8 Holographic Domain Division Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {DOMAINS_DATA.map((domain, index) => {
+          {DOMAINS_DATA.map((domain) => {
             const isRose = domain.hologramColor === 'rose';
             return (
               <motion.div

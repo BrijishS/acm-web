@@ -1,11 +1,41 @@
 import { createClient } from '@supabase/supabase-js';
 import { EventItem, ProjectItem, GalleryItem } from '../types';
 import { EVENTS_DATA, PROJECTS_DATA, GALLERY_DATA } from './chapterData';
+import { TeamMember, ACTUAL_TEAM_MEMBERS } from './teamData';
 
 const SUPABASE_URL = "https://zwxjuhologbhmicfzrvx.supabase.co";
 const SUPABASE_KEY = "sb_publishable_dPVQ_pAVEZw18c4uw2mX7Q__qP5Uk-e";
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+export async function fetchLiveTeam(): Promise<TeamMember[]> {
+  try {
+    const { data, error } = await supabase
+      .from('team_members')
+      .select('*')
+      .eq('status', 'published')
+      .order('display_order', { ascending: true });
+
+    if (error || !data || data.length === 0) {
+      return ACTUAL_TEAM_MEMBERS;
+    }
+
+    return data.map((item: Record<string, unknown>, idx: number) => ({
+      id: String(item.id || `team-${idx}`),
+      name: String(item.name || 'Team Member'),
+      designation: String(item.designation || 'Chapter Lead'),
+      domain: String(item.domain || 'Executive Council'),
+      bio: item.bio ? String(item.bio) : undefined,
+      image_url: String(item.image_url || '/assets/vistas-acm-blue-logo.jpg'),
+      linkedin_url: item.linkedin_url ? String(item.linkedin_url) : null,
+      github_url: item.github_url ? String(item.github_url) : null,
+      instagram_url: item.instagram_url ? String(item.instagram_url) : null,
+      display_order: Number(item.display_order || idx + 1)
+    }));
+  } catch {
+    return ACTUAL_TEAM_MEMBERS;
+  }
+}
 
 export async function fetchLiveEvents(): Promise<EventItem[]> {
   try {

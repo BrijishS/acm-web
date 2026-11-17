@@ -44,17 +44,17 @@ export const EventsSection: React.FC = () => {
   };
 
   return (
-    <section id="events" className="relative py-24 px-4 md:px-8 border-t border-cerulean/15">
+    <section id="launches" className="relative py-24 px-4 md:px-8 border-t border-cerulean/15">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
             <div className="inline-flex items-center gap-2 font-mono text-xs text-cerulean tracking-widest uppercase mb-2">
               <span className="w-1.5 h-1.5 bg-cerulean rounded-full animate-ping" />
-              <span>04 // EVENT COMMAND CENTER</span>
+              <span>04 // LAUNCHES & OPERATIONS</span>
             </div>
             <h2 className="font-heading text-4xl sm:text-5xl md:text-6xl font-extrabold text-white uppercase tracking-wider">
-              OPERATIONS & <span className="text-cerulean glow-blue">HACKATHONS.</span>
+              LAUNCHES & <span className="text-cerulean glow-blue">HACKATHONS.</span>
             </h2>
           </div>
           <p className="font-sans text-sm md:text-base text-chrome max-w-md leading-relaxed">

@@ -1,7 +1,7 @@
 import React from 'react';
 import { soundEngine } from '../audio/soundEngine';
 import { CHAPTER_INFO } from '../data/chapterData';
-import { Instagram, ArrowUp, Globe, Shield, Terminal } from 'lucide-react';
+import { Instagram, ArrowUp, Terminal } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (sectionId: string) => void;
@@ -27,13 +27,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   className="w-full h-full object-cover rounded-full"
                 />
               </div>
-              <div>
-                <span className="font-heading text-xl font-bold tracking-wider text-white uppercase block leading-tight">
-                  VISTAS <span className="text-cerulean">ACM</span>
-                </span>
-                <span className="font-mono text-[9px] text-chrome-muted tracking-widest uppercase">
-                  FUTURE INNOVATION COMMAND CENTER
-                </span>
+              <div className="flex flex-col">
+                <b className="font-heading text-xl font-bold tracking-wider text-white uppercase leading-none">
+                  VISTAS ACM
+                </b>
+                <small className="font-mono text-[9px] text-cerulean tracking-[0.2em] uppercase mt-0.5">
+                  STUDENT CHAPTER
+                </small>
               </div>
             </div>
 
@@ -41,26 +41,26 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               Official student chapter of the Association for Computing Machinery at Vels Institute of Science, Technology and Advanced Studies (VISTAS), Chennai.
             </p>
 
-            <div className="font-mono text-xs text-rose">
+            <div className="font-mono text-xs text-rose tracking-wider">
               BUILD · LEAD · CREATE · CONNECT
             </div>
           </div>
 
-          {/* Quick HUD Navigation */}
+          {/* Quick Official Navigation */}
           <div className="md:col-span-4">
             <span className="font-mono text-xs text-cerulean tracking-widest uppercase block mb-3 font-semibold">
-              NAVIGATION TERMINALS
+              CHAPTER NAVIGATION
             </span>
-            <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+            <div className="grid grid-cols-2 gap-2 text-xs font-sans font-medium">
               {[
-                { id: 'home', label: 'Command Center' },
-                { id: 'about', label: 'About Chapter' },
-                { id: 'domains', label: 'Tech Domains' },
-                { id: 'events', label: 'Operations' },
-                { id: 'projects', label: 'Innovation Lab' },
-                { id: 'team', label: 'Crew Command' },
-                { id: 'gallery', label: 'Visual Archive' },
-                { id: 'contact', label: 'Contact Hub' },
+                { id: 'about', label: 'About' },
+                { id: 'domains', label: 'Domains' },
+                { id: 'events', label: 'Events' },
+                { id: 'projects', label: 'Projects' },
+                { id: 'governance', label: 'Governance' },
+                { id: 'team', label: 'Team' },
+                { id: 'gallery', label: 'Gallery' },
+                { id: 'contact', label: 'Contact' },
               ].map((item) => (
                 <button
                   key={item.id}
@@ -107,7 +107,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <button
                 onClick={scrollToTop}
                 onMouseEnter={() => soundEngine.playHover()}
-                className="flex items-center gap-2 px-3 py-1.5 rounded border border-cerulean/30 hover:border-cerulean text-xs font-mono text-cerulean transition-colors cursor-pointer"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-cerulean/30 hover:border-cerulean text-xs font-mono text-cerulean transition-colors cursor-pointer"
               >
                 <ArrowUp className="w-3.5 h-3.5" />
                 <span>RETURN TO TOP</span>
