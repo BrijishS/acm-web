@@ -15,7 +15,7 @@ import { MembershipSection } from './components/sections/MembershipSection';
 import { ContactSection } from './components/sections/ContactSection';
 import { InstagramSection } from './components/sections/InstagramSection';
 import { Footer } from './components/Footer';
-import { JarvisAssistant } from './components/JarvisAssistant';
+import { AriaInterface } from './components/aria/AriaInterface';
 import { AdminDashboard } from './components/AdminDashboard';
 import { CustomCursor } from './components/CustomCursor';
 import { GlobalBackgroundAnimation } from './components/GlobalBackgroundAnimation';
@@ -34,6 +34,7 @@ export function App() {
   const [activeSection, setActiveSection] = useState<string>('home');
   const [isSoundMuted, setIsSoundMuted] = useState<boolean>(soundEngine.getIsMuted());
   const [isAdminOpen, setIsAdminOpen] = useState<boolean>(false);
+  const [isAriaOpen, setIsAriaOpen] = useState<boolean>(false);
 
   // Lock body scroll while entry animation is active
   useEffect(() => {
@@ -149,6 +150,7 @@ export function App() {
           onToggleSound={handleToggleSound}
           onReplayIntro={() => setShowIntro(true)}
           onOpenAdmin={() => setIsAdminOpen(true)}
+          onOpenAria={() => setIsAriaOpen(true)}
         />
       )}
 
@@ -197,13 +199,40 @@ export function App() {
       {/* Chapter Footer */}
       <Footer onNavigate={handleNavigate} />
 
-      {/* ACM Digital Assistant Floating System */}
+      {/* A.R.I.A. Advanced Responsive Intelligence Assistant */}
       {!showIntro && (
-        <JarvisAssistant
+        <AriaInterface
+          isOpen={isAriaOpen}
+          onClose={() => setIsAriaOpen(false)}
           onNavigateSection={handleNavigate}
-          isSoundMuted={isSoundMuted}
-          onToggleSound={handleToggleSound}
+          onOpenAdmin={() => setIsAdminOpen(true)}
+          isAdminAuthenticated={typeof window !== 'undefined' && sessionStorage.getItem('vistas_admin_auth') === 'true'}
         />
+      )}
+
+      {/* Floating Holographic A.R.I.A. Access Capsule (When closed) */}
+      {!showIntro && !isAriaOpen && (
+        <button
+          onClick={() => {
+            soundEngine.playJarvisChirp();
+            setIsAriaOpen(true);
+          }}
+          className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 px-4 py-2.5 rounded-full hud-card border-cerulean/50 bg-[#071322]/90 hover:border-[#00CFFF] text-white shadow-[0_0_25px_rgba(0,207,255,0.4)] backdrop-blur-xl group transition-all duration-300 hover:scale-105 cursor-pointer"
+          title="Activate A.R.I.A. Holographic Assistant"
+        >
+          <div className="relative w-3.5 h-3.5 flex items-center justify-center">
+            <span className="absolute inset-0 rounded-full bg-[#00CFFF] animate-ping opacity-75" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#00CFFF] shadow-[0_0_8px_#00CFFF]" />
+          </div>
+          <div className="flex flex-col text-left">
+            <span className="font-heading text-xs font-black tracking-wider uppercase group-hover:text-[#00CFFF] transition-colors leading-none">
+              A.R.I.A. AI
+            </span>
+            <span className="font-mono text-[8px] text-chrome/50 leading-none mt-0.5">
+              CLICK OR SAY "HEY A.R.I.A."
+            </span>
+          </div>
+        </button>
       )}
 
       {/* Protected Administrator Dashboard */}

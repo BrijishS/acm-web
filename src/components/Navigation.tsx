@@ -10,6 +10,7 @@ interface NavigationProps {
   onToggleSound: () => void;
   onReplayIntro?: () => void;
   onOpenAdmin?: () => void;
+  onOpenAria?: () => void;
 }
 
 export const MAIN_NAV_ITEMS = [
@@ -32,7 +33,8 @@ export const Navigation: React.FC<NavigationProps> = ({
   isSoundMuted,
   onToggleSound,
   onReplayIntro,
-  onOpenAdmin
+  onOpenAdmin,
+  onOpenAria
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [elapsedSeconds, setElapsedSeconds] = useState(42);
@@ -141,6 +143,25 @@ export const Navigation: React.FC<NavigationProps> = ({
 
         {/* Right Controls: Mission Elapsed Time, Replay, Admin, Audio, Instagram, Mobile Toggle */}
         <div className="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
+          {/* A.R.I.A. AI Holographic Trigger */}
+          {onOpenAria && (
+            <button
+              onClick={() => {
+                soundEngine.playJarvisChirp();
+                onOpenAria();
+              }}
+              onMouseEnter={() => soundEngine.playHover()}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#00CFFF]/70 text-[#00CFFF] hover:text-white bg-[#071322] hover:bg-[#00CFFF]/25 transition-all font-mono text-[11px] font-extrabold tracking-widest cursor-pointer shadow-[0_0_15px_rgba(0,207,255,0.4)] group"
+              title="Summon A.R.I.A. Holographic AI"
+            >
+              <div className="relative w-2 h-2">
+                <span className="absolute inset-0 rounded-full bg-[#00CFFF] animate-ping" />
+                <span className="w-2 h-2 rounded-full bg-[#00CFFF] block" />
+              </div>
+              <span>A.R.I.A.</span>
+            </button>
+          )}
+
           {/* Replay Cinematic Intro */}
           {onReplayIntro && (
             <button
@@ -248,32 +269,48 @@ export const Navigation: React.FC<NavigationProps> = ({
             })}
           </div>
 
-          {/* Mobile Admin & Replay triggers */}
-          <div className="flex items-center gap-2 mt-4 pt-3 border-t border-white/10">
-            {onOpenAdmin && (
+          {/* Mobile A.R.I.A., Admin & Replay triggers */}
+          <div className="flex flex-col gap-2 mt-4 pt-3 border-t border-white/10">
+            {onOpenAria && (
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
-                  onOpenAdmin();
+                  soundEngine.playJarvisChirp();
+                  onOpenAria();
                 }}
-                className="flex-1 py-2 px-3 rounded-lg border border-rose/50 bg-rose/10 text-rose font-mono text-xs font-bold flex items-center justify-center gap-1.5"
+                className="w-full py-2.5 px-3 rounded-lg border border-[#00CFFF]/60 bg-[#00CFFF]/15 text-[#00CFFF] font-mono text-xs font-black tracking-widest flex items-center justify-center gap-2"
               >
-                <Shield className="w-3.5 h-3.5" />
-                <span>ADMIN CONSOLE</span>
+                <div className="w-2 h-2 rounded-full bg-[#00CFFF] animate-ping" />
+                <span>OPEN A.R.I.A. AI ASSISTANT</span>
               </button>
             )}
-            {onReplayIntro && (
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onReplayIntro();
-                }}
-                className="flex-1 py-2 px-3 rounded-lg border border-cerulean/50 bg-cerulean/10 text-cerulean font-mono text-xs font-bold flex items-center justify-center gap-1.5"
-              >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>REPLAY INTRO</span>
-              </button>
-            )}
+
+            <div className="flex items-center gap-2">
+              {onOpenAdmin && (
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenAdmin();
+                  }}
+                  className="flex-1 py-2 px-3 rounded-lg border border-rose/50 bg-rose/10 text-rose font-mono text-xs font-bold flex items-center justify-center gap-1.5"
+                >
+                  <Shield className="w-3.5 h-3.5" />
+                  <span>ADMIN CONSOLE</span>
+                </button>
+              )}
+              {onReplayIntro && (
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onReplayIntro();
+                  }}
+                  className="flex-1 py-2 px-3 rounded-lg border border-cerulean/50 bg-cerulean/10 text-cerulean font-mono text-xs font-bold flex items-center justify-center gap-1.5"
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>REPLAY INTRO</span>
+                </button>
+              )}
+            </div>
           </div>
         </div>
       )}
