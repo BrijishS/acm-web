@@ -7,6 +7,8 @@ export interface Domain {
   symbol: string;
   description: string;
   tags: string[];
+  technologies: string[];
+  activities: string[];
   specs: { label: string; value: string }[];
   hologramColor?: 'cerulean' | 'rose';
 }
@@ -43,11 +45,11 @@ export interface ProjectItem {
 export interface GalleryItem {
   id: string;
   title: string;
-  event_name: string;
   description: string;
+  event_name?: string;
   media_url: string;
-  date?: string;
   category?: string;
+  date?: string;
 }
 
 export interface AssistantMessage {

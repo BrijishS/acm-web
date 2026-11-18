@@ -155,7 +155,7 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({ onComplete }) =>
       animate={{ opacity: isEntering ? 0 : 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.6 }}
-      className="fixed inset-0 z-50 bg-[#020408] text-chrome select-none overflow-hidden"
+      className="fixed inset-0 z-[100] bg-[#020408] text-chrome select-none overflow-hidden"
     >
       {/* 3D WebGL Atmospheric Portal Canvas */}
       <div className="absolute inset-0 z-0">

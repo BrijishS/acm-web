@@ -71,59 +71,59 @@ export const JarvisAssistant: React.FC<JarvisAssistantProps> = ({
       const lower = query.toLowerCase();
 
       // Check section navigation trigger words
-      if (lower.includes('domain') || lower.includes('ai') || lower.includes('technology')) {
+      if (lower.includes('domain') || lower.includes('ai') || lower.includes('technology') || lower.includes('galaxy') || lower.includes('cyber')) {
         respond(
-          "Accessing Technology Divisions. VISTAS ACM operates across 8 technical domains including AI, Robotics, Cybersecurity, and Cloud Computing.",
-          ['Go to Domains', 'Upcoming Events', 'Join Chapter'],
+          "Routing to Technical Domains. VISTAS ACM focuses on 5 core areas: AI & Machine Learning, Web & App Development, Cybersecurity, Data & Cloud, and Emerging Tech.",
+          ['Go to Domains', 'Meet Team', 'View Projects'],
           'domains'
         );
-      } else if (lower.includes('event') || lower.includes('hackathon') || lower.includes('workshop')) {
+      } else if (lower.includes('event') || lower.includes('hackathon') || lower.includes('workshop') || lower.includes('launch')) {
         respond(
-          "Routing to Event Command Center. Flagship: HACK-VORTEX (24-Hour Hackathon) and technical bootcamps.",
-          ['Go to Events', 'Follow Instagram', 'Register Interest'],
+          "Opening Events Console. Activities include Hack the Vel (24-hour hackathon), Cipher Quest, Byte Brawl, Neural Nights, Pixel Forge, and Orbit Outreach.",
+          ['Go to Events', 'Follow @vistas_acm'],
           'events'
         );
-      } else if (lower.includes('project') || lower.includes('lab') || lower.includes('research')) {
+      } else if (lower.includes('project') || lower.includes('build') || lower.includes('what we have built')) {
         respond(
-          "Opening Innovation Lab. Student prototypes span edge neural telemetry, LoRa wireless meshes, and zero-trust security tools.",
-          ['Go to Projects', 'View GitHub', 'Join Chapter'],
+          "Opening Projects. Featured student builds include Campus Companion, Exam Vault, and Rural Learn Kit.",
+          ['Go to Builds', 'View Domains'],
           'projects'
         );
-      } else if (lower.includes('team') || lower.includes('lead') || lower.includes('who are')) {
+      } else if (lower.includes('governance') || lower.includes('committee') || lower.includes('function') || lower.includes('review')) {
         respond(
-          "TEAM PROFILES // COMING SOON. Meet the people behind the mission soon. Our holographic crew console is staged for the upcoming announcement.",
-          ['Go to Team Section', 'Follow @vistas_acm'],
+          "Opening Governance and Committee Functions. Review student committee responsibilities, 10 operational functions, and the 7-stage review process.",
+          ['Go to Governance', 'View Crew Roster'],
+          'governance'
+        );
+      } else if (lower.includes('team') || lower.includes('crew') || lower.includes('chairperson') || lower.includes('lead') || lower.includes('udayakumar')) {
+        respond(
+          "Accessing Team. Chapter leadership is guided by Faculty Advisor Mr. N. Udayakumar and Student Chairperson Mr. Brijish S, supported by 15 student office bearers.",
+          ['Meet the Team', 'View Gallery'],
           'team'
-        );
-      } else if (lower.includes('about') || lower.includes('vistas') || lower.includes('mission') || lower.includes('story')) {
-        respond(
-          "Opening Mission Chamber. VISTAS ACM was chartered on May 19, 2025 at Vels Institute of Science, Technology and Advanced Studies (VISTAS) under ACM India.",
-          ['Go to About Section', 'Our Values', 'Explore Domains'],
-          'about'
-        );
-      } else if (lower.includes('join') || lower.includes('contact') || lower.includes('register') || lower.includes('apply')) {
-        respond(
-          "Deploying Connect Terminal. You can submit your membership request or reach faculty coordinators directly through our terminal.",
-          ['Go to Contact Terminal', 'Instagram Link'],
-          'contact'
         );
       } else if (lower.includes('gallery') || lower.includes('photo') || lower.includes('moments')) {
         respond(
-          "Opening Visual Archive. Explore photographic telemetry from hackathons, workshops, and chapter milestones.",
-          ['Go to Gallery', 'Instagram Highlights'],
+          "Opening Gallery. Browse moments together — an archive of people, ideas, and experiences at VISTAS ACM.",
+          ['View Gallery', 'Meet the Team'],
           'gallery'
         );
-      } else if (lower.includes('instagram') || lower.includes('social')) {
+      } else if (lower.includes('about') || lower.includes('vistas') || lower.includes('mission') || lower.includes('vision') || lower.includes('profile')) {
         respond(
-          `Official social radar active at ${CHAPTER_INFO.instagramHandle}. Stay connected for real-time announcements.`,
-          ['Open Instagram Link', 'Upcoming Events'],
-          'instagram'
+          "Opening About Chapter. Curiosity makes. VISTAS ACM Student Chapter (Group ID 199704) is a community for curious minds, practical ideas, and better things built together.",
+          ['Explore About', 'View Domains', 'Join Chapter'],
+          'about'
+        );
+      } else if (lower.includes('join') || lower.includes('contact') || lower.includes('channel') || lower.includes('instagram')) {
+        respond(
+          "Deploying Join the Chapter. Reach out to the team or connect with us on Instagram @vistas_acm.",
+          ['Join the Chapter', 'Follow Instagram'],
+          'contact'
         );
       } else {
         // Fallback intelligent response
         respond(
-          "Understood. Command telemetry acknowledged. You can query technical divisions, events, projects, or use quick navigation commands.",
-          ['Explore Domains', 'Upcoming Events', 'Innovation Projects', 'Join Chapter']
+          "Understood. Command telemetry acknowledged. You can query technical domains, events, projects, governance, team leadership, or open the contact form.",
+          ['Explore Domains', 'Chapter Events', 'Selected Projects', 'Governance', 'Meet the Team']
         );
       }
       setIsTyping(false);
@@ -144,11 +144,13 @@ export const JarvisAssistant: React.FC<JarvisAssistantProps> = ({
 
   const handleSuggestionClick = (suggestion: string) => {
     soundEngine.playClick();
-    if (suggestion.includes('Domains')) onNavigateSection('domains');
-    else if (suggestion.includes('Events')) onNavigateSection('events');
-    else if (suggestion.includes('Projects')) onNavigateSection('projects');
-    else if (suggestion.includes('Team')) onNavigateSection('team');
-    else if (suggestion.includes('About') || suggestion.includes('Story')) onNavigateSection('about');
+    if (suggestion.includes('Domains') || suggestion.includes('Galaxy')) onNavigateSection('domains');
+    else if (suggestion.includes('Events') || suggestion.includes('Launches')) onNavigateSection('events');
+    else if (suggestion.includes('Projects') || suggestion.includes('Builds')) onNavigateSection('projects');
+    else if (suggestion.includes('Team') || suggestion.includes('Crew')) onNavigateSection('team');
+    else if (suggestion.includes('Governance')) onNavigateSection('governance');
+    else if (suggestion.includes('About') || suggestion.includes('Profile') || suggestion.includes('Story')) onNavigateSection('profile');
+    else if (suggestion.includes('Vision')) onNavigateSection('vision');
     else if (suggestion.includes('Join') || suggestion.includes('Contact')) onNavigateSection('contact');
     else if (suggestion.includes('Gallery')) onNavigateSection('gallery');
     else if (suggestion.includes('Instagram')) onNavigateSection('instagram');

@@ -66,16 +66,16 @@ function QuantumCore() {
   });
 
   return (
-    <group position={[0, -0.9, -1.6]} scale={[0.85, 0.85, 0.85]}>
-      {/* Central Plasma Core - Subtle and non-blinding */}
+    <group position={[0, -1.3, -2.4]} scale={[0.78, 0.78, 0.78]}>
+      {/* Central Quantum Core - Obsidian finish, non-blinding */}
       <mesh ref={coreRef}>
-        <icosahedronGeometry args={[0.9, 3]} />
-        <meshBasicMaterial color="#38BDF8" wireframe transparent opacity={0.3} />
+        <icosahedronGeometry args={[0.85, 2]} />
+        <meshBasicMaterial color="#38BDF8" wireframe transparent opacity={0.25} />
       </mesh>
 
       <mesh>
-        <sphereGeometry args={[0.45, 16, 16]} />
-        <meshBasicMaterial color="#071329" transparent opacity={0.65} />
+        <sphereGeometry args={[0.42, 24, 24]} />
+        <meshStandardMaterial color="#030816" metalness={0.9} roughness={0.7} />
       </mesh>
 
       {/* Point lights for real-time metallic illumination */}
@@ -351,9 +351,9 @@ function ParticleField() {
 function CameraRig() {
   useFrame((state) => {
     const { x, y } = state.pointer;
-    state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, x * 1.5, 0.05);
-    state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, y * 0.8 + 0.5, 0.05);
-    state.camera.lookAt(0, 0, 0);
+    state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, x * 1.0, 0.04);
+    state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, y * 0.4 + 0.4, 0.04);
+    state.camera.lookAt(0, -0.3, 0);
   });
   return null;
 }

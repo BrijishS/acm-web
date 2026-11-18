@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { soundEngine } from '../../audio/soundEngine';
-import { DOMAINS_DATA } from '../../data/chapterData';
+import { DOMAINS_DATA, CHAPTER_ACTIVITIES } from '../../data/chapterData';
 import { Domain } from '../../types';
-import { Cpu, X, ArrowUpRight, Sparkles, Layers, ShieldCheck, Orbit } from 'lucide-react';
+import { Cpu, X, ArrowUpRight, Sparkles, Layers, ShieldCheck, Orbit, CheckCircle2 } from 'lucide-react';
 
 export const DomainsSection: React.FC = () => {
   const [selectedDomain, setSelectedDomain] = useState<Domain | null>(null);
@@ -19,97 +19,156 @@ export const DomainsSection: React.FC = () => {
   };
 
   return (
-    <section id="domains" className="relative py-24 px-4 md:px-8 border-t border-cerulean/15 bg-jet">
-      <div className="max-w-6xl mx-auto">
-        {/* Section Header: Matching GALAXY / DOMAINS from user reference */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-          <div>
-            <div className="inline-flex items-center gap-2 font-mono text-xs text-cerulean tracking-widest uppercase mb-2">
-              <Orbit className="w-4 h-4 text-rose animate-spin" />
-              <span>GALAXY // 08 TECHNOLOGY DIVISIONS</span>
+    <section id="domains" className="relative py-24 px-4 sm:px-6 md:px-8 border-t border-cerulean/15 bg-[#020408]">
+      <div id="galaxy" className="absolute top-0 pointer-events-none" />
+      {/* Blueprint grid background */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,rgba(14,35,71,0.5)_0%,transparent_75%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.04)_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto relative z-10 space-y-20">
+        {/* =========================================================
+            SECTION: TECHNICAL DOMAINS
+        ========================================================= */}
+        <div>
+          {/* Section Header */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-cerulean/15 mb-12">
+            <div>
+              <div className="inline-flex items-center gap-2 font-mono text-xs text-cerulean tracking-widest uppercase mb-2">
+                <Orbit className="w-4 h-4 text-rose animate-spin" />
+                <span>GALAXY // 05 TECHNICAL DOMAINS</span>
+                <span className="text-chrome/30">·</span>
+                <span className="text-[#FF3B9D] font-bold">VISTAS ACM</span>
+              </div>
+              <h2 className="font-heading text-4xl sm:text-5xl md:text-6xl font-black text-white uppercase tracking-wider">
+                TECHNICAL <span className="text-cerulean glow-blue">DOMAINS.</span>
+              </h2>
             </div>
-            <h2 className="font-heading text-4xl sm:text-5xl md:text-6xl font-extrabold text-white uppercase tracking-wider">
-              DOMAIN <span className="text-cerulean glow-blue">GALAXY.</span>
-            </h2>
+            <p className="font-sans text-sm md:text-base text-chrome max-w-md leading-relaxed">
+              Explore our 5 technical divisions shaping active computing curiosity, engineering practice, and collaborative projects at VISTAS ACM.
+            </p>
           </div>
-          <p className="font-sans text-sm md:text-base text-chrome max-w-md leading-relaxed">
-            Specialized engineering cells exploring the outer boundaries of computing science, intelligent systems, cybernetics, and physical hardware.
-          </p>
+
+          {/* 5 Holographic Domain Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {DOMAINS_DATA.map((domain) => {
+              const isRose = domain.hologramColor === 'rose';
+              return (
+                <motion.div
+                  key={domain.id}
+                  whileHover={{ y: -6, scale: 1.01 }}
+                  transition={{ duration: 0.25 }}
+                  onMouseEnter={() => soundEngine.playHover()}
+                  onClick={() => openDomainModal(domain)}
+                  className={`hud-card p-6 sm:p-7 rounded-2xl cursor-pointer flex flex-col justify-between group bg-[#030611]/90 backdrop-blur-md ${
+                    isRose ? 'border-rose/25 hover:border-rose/70 shadow-hologram-rose' : 'border-cerulean/25 hover:border-cerulean/70 shadow-hologram-blue'
+                  }`}
+                >
+                  <div>
+                    {/* Top Bar: Code + Symbol */}
+                    <div className="flex items-center justify-between pb-3 mb-4 border-b border-cerulean/15">
+                      <span className="font-mono text-xs text-chrome/50 tracking-widest uppercase">
+                        {domain.code}
+                      </span>
+                      <span className="font-mono text-xl text-cerulean group-hover:text-rose transition-colors">
+                        {domain.symbol}
+                      </span>
+                    </div>
+
+                    <span className="font-mono text-[10px] text-rose tracking-wider uppercase font-semibold block mb-1">
+                      {domain.category}
+                    </span>
+
+                    <h3 className="font-heading text-2xl font-bold text-white tracking-wider uppercase mb-2 group-hover:text-cerulean transition-colors leading-tight">
+                      {domain.title}
+                    </h3>
+
+                    <p className="font-sans text-sm text-chrome/90 leading-relaxed mb-5">
+                      {domain.description}
+                    </p>
+                  </div>
+
+                  <div>
+                    {/* Technologies Sub-Tags */}
+                    <div className="space-y-2 mb-5">
+                      <span className="font-mono text-[10px] text-cerulean tracking-widest uppercase font-semibold block">
+                        CORE TECHNOLOGIES:
+                      </span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {domain.technologies.map((tech, tIdx) => (
+                          <span
+                            key={tIdx}
+                            className="px-2.5 py-1 rounded bg-[#071329] border border-cerulean/20 text-[11px] font-mono text-white/90"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Action Link Footer */}
+                    <div className="pt-3 border-t border-cerulean/15 flex items-center justify-between text-xs font-mono text-cerulean group-hover:text-rose transition-colors">
+                      <span className="tracking-wider">VIEW DOMAIN TELEMETRY</span>
+                      <ArrowUpRight className="w-4 h-4" />
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
 
-        {/* 8 Holographic Domain Division Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {DOMAINS_DATA.map((domain) => {
-            const isRose = domain.hologramColor === 'rose';
-            return (
-              <motion.div
-                key={domain.id}
-                whileHover={{ y: -6, scale: 1.01 }}
-                transition={{ duration: 0.25 }}
+        {/* =========================================================
+            SECTION: CHAPTER ACTIVITIES – WHAT WE DO
+        ========================================================= */}
+        <div className="hud-card p-6 sm:p-10 md:p-12 rounded-3xl border-cerulean/30 bg-[#030611]/90 backdrop-blur-xl">
+          <div className="max-w-3xl mb-10">
+            <span className="font-mono text-xs text-[#FF3B9D] tracking-widest uppercase font-bold block mb-2">
+              CHAPTER ACTIVITIES // 08 OPERATIONAL DIVISIONS
+            </span>
+            <h3 className="font-heading text-3xl sm:text-4xl md:text-5xl font-black text-white uppercase tracking-wider mb-4">
+              WHAT WE <span className="text-cerulean glow-blue">DO.</span>
+            </h3>
+            <p className="font-sans text-sm sm:text-base text-chrome/90 leading-relaxed">
+              Activities that let students apply academic knowledge, collaborate with peers, meet professionals and build career-relevant competencies.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {CHAPTER_ACTIVITIES.map((act, i) => (
+              <div
+                key={act.id}
                 onMouseEnter={() => soundEngine.playHover()}
-                onClick={() => openDomainModal(domain)}
-                className={`hud-card p-5 rounded-xl cursor-pointer flex flex-col justify-between group ${
-                  isRose ? 'border-rose/25 hover:border-rose/70' : 'border-cerulean/25 hover:border-cerulean/70'
-                }`}
+                className="p-5 rounded-xl bg-[#071329]/80 border border-cerulean/20 hover:border-cerulean/60 transition-colors flex flex-col justify-between"
               >
                 <div>
-                  {/* Top Bar: Code + Symbol */}
-                  <div className="flex items-center justify-between pb-3 mb-3 border-b border-cerulean/15">
-                    <span className="font-mono text-[10px] text-chrome/50 tracking-widest uppercase">
-                      {domain.code}
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="font-mono text-[10px] text-cerulean tracking-widest uppercase bg-cerulean/10 px-2 py-0.5 rounded border border-cerulean/30">
+                      0{i + 1}
                     </span>
-                    <span className="font-mono text-base text-cerulean group-hover:text-rose transition-colors">
-                      {domain.symbol}
-                    </span>
+                    <CheckCircle2 className="w-3.5 h-3.5 text-rose" />
                   </div>
-
-                  <span className="font-mono text-[9px] text-rose tracking-wider uppercase font-semibold block mb-1">
-                    {domain.category}
-                  </span>
-
-                  <h3 className="font-heading text-xl font-bold text-white tracking-wider uppercase mb-2 group-hover:text-cerulean transition-colors leading-tight">
-                    {domain.title}
-                  </h3>
-
-                  <p className="font-sans text-xs text-chrome/80 leading-relaxed mb-4 line-clamp-3">
-                    {domain.description}
+                  <h4 className="font-heading text-lg font-bold text-white uppercase tracking-wide mb-2">
+                    {act.title}
+                  </h4>
+                  <p className="font-sans text-xs text-chrome/80 leading-relaxed">
+                    {act.description}
                   </p>
                 </div>
-
-                <div>
-                  {/* Tag Pills */}
-                  <div className="flex flex-wrap gap-1 mb-4">
-                    {domain.tags.slice(0, 3).map((tag, tIdx) => (
-                      <span
-                        key={tIdx}
-                        className="px-2 py-0.5 rounded bg-jet border border-cerulean/20 text-[10px] font-mono text-chrome/70"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Action Link Footer */}
-                  <div className="pt-3 border-t border-cerulean/15 flex items-center justify-between text-xs font-mono text-cerulean group-hover:text-rose transition-colors">
-                    <span className="tracking-wider">ACCESS TELEMETRY</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Modal: In-Depth Holographic Domain Diagnostics */}
         <AnimatePresence>
           {selectedDomain && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-jet/85 backdrop-blur-md">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
               <motion.div
                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 20 }}
                 transition={{ duration: 0.3 }}
-                className="w-full max-w-xl hud-card rounded-2xl overflow-hidden border-cerulean shadow-2xl p-6 md:p-8"
+                className="w-full max-w-xl hud-card rounded-2xl overflow-hidden border-cerulean shadow-2xl p-6 md:p-8 bg-[#030611]"
               >
                 {/* Modal Header */}
                 <div className="flex items-start justify-between pb-4 border-b border-cerulean/20 mb-6">
@@ -133,22 +192,57 @@ export const DomainsSection: React.FC = () => {
                 </div>
 
                 {/* Body Details */}
-                <p className="font-sans text-sm md:text-base text-chrome leading-relaxed mb-6">
+                <p className="font-sans text-sm md:text-base text-white/90 leading-relaxed mb-6">
                   {selectedDomain.description}
                 </p>
 
-                {/* Hardware & Computational Specs */}
+                {/* Sub-Technologies */}
                 <div className="mb-6">
                   <span className="font-mono text-xs text-cerulean tracking-widest uppercase block mb-3 font-semibold">
-                    DOMAIN TELEMETRY SPECIFICATIONS
+                    SUB-TECHNOLOGIES & TOOLS
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedDomain.technologies.map((tech, idx) => (
+                      <span
+                        key={idx}
+                        className="px-3 py-1.5 rounded-lg bg-[#071329] border border-cerulean/30 text-xs font-mono text-cerulean font-bold"
+                      >
+                        #{tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Activities in this Domain */}
+                <div className="mb-6">
+                  <span className="font-mono text-xs text-rose tracking-widest uppercase block mb-3 font-semibold">
+                    CHAPTER DOMAIN ACTIVITIES
+                  </span>
+                  <div className="space-y-2">
+                    {selectedDomain.activities.map((act, idx) => (
+                      <div
+                        key={idx}
+                        className="p-3 rounded-lg bg-[#071329]/80 border border-cerulean/20 flex items-center gap-2.5 font-sans text-xs text-white/90"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-cerulean flex-shrink-0" />
+                        <span>{act}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Computational Specs */}
+                <div className="mb-8">
+                  <span className="font-mono text-xs text-chrome/60 tracking-widest uppercase block mb-3 font-semibold">
+                    SPECIFICATIONS
                   </span>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     {selectedDomain.specs.map((spec, sIdx) => (
-                      <div key={sIdx} className="bg-jet p-3 rounded-lg border border-cerulean/20">
+                      <div key={sIdx} className="bg-[#071329] p-3 rounded-lg border border-cerulean/20">
                         <span className="font-mono text-[9px] text-chrome/50 tracking-wider uppercase block">
                           {spec.label}
                         </span>
-                        <span className="font-mono text-xs text-white font-bold tracking-wider">
+                        <span className="font-mono text-xs text-white font-bold tracking-wider truncate block">
                           {spec.value}
                         </span>
                       </div>
@@ -156,35 +250,13 @@ export const DomainsSection: React.FC = () => {
                   </div>
                 </div>
 
-                {/* All Associated Tags */}
-                <div className="mb-8">
-                  <span className="font-mono text-xs text-chrome-muted tracking-widest uppercase block mb-2 font-medium">
-                    EXPLORED TECHNOLOGIES & TOOLS
-                  </span>
-                  <div className="flex flex-wrap gap-1.5">
-                    {selectedDomain.tags.map((tag, tIdx) => (
-                      <span
-                        key={tIdx}
-                        className="px-2.5 py-1 rounded bg-jet border border-cerulean/30 text-xs font-mono text-cerulean font-medium"
-                      >
-                        #{tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Bottom CTA to Join Chapter / Inquire */}
-                <div className="pt-4 border-t border-cerulean/20 flex items-center justify-between">
-                  <span className="font-mono text-xs text-chrome/50">
-                    STATUS: DIVISION OPEN FOR STUDENT COLLABORATION
-                  </span>
-                  <button
-                    onClick={closeModal}
-                    className="cyber-btn-blue px-5 py-2 rounded text-xs font-bold"
-                  >
-                    CLOSE TELEMETRY
-                  </button>
-                </div>
+                {/* Close Button */}
+                <button
+                  onClick={closeModal}
+                  className="w-full cyber-btn-blue py-3 rounded-lg font-mono text-xs font-bold tracking-wider uppercase cursor-pointer"
+                >
+                  DISMISS TELEMETRY
+                </button>
               </motion.div>
             </div>
           )}

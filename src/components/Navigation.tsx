@@ -15,10 +15,24 @@ export const MISSION_NAV_ITEMS = [
   { id: 'profile', label: 'PROFILE' },
   { id: 'vision', label: 'VISION' },
   { id: 'domains', label: 'GALAXY' },
-  { id: 'launches', label: 'LAUNCHES' },
-  { id: 'builds', label: 'BUILDS' },
+  { id: 'events', label: 'LAUNCHES' },
+  { id: 'projects', label: 'BUILDS' },
   { id: 'governance', label: 'GOVERNANCE' },
-  { id: 'crew', label: 'CREW' },
+  { id: 'team', label: 'CREW' },
+  { id: 'gallery', label: 'GALLERY' },
+  { id: 'contact', label: 'CONTACT' },
+];
+
+export const MOBILE_NAV_ITEMS = [
+  { id: 'mission', label: 'MISSION' },
+  { id: 'profile', label: 'PROFILE' },
+  { id: 'vision', label: 'VISION' },
+  { id: 'domains', label: 'GALAXY' },
+  { id: 'events', label: 'LAUNCHES' },
+  { id: 'projects', label: 'BUILDS' },
+  { id: 'governance', label: 'GOVERNANCE' },
+  { id: 'team', label: 'CREW' },
+  { id: 'gallery', label: 'GALLERY' },
   { id: 'contact', label: 'CONTACT' },
 ];
 
@@ -30,6 +44,7 @@ export const Navigation: React.FC<NavigationProps> = ({
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [elapsedSeconds, setElapsedSeconds] = useState(19);
+  const [targetedNavId, setTargetedNavId] = useState<string | null>(null);
 
   // Mission Elapsed Time (MET) counter: T+ MM:SS as seen in user's reference photo
   useEffect(() => {
@@ -46,6 +61,8 @@ export const Navigation: React.FC<NavigationProps> = ({
   };
 
   const handleNavClick = (id: string) => {
+    setTargetedNavId(id);
+    setTimeout(() => setTargetedNavId(null), 1800);
     soundEngine.playClick();
     onNavigate(id);
     setMobileMenuOpen(false);
@@ -56,9 +73,9 @@ export const Navigation: React.FC<NavigationProps> = ({
       <div className="max-w-[1600px] mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
         {/* Left: Logo + VISTAS / ACM Brand */}
         <button
-          onClick={() => handleNavClick('mission')}
+          onClick={() => handleNavClick('home')}
           className="flex items-center gap-2.5 text-left cursor-pointer focus:outline-none group flex-shrink-0"
-          aria-label="VISTAS ACM Mission Control Home"
+          aria-label="VISTAS ACM Home"
         >
           <div className="w-8 h-8 rounded-full border border-cerulean/60 p-0.5 overflow-hidden flex items-center justify-center bg-[#071329] group-hover:border-rose transition-colors shadow-[0_0_12px_rgba(56,189,248,0.4)]">
             <img
@@ -76,21 +93,29 @@ export const Navigation: React.FC<NavigationProps> = ({
         </button>
 
         {/* Center: Mission Control Nav Links (Exact style from Reference Image) */}
-        <nav className="hidden xl:flex items-center gap-2 font-mono text-xs tracking-wider uppercase">
+        <nav className="hidden xl:flex items-center gap-1.5 2xl:gap-2 font-mono text-[11px] 2xl:text-xs tracking-wider uppercase">
           {MISSION_NAV_ITEMS.map((item) => {
             const isActive = activeSection === item.id;
+            const isTargeted = targetedNavId === item.id;
             return (
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
                 onMouseEnter={() => soundEngine.playHover()}
-                className={`relative px-3 py-1.5 rounded-md transition-all duration-200 cursor-pointer ${
-                  isActive
+                className={`relative px-2.5 py-1.5 2xl:px-3 rounded-md transition-all duration-200 cursor-pointer ${
+                  isTargeted
+                    ? 'border-2 border-[#FF3B9D] text-white bg-[#FF3B9D]/20 font-bold shadow-[0_0_20px_#FF3B9D]'
+                    : isActive
                     ? 'border border-[#38BDF8] text-[#38BDF8] bg-[#38BDF8]/10 font-bold shadow-[0_0_15px_rgba(56,189,248,0.3)]'
                     : 'text-[#94a3b8] hover:text-white hover:bg-white/5 border border-transparent'
                 }`}
                 aria-current={isActive ? 'page' : undefined}
               >
+                {/* AI Selection Radar Ping */}
+                {isTargeted && (
+                  <span className="absolute -inset-1 rounded-lg border border-[#38BDF8] animate-ping pointer-events-none opacity-50" />
+                )}
+
                 <span>{item.label}</span>
                 {/* Active cyan indicator dot centered underneath */}
                 {isActive && (
@@ -102,20 +127,26 @@ export const Navigation: React.FC<NavigationProps> = ({
         </nav>
 
         {/* Compact Nav for LG screens */}
-        <nav className="hidden lg:flex xl:hidden items-center gap-1.5 font-mono text-[11px] tracking-wider uppercase">
+        <nav className="hidden lg:flex xl:hidden items-center gap-1 font-mono text-[10px] tracking-wider uppercase">
           {MISSION_NAV_ITEMS.map((item) => {
             const isActive = activeSection === item.id;
+            const isTargeted = targetedNavId === item.id;
             return (
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
                 onMouseEnter={() => soundEngine.playHover()}
-                className={`relative px-2 py-1 rounded transition-colors cursor-pointer ${
-                  isActive
+                className={`relative px-1.5 py-1 rounded transition-colors cursor-pointer ${
+                  isTargeted
+                    ? 'border border-[#FF3B9D] text-white bg-[#FF3B9D]/20 font-bold shadow-[0_0_15px_#FF3B9D]'
+                    : isActive
                     ? 'border border-[#38BDF8] text-[#38BDF8] bg-[#38BDF8]/10 font-bold'
                     : 'text-[#94a3b8] hover:text-white'
                 }`}
               >
+                {isTargeted && (
+                  <span className="absolute -inset-1 rounded border border-[#38BDF8] animate-ping pointer-events-none opacity-40" />
+                )}
                 <span>{item.label}</span>
                 {isActive && (
                   <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#38BDF8]" />
@@ -160,16 +191,6 @@ export const Navigation: React.FC<NavigationProps> = ({
             <Instagram className="w-4 h-4" />
           </a>
 
-          {/* JOIN MISSION ↗ Button (Reference Image Style) */}
-          <button
-            onClick={() => handleNavClick('contact')}
-            onMouseEnter={() => soundEngine.playHover()}
-            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#38BDF8] text-[#38BDF8] hover:bg-[#38BDF8]/15 font-mono text-xs font-bold tracking-wider uppercase transition-colors cursor-pointer shadow-[0_0_12px_rgba(56,189,248,0.25)]"
-          >
-            <span>JOIN MISSION</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </button>
-
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -190,27 +211,33 @@ export const Navigation: React.FC<NavigationProps> = ({
             <span className="text-[#fbbf24] font-bold">{formatMET(elapsedSeconds)}</span>
           </div>
           <div className="flex flex-col gap-1.5 font-mono text-xs tracking-wider">
-            {MISSION_NAV_ITEMS.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => handleNavClick(item.id)}
-                className={`flex items-center justify-between p-2.5 rounded-lg text-left transition-colors cursor-pointer ${
-                  activeSection === item.id
-                    ? 'bg-[#38BDF8]/15 text-[#38BDF8] font-bold border border-[#38BDF8]/50'
-                    : 'text-[#94a3b8] hover:text-white hover:bg-white/5'
-                }`}
-              >
-                <span>{item.label}</span>
-                {activeSection === item.id && (
-                  <span className="w-2 h-2 rounded-full bg-[#38BDF8] shadow-[0_0_8px_#38BDF8]" />
-                )}
-              </button>
-            ))}
+            {MOBILE_NAV_ITEMS.map((item) => {
+              const isTargeted = targetedNavId === item.id;
+              const isActive = activeSection === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleNavClick(item.id)}
+                  className={`relative flex items-center justify-between p-2.5 rounded-lg text-left transition-colors cursor-pointer ${
+                    isTargeted
+                      ? 'bg-[#FF3B9D]/20 text-white font-bold border-2 border-[#FF3B9D] shadow-[0_0_15px_#FF3B9D]'
+                      : isActive
+                      ? 'bg-[#38BDF8]/15 text-[#38BDF8] font-bold border border-[#38BDF8]/50'
+                      : 'text-[#94a3b8] hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  <span>{item.label}</span>
+                  {isActive && (
+                    <span className="w-2 h-2 rounded-full bg-[#38BDF8] shadow-[0_0_8px_#38BDF8]" />
+                  )}
+                </button>
+              );
+            })}
             <button
               onClick={() => handleNavClick('contact')}
               className="mt-2 w-full py-2.5 rounded-lg border border-[#38BDF8] text-[#38BDF8] bg-[#38BDF8]/10 font-mono text-xs font-bold text-center tracking-wider uppercase flex items-center justify-center gap-1.5"
             >
-              <span>JOIN MISSION</span>
+              <span>JOIN THE CHAPTER</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </button>
           </div>

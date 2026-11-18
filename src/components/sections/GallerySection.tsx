@@ -3,127 +3,91 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { soundEngine } from '../../audio/soundEngine';
 import { GalleryItem } from '../../types';
 import { fetchLiveGallery } from '../../data/supabaseClient';
-import { Maximize2, X, ChevronLeft, ChevronRight, Image as ImageIcon, Sparkles } from 'lucide-react';
+import { Image as ImageIcon, X, Maximize2, Sparkles, Camera } from 'lucide-react';
 
 export const GallerySection: React.FC = () => {
   const [items, setItems] = useState<GalleryItem[]>([]);
-  const [activeCategory, setActiveCategory] = useState<string>('all');
-  const [activeItemIndex, setActiveItemIndex] = useState<number | null>(null);
+  const [activeItem, setActiveItem] = useState<GalleryItem | null>(null);
 
   useEffect(() => {
     fetchLiveGallery().then(setItems);
   }, []);
 
-  const categories = ['all', 'Charter', 'Hackathon', 'Robotics', 'Workshops'];
-
-  const filteredItems = items.filter((item) => {
-    if (activeCategory === 'all') return true;
-    return item.category?.toLowerCase() === activeCategory.toLowerCase();
-  });
-
-  const openLightbox = (index: number) => {
+  const openLightbox = (item: GalleryItem) => {
     soundEngine.playHologramActivate();
-    setActiveItemIndex(index);
+    setActiveItem(item);
   };
 
   const closeLightbox = () => {
     soundEngine.playClick();
-    setActiveItemIndex(null);
+    setActiveItem(null);
   };
-
-  const nextImage = () => {
-    if (activeItemIndex === null) return;
-    soundEngine.playHover();
-    setActiveItemIndex((activeItemIndex + 1) % filteredItems.length);
-  };
-
-  const prevImage = () => {
-    if (activeItemIndex === null) return;
-    soundEngine.playHover();
-    setActiveItemIndex((activeItemIndex - 1 + filteredItems.length) % filteredItems.length);
-  };
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (activeItemIndex === null) return;
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowRight') nextImage();
-      if (e.key === 'ArrowLeft') prevImage();
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeItemIndex, filteredItems.length]);
 
   return (
-    <section id="gallery" className="relative py-24 px-4 md:px-8 border-t border-cerulean/15 bg-jet/60">
-      <div className="max-w-6xl mx-auto">
+    <section id="gallery" className="relative py-24 px-4 sm:px-6 md:px-8 border-t border-cerulean/15 bg-[#020408]">
+      {/* Blueprint grid background */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,rgba(14,35,71,0.45)_0%,transparent_75%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.04)_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto relative z-10 space-y-12">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-cerulean/15">
           <div>
             <div className="inline-flex items-center gap-2 font-mono text-xs text-cerulean tracking-widest uppercase mb-2">
-              <span className="w-1.5 h-1.5 bg-rose rounded-full animate-ping" />
-              <span>07 // VISUAL ARCHIVE</span>
+              <Camera className="w-4 h-4 text-rose" />
+              <span>FRAMES OF WHAT WE DO</span>
+              <span className="text-chrome/30">·</span>
+              <span className="text-[#38BDF8] font-bold">VISUAL ARCHIVE</span>
             </div>
-            <h2 className="font-heading text-4xl sm:text-5xl md:text-6xl font-extrabold text-white uppercase tracking-wider">
-              MOMENTS & <span className="text-cerulean glow-blue">MEMORIES.</span>
+            <h2 className="font-heading text-4xl sm:text-5xl md:text-6xl font-black text-white uppercase tracking-wider">
+              MOMENTS <span className="text-cerulean glow-blue">TOGETHER.</span>
             </h2>
           </div>
-          <p className="font-sans text-sm md:text-base text-chrome max-w-md leading-relaxed">
-            Photographic telemetry capturing chapter inaugurations, collaborative hackathons, and hardware robotics testing at VISTAS.
-          </p>
+          <div className="max-w-md space-y-1.5">
+            <p className="font-sans text-sm md:text-base text-white leading-relaxed font-semibold">
+              A visual archive of the people, ideas, and projects that make up the chapter.
+            </p>
+            <p className="font-sans text-xs sm:text-sm text-chrome/80 leading-relaxed">
+              Ideas, people and moments — collected from the experiences that bring our community together.
+            </p>
+          </div>
         </div>
 
-        {/* Category Filters */}
-        <div className="flex flex-wrap gap-2 mb-10">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => {
-                soundEngine.playClick();
-                setActiveCategory(cat);
-              }}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all cursor-pointer ${
-                activeCategory === cat
-                  ? 'bg-cerulean text-jet font-bold shadow-[0_0_12px_rgba(56,189,248,0.5)]'
-                  : 'bg-jet-surface text-chrome hover:text-white border border-cerulean/20 hover:border-cerulean/40'
-              }`}
-            >
-              {cat === 'all' ? 'All Archive' : cat}
-            </button>
-          ))}
-        </div>
-
-        {/* Gallery Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {filteredItems.map((item, idx) => (
+        {/* Gallery Grid of Authentic Visuals */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {items.map((item, idx) => (
             <motion.div
               key={item.id}
-              whileHover={{ y: -5, scale: 1.02 }}
+              whileHover={{ y: -6, scale: 1.02 }}
+              transition={{ duration: 0.25 }}
               onMouseEnter={() => soundEngine.playHover()}
-              onClick={() => openLightbox(idx)}
-              className="hud-card group rounded-xl overflow-hidden cursor-pointer border-cerulean/25 hover:border-cerulean/60 transition-all flex flex-col justify-between"
+              onClick={() => openLightbox(item)}
+              className="hud-card rounded-2xl overflow-hidden border-cerulean/25 hover:border-cerulean/70 group cursor-pointer bg-[#030611]/90 backdrop-blur-md shadow-hologram-blue flex flex-col justify-between"
             >
-              <div className="relative aspect-video bg-jet overflow-hidden flex items-center justify-center p-3">
+              <div className="relative aspect-video sm:aspect-square w-full overflow-hidden bg-[#071329]">
                 <img
                   src={item.media_url}
                   alt={item.title}
-                  className="w-full h-full object-contain filter group-hover:brightness-110 transition-all duration-300"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  onError={(e) => {
+                    // Fallback to official logo if external image fails
+                    (e.target as HTMLImageElement).src = '/assets/vistas-acm-blue-logo.jpg';
+                  }}
                 />
-                <div className="absolute inset-0 bg-jet/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <div className="p-2.5 rounded-full bg-cerulean/20 border border-cerulean text-cerulean shadow-hologram-blue">
-                    <Maximize2 className="w-4 h-4" />
-                  </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#030611] via-transparent to-transparent opacity-80" />
+                <div className="absolute top-3 right-3 p-1.5 rounded-lg bg-[#030611]/80 border border-cerulean/30 text-cerulean opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Maximize2 className="w-4 h-4" />
+                </div>
+                <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-[#030611]/80 border border-cerulean/30 font-mono text-[10px] text-cerulean uppercase">
+                  {item.event_name || 'VISTAS ACM'}
                 </div>
               </div>
 
-              <div className="p-4 bg-jet-surface/90">
-                <span className="font-mono text-[9px] text-rose uppercase tracking-widest block mb-1">
-                  {item.event_name}
-                </span>
-                <h3 className="font-heading text-lg font-bold text-white uppercase tracking-wider mb-1 line-clamp-1">
+              <div className="p-5 space-y-1.5">
+                <h3 className="font-heading text-lg font-bold text-white uppercase tracking-wide group-hover:text-cerulean transition-colors truncate">
                   {item.title}
                 </h3>
-                <p className="font-sans text-xs text-chrome/70 line-clamp-2">
+                <p className="font-sans text-xs text-chrome/70 line-clamp-2 leading-relaxed">
                   {item.description}
                 </p>
               </div>
@@ -131,68 +95,49 @@ export const GallerySection: React.FC = () => {
           ))}
         </div>
 
-        {/* Fullscreen Holographic Lightbox */}
+        {/* Lightbox Modal */}
         <AnimatePresence>
-          {activeItemIndex !== null && filteredItems[activeItemIndex] && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 bg-jet/90 backdrop-blur-xl">
+          {activeItem && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-lg">
               <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="relative max-w-4xl w-full hud-card rounded-2xl overflow-hidden border-cerulean shadow-2xl p-4 md:p-6 flex flex-col"
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.25 }}
+                className="relative max-w-3xl w-full hud-card rounded-2xl overflow-hidden border-cerulean p-6 bg-[#030611]"
               >
-                {/* Close Button */}
-                <button
-                  onClick={closeLightbox}
-                  className="absolute top-4 right-4 z-10 p-2 rounded-full bg-jet border border-chrome/30 hover:border-rose text-chrome hover:text-rose transition-colors cursor-pointer"
-                  aria-label="Close Lightbox"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-
-                {/* Main Image Container */}
-                <div className="relative aspect-video max-h-[60vh] bg-jet rounded-xl overflow-hidden flex items-center justify-center p-4">
-                  <img
-                    src={filteredItems[activeItemIndex].media_url}
-                    alt={filteredItems[activeItemIndex].title}
-                    className="max-w-full max-h-full object-contain filter drop-shadow-[0_0_15px_rgba(56,189,248,0.3)]"
-                  />
-
-                  {/* Previous / Next Controls */}
-                  <button
-                    onClick={prevImage}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-jet/80 border border-cerulean/40 text-cerulean hover:bg-cerulean hover:text-jet transition-colors cursor-pointer"
-                    aria-label="Previous Image"
-                  >
-                    <ChevronLeft className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={nextImage}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-jet/80 border border-cerulean/40 text-cerulean hover:bg-cerulean hover:text-jet transition-colors cursor-pointer"
-                    aria-label="Next Image"
-                  >
-                    <ChevronRight className="w-5 h-5" />
-                  </button>
-                </div>
-
-                {/* Caption Footer */}
-                <div className="mt-4 pt-3 border-t border-cerulean/20 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div className="flex items-center justify-between pb-4 border-b border-cerulean/20 mb-4">
                   <div>
-                    <span className="font-mono text-xs text-rose uppercase tracking-widest block">
-                      {filteredItems[activeItemIndex].event_name}
+                    <span className="font-mono text-xs text-rose tracking-widest uppercase block mb-0.5">
+                      {activeItem.event_name || 'CHAPTER ARCHIVE'}
                     </span>
                     <h3 className="font-heading text-2xl font-bold text-white uppercase tracking-wider">
-                      {filteredItems[activeItemIndex].title}
+                      {activeItem.title}
                     </h3>
-                    <p className="font-sans text-xs md:text-sm text-chrome mt-0.5">
-                      {filteredItems[activeItemIndex].description}
-                    </p>
                   </div>
-
-                  <span className="font-mono text-xs text-chrome/50 whitespace-nowrap">
-                    FRAME {activeItemIndex + 1} OF {filteredItems.length}
-                  </span>
+                  <button
+                    onClick={closeLightbox}
+                    className="p-1.5 rounded-lg border border-chrome/30 hover:border-rose text-chrome hover:text-rose transition-colors cursor-pointer"
+                    aria-label="Close Lightbox"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
                 </div>
+
+                <div className="rounded-xl overflow-hidden max-h-[60vh] bg-[#071329] mb-4 flex items-center justify-center border border-cerulean/20">
+                  <img
+                    src={activeItem.media_url}
+                    alt={activeItem.title}
+                    className="max-h-[60vh] w-auto object-contain"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/assets/vistas-acm-blue-logo.jpg';
+                    }}
+                  />
+                </div>
+
+                <p className="font-sans text-sm text-chrome leading-relaxed">
+                  {activeItem.description}
+                </p>
               </motion.div>
             </div>
           )}

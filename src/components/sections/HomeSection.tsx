@@ -28,6 +28,7 @@ export const HomeSection: React.FC<HomeSectionProps> = ({ onNavigate }) => {
 
   return (
     <section id="mission" className="relative min-h-screen flex items-center justify-center pt-24 pb-16 px-4 md:px-8 overflow-hidden bg-[#030611]">
+      <div id="home" className="absolute top-0 pointer-events-none" />
       {/* 1. Mission Control Blueprint Coordinate Grid Overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,rgba(14,35,71,0.6)_0%,rgba(3,6,17,0.98)_100%)] pointer-events-none" />
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.06)_1px,transparent_1px)] bg-[size:48px_48px] pointer-events-none" />
@@ -99,82 +100,124 @@ export const HomeSection: React.FC<HomeSectionProps> = ({ onNavigate }) => {
       {/* 4. Center Main Typographic Statement with High-Contrast Dark Scrim */}
       <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center">
         {/* Dark Scrim Backdrop to guarantee 100% text legibility over 3D animations */}
-        <div className="absolute inset-0 -top-8 max-w-3xl mx-auto h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(3,6,17,0.94)_0%,rgba(3,6,17,0.8)_55%,transparent_85%)] pointer-events-none -z-10" />
+        <div className="absolute inset-0 -top-12 -bottom-12 max-w-4xl mx-auto bg-[radial-gradient(ellipse_at_center,rgba(3,6,17,0.96)_0%,rgba(3,6,17,0.88)_50%,transparent_90%)] pointer-events-none -z-10" />
 
-        {/* Exact Kicker: VISTAS ACM · IDEAS INTO IMPACT */}
+        {/* Exact Kicker: ACM Chapter Group ID 199704 · Academic Year 2026-2027 */}
         <motion.div
           initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#030611]/95 border border-[#38BDF8]/40 shadow-hologram-blue backdrop-blur-md mb-6"
+          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#030611]/95 border border-[#38BDF8]/40 shadow-hologram-blue backdrop-blur-md mb-4"
         >
           <span className="w-2 h-2 rounded-full bg-[#38BDF8] animate-ping" />
-          <span className="font-mono text-xs md:text-sm text-[#38BDF8] font-bold tracking-[0.25em] uppercase">
-            VISTAS ACM · IDEAS INTO IMPACT
+          <span className="font-mono text-xs md:text-sm text-[#38BDF8] font-bold tracking-[0.2em] uppercase">
+            ACM CHAPTER GROUP ID: 199704
           </span>
           <span className="text-chrome/30">|</span>
           <span className="font-mono text-[11px] text-[#FF3B9D] font-bold tracking-wider">
-            MISSION CONTROL
+            AY 2026–2027
           </span>
         </motion.div>
 
-        {/* Master Architectural Giant Heading: VISTAS / ACM */}
+        {/* Reference Subtitle: VISTAS ACM · Ideas into impact */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="font-mono text-xs sm:text-sm text-cerulean tracking-[0.25em] uppercase font-bold mb-2"
+        >
+          VISTAS ACM · Ideas into impact
+        </motion.div>
+
+        {/* Master Architectural Giant Heading: VISTAS ACM (High visibility, perfectly framed) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.15 }}
-          className="flex flex-col items-center leading-none select-none mb-4"
+          className="flex flex-col items-center leading-tight select-none mb-4 py-2"
         >
-          <span className="font-heading text-7xl sm:text-9xl md:text-[13rem] font-black tracking-tight text-white uppercase drop-shadow-[0_10px_35px_rgba(0,0,0,0.95)]">
-            VISTAS
-          </span>
-          <span className="font-heading text-6xl sm:text-8xl md:text-[11rem] font-black tracking-tight text-[#38BDF8] glow-blue uppercase -mt-4 sm:-mt-8 md:-mt-12 drop-shadow-[0_10px_35px_rgba(0,0,0,0.95)]">
-            ACM
+          <h1 className="font-heading text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight text-white uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,1)]">
+            VISTAS <span className="text-[#38BDF8] glow-blue">ACM</span>
+          </h1>
+          <span className="font-heading text-lg sm:text-2xl md:text-3xl font-extrabold text-chrome tracking-[0.3em] uppercase mt-1 drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
+            Student Chapter
           </span>
         </motion.div>
 
-        {/* Core Chapter Motto - High-Contrast Solid Plate */}
+        {/* Dual Tagline Badges: ENGINEERING THE FUTURE (Image 2) + BUILD. LEAD. CREATE. */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-[#030611]/95 border-2 border-[#FF3B9D] shadow-[0_0_25px_rgba(255,59,157,0.45)] mb-4 backdrop-blur-xl z-20"
+          transition={{ duration: 0.7, delay: 0.25 }}
+          className="flex flex-wrap items-center justify-center gap-3 mb-4 z-20"
         >
-          <span className="font-mono text-xs md:text-sm text-[#FF3B9D] uppercase tracking-[0.25em] font-extrabold drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">
-            ENGINEERING THE FUTURE · INNOVATING TOGETHER
-          </span>
+          {/* Laser Rose Headline Badge from Image 2 */}
+          <div className="inline-flex items-center justify-center px-5 py-2 rounded-full bg-[#030611]/95 border-2 border-[#FF3B9D] shadow-[0_0_25px_rgba(255,59,157,0.45)] backdrop-blur-xl">
+            <span className="font-mono text-xs sm:text-sm text-[#FF3B9D] uppercase tracking-[0.25em] font-extrabold drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">
+              ENGINEERING THE FUTURE · INNOVATING TOGETHER
+            </span>
+          </div>
+
+          {/* Official Tagline Badge */}
+          <div className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-[#030611]/95 border border-[#38BDF8]/70 shadow-[0_0_15px_rgba(56,189,248,0.3)] backdrop-blur-xl">
+            <span className="font-mono text-xs text-[#38BDF8] uppercase tracking-[0.25em] font-bold">
+              Build. Lead. Create.
+            </span>
+          </div>
         </motion.div>
 
-        {/* Master Supporting Abstract - High-Contrast Glassmorphic Card */}
+        {/* Department & School Subtitle */}
+        <div className="font-mono text-[11px] sm:text-xs text-[#94a3b8] tracking-wider uppercase mb-5 z-20 font-semibold drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
+          School of Engineering · Department of Computer Science and Engineering
+        </div>
+
+        {/* Master Supporting Abstract - Guaranteed 100% visible with high-contrast obsidian backdrop */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.35 }}
-          className="p-6 sm:p-7 rounded-2xl bg-[#030611]/95 border border-[#38BDF8]/60 backdrop-blur-2xl shadow-[0_16px_50px_rgba(0,0,0,0.98)] max-w-2xl mx-auto z-20"
+          className="p-6 sm:p-7 rounded-2xl bg-[#030611]/95 border border-[#38BDF8]/60 backdrop-blur-2xl shadow-[0_16px_50px_rgba(0,0,0,0.98)] max-w-3xl mx-auto z-20 text-center space-y-3"
         >
-          <p className="font-sans text-base sm:text-lg md:text-xl text-white leading-relaxed font-semibold drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">
-            Explore technology, build solutions, collaborate with innovators and shape the future through{' '}
-            <strong className="text-[#38BDF8] font-black underline decoration-[#FF3B9D] underline-offset-4 glow-blue">VISTAS ACM</strong> — the premier computing innovation chapter at Vels Institute of Science, Technology and Advanced Studies.
+          {/* High-Contrast Lead Description from Image 2 */}
+          <p className="font-sans text-base sm:text-lg text-white leading-relaxed font-semibold drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">
+            Explore technology, build solutions, collaborate with innovators and shape the future through <span className="text-[#38BDF8] font-bold">VISTAS ACM</span> — the premier computing innovation chapter at Vels Institute of Science, Technology and Advanced Studies.
+          </p>
+
+          {/* Official Mission Abstract from Reference Site */}
+          <p className="font-sans text-sm sm:text-base text-slate-200 leading-relaxed font-normal pt-2 border-t border-cerulean/20">
+            A community for curious minds, practical ideas, and better things built together. We make room for learning at every level and for ideas to grow through collaboration.
           </p>
         </motion.div>
 
-        {/* Action Triggers */}
+        {/* 3 Action Triggers matching reference buttons */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.45 }}
-          className="flex flex-wrap items-center justify-center gap-4 mt-8"
+          className="flex flex-wrap items-center justify-center gap-3.5 mt-8"
         >
           <button
             onClick={() => {
               soundEngine.playHologramActivate();
-              onNavigate('domains');
+              onNavigate('about');
             }}
             onMouseEnter={() => soundEngine.playHover()}
-            className="cyber-btn-blue px-7 py-3.5 rounded text-xs md:text-sm font-bold flex items-center gap-2 cursor-pointer shadow-hologram-blue"
+            className="cyber-btn-blue px-6 py-3 rounded text-xs md:text-sm font-bold flex items-center gap-2 cursor-pointer shadow-hologram-blue uppercase tracking-wider"
           >
             <Compass className="w-4 h-4 text-rose" />
-            <span>EXPLORE GALAXY [DOMAINS]</span>
+            <span>Explore the chapter</span>
+          </button>
+
+          <button
+            onClick={() => {
+              soundEngine.playClick();
+              onNavigate('team');
+            }}
+            onMouseEnter={() => soundEngine.playHover()}
+            className="hud-card px-6 py-3 rounded text-xs md:text-sm font-bold flex items-center gap-2 cursor-pointer border-cerulean/40 hover:border-cerulean text-white uppercase tracking-wider transition-colors"
+          >
+            <Sparkles className="w-4 h-4 text-cerulean" />
+            <span>Meet the team</span>
           </button>
 
           <button
@@ -183,10 +226,10 @@ export const HomeSection: React.FC<HomeSectionProps> = ({ onNavigate }) => {
               onNavigate('contact');
             }}
             onMouseEnter={() => soundEngine.playHover()}
-            className="cyber-btn-rose px-7 py-3.5 rounded text-xs md:text-sm font-bold flex items-center gap-2 cursor-pointer shadow-hologram-rose"
+            className="cyber-btn-rose px-6 py-3 rounded text-xs md:text-sm font-bold flex items-center gap-2 cursor-pointer shadow-hologram-rose uppercase tracking-wider"
           >
             <Terminal className="w-4 h-4" />
-            <span>JOIN THE MISSION</span>
+            <span>Join the chapter</span>
           </button>
         </motion.div>
 
@@ -198,10 +241,10 @@ export const HomeSection: React.FC<HomeSectionProps> = ({ onNavigate }) => {
           className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 mt-12 w-full max-w-3xl"
         >
           {[
-            { label: 'ACM CHARTER', value: 'MAY 19, 2025', desc: 'Global Chapter ID' },
-            { label: 'GALAXY DOMAINS', value: '08 DIVISIONS', desc: 'AI to Robotics' },
-            { label: 'COMMUNITY', value: '250+ MEMBERS', desc: 'Active Innovators' },
-            { label: 'BASE STATION', value: 'VISTAS CAMPUS', desc: 'Chennai, India' },
+            { label: 'ACM GROUP ID', value: '199704', desc: 'Chapter Group ID' },
+            { label: 'ACADEMIC YEAR', value: '2026–2027', desc: 'Official Cadence' },
+            { label: 'FACULTY ADVISOR', value: 'N. UDAYAKUMAR', desc: 'Asst. Professor, CSE' },
+            { label: 'DEPARTMENT', value: 'CSE / VISTAS', desc: 'School of Engineering' },
           ].map((stat, i) => (
             <div
               key={i}

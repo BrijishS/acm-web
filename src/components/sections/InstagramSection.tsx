@@ -1,14 +1,14 @@
 import React from 'react';
 import { soundEngine } from '../../audio/soundEngine';
 import { CHAPTER_INFO } from '../../data/chapterData';
-import { Instagram, Radio, Sparkles, ArrowUpRight, Heart, Share2, Compass } from 'lucide-react';
+import { Instagram, Radio } from 'lucide-react';
 
 export const InstagramSection: React.FC = () => {
   return (
-    <section id="instagram" className="relative py-24 px-4 md:px-8 border-t border-cerulean/15 bg-jet/60">
+    <section id="instagram" className="relative py-24 px-4 sm:px-6 md:px-8 border-t border-cerulean/15 bg-[#020408]">
       <div className="max-w-6xl mx-auto">
         {/* Holographic Social Radar Container */}
-        <div className="hud-card-rose p-8 md:p-12 rounded-2xl border-rose/30 shadow-hologram-rose relative overflow-hidden">
+        <div className="hud-card-rose p-8 md:p-12 rounded-3xl border-rose/30 shadow-hologram-rose relative overflow-hidden bg-[#030611]/90 backdrop-blur-xl">
           {/* Subtle Ambient Radial Glow */}
           <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-rose/15 blur-[90px] pointer-events-none" />
 
@@ -17,7 +17,7 @@ export const InstagramSection: React.FC = () => {
             <div className="lg:col-span-8">
               <div className="inline-flex items-center gap-2 font-mono text-xs text-rose tracking-widest uppercase mb-3 font-semibold">
                 <Radio className="w-3.5 h-3.5 animate-pulse" />
-                <span>09 // SOCIAL RADAR & TRANSMISSIONS</span>
+                <span>SOCIAL RADAR & TRANSMISSIONS</span>
               </div>
 
               <h2 className="font-heading text-4xl sm:text-5xl font-black text-white uppercase tracking-wider mb-4">
@@ -34,7 +34,7 @@ export const InstagramSection: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   onMouseEnter={() => soundEngine.playHover()}
-                  className="cyber-btn-rose px-7 py-3.5 rounded text-xs md:text-sm font-bold flex items-center gap-2 cursor-pointer"
+                  className="cyber-btn-rose px-7 py-3.5 rounded text-xs md:text-sm font-bold flex items-center gap-2 cursor-pointer shadow-hologram-rose"
                 >
                   <Instagram className="w-4 h-4" />
                   <span>FOLLOW {CHAPTER_INFO.instagramHandle} ↗</span>
@@ -49,7 +49,7 @@ export const InstagramSection: React.FC = () => {
 
             {/* Right Holographic Social Card Widget */}
             <div className="lg:col-span-4 flex justify-center">
-              <div className="w-full max-w-xs hud-card p-5 rounded-xl border-rose/40 text-center bg-jet-surface/90">
+              <div className="w-full max-w-xs hud-card p-5 rounded-2xl border-rose/40 text-center bg-[#071329]/90 backdrop-blur-md">
                 <div className="w-16 h-16 rounded-full border-2 border-rose p-1 mx-auto mb-3 shadow-[0_0_15px_rgba(255,59,157,0.5)]">
                   <img
                     src={CHAPTER_INFO.logoUrl}
@@ -61,11 +61,11 @@ export const InstagramSection: React.FC = () => {
                 <h3 className="font-heading text-xl font-bold text-white tracking-wider uppercase mb-0.5">
                   VISTAS ACM
                 </h3>
-                <span className="font-mono text-xs text-rose tracking-wider block mb-3">
+                <span className="font-mono text-xs text-rose tracking-wider block mb-3 font-semibold">
                   {CHAPTER_INFO.instagramHandle}
                 </span>
 
-                <div className="grid grid-cols-2 gap-2 p-2.5 rounded bg-jet border border-cerulean/20 text-center font-mono text-xs mb-4">
+                <div className="grid grid-cols-2 gap-2 p-2.5 rounded-xl bg-[#030611] border border-cerulean/20 text-center font-mono text-xs mb-4">
                   <div>
                     <span className="text-white font-bold block">ACTIVE</span>
                     <span className="text-[10px] text-chrome/50">TRANSMISSIONS</span>
@@ -80,7 +80,7 @@ export const InstagramSection: React.FC = () => {
                   href={CHAPTER_INFO.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-2 rounded bg-rose/20 hover:bg-rose text-rose hover:text-white border border-rose text-xs font-mono tracking-wider transition-colors block font-bold cursor-pointer"
+                  className="w-full py-2.5 rounded-lg bg-rose/20 hover:bg-rose text-rose hover:text-white border border-rose text-xs font-mono tracking-wider transition-colors block font-bold cursor-pointer"
                 >
                   VIEW PROFILE ↗
                 </a>

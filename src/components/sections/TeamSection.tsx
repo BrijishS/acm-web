@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { soundEngine } from '../../audio/soundEngine';
 import { ACTUAL_TEAM_MEMBERS, TeamMember } from '../../data/teamData';
 import { fetchLiveTeam } from '../../data/supabaseClient';
-import { CHAPTER_INFO } from '../../data/chapterData';
 import {
   Shield,
   Linkedin,
@@ -11,13 +10,10 @@ import {
   Instagram,
   ChevronLeft,
   ChevronRight,
-  Radio,
   Scan,
-  Sparkles,
   Grid,
   Disc,
   ExternalLink,
-  Award,
   CheckCircle2
 } from 'lucide-react';
 
@@ -27,19 +23,17 @@ export const TeamSection: React.FC = () => {
   const [viewMode, setViewMode] = useState<'scanner' | 'grid'>('scanner');
   const [filterDomain, setFilterDomain] = useState<string>('ALL');
 
-  // Fetch live team members from Supabase, fallback to ACTUAL_TEAM_MEMBERS
   useEffect(() => {
     let isMounted = true;
     fetchLiveTeam()
       .then((data) => {
         if (isMounted && data && data.length > 0) {
-          // Sort by display_order
           const sorted = [...data].sort((a, b) => a.display_order - b.display_order);
           setMembers(sorted);
         }
       })
       .catch((err) => {
-        console.warn("Using offline curated team records:", err);
+        console.warn("Using curated team records:", err);
       });
     return () => {
       isMounted = false;
@@ -63,31 +57,35 @@ export const TeamSection: React.FC = () => {
     setActiveIdx((prev) => (prev < members.length - 1 ? prev + 1 : 0));
   };
 
-  // Domain filters
-  const domains = ['ALL', 'EXECUTIVE COUNCIL', 'CYBER SECURITY', 'RESEARCH & INNOVATION', 'CORPORATE RELATIONS', 'TECHNICAL & DEVELOPMENT', 'MEDIA & CREATIVE'];
+  // Dynamic domain filters
+  const domains = ['ALL', ...Array.from(new Set(members.map((m) => m.domain.toUpperCase())))];
   const filteredMembers = filterDomain === 'ALL'
     ? members
     : members.filter((m) => m.domain.toUpperCase() === filterDomain.toUpperCase());
 
   return (
-    <section id="crew" className="relative py-24 px-4 sm:px-6 md:px-8 border-t border-cerulean/20 bg-[#020408] overflow-hidden">
+    <section id="team" className="relative py-24 px-4 sm:px-6 md:px-8 border-t border-cerulean/20 bg-[#020408] overflow-hidden">
+      <div id="crew" className="absolute top-0 pointer-events-none" />
       {/* Background blueprint coordinate grid */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_20%,rgba(14,35,71,0.5)_0%,transparent_75%)] pointer-events-none" />
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.04)_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10 space-y-12">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-cerulean/15">
           <div>
             <div className="inline-flex items-center gap-2 font-mono text-xs text-[#38BDF8] tracking-widest uppercase mb-2">
               <span className="w-1.5 h-1.5 bg-[#38BDF8] rounded-full animate-ping" />
-              <span>07 // CREW COMMAND CONSOLE</span>
-              <span className="text-[#FF3B9D] font-bold">· 10 ACTIVE OPERATIVES</span>
+              <span>OUR TEAM</span>
+              <span className="text-[#FF3B9D] font-bold">· 16 CHAPTER LEADERSHIP MEMBERS</span>
             </div>
             <h2 className="font-heading text-4xl sm:text-5xl md:text-6xl font-black text-white uppercase tracking-wider">
-              CREW <span className="text-[#38BDF8] glow-blue">ROSTER.</span>
+              PEOPLE MAKE THE <span className="text-[#38BDF8] glow-blue">CHAPTER.</span>
             </h2>
           </div>
+          <p className="font-sans text-sm md:text-base text-chrome max-w-md leading-relaxed font-semibold">
+            One team, fifteen members. Discover the people, ideas and passion building our chapter.
+          </p>
 
           {/* View Mode Toggle: Scanner Mode vs Full Grid Mode */}
           <div className="flex items-center gap-3">
@@ -125,19 +123,17 @@ export const TeamSection: React.FC = () => {
         </div>
 
         {/* -------------------------------------------------------------
-            VIEW 1: CIRCULAR HOLOGRAPHIC SCANNER (Master Prompt Section 7)
+            VIEW 1: CIRCULAR HOLOGRAPHIC SCANNER
             ------------------------------------------------------------- */}
         {viewMode === 'scanner' && (
           <div className="space-y-10">
             {/* Main Holographic Scanner Station */}
             <div className="hud-card p-6 sm:p-10 md:p-12 rounded-3xl border-cerulean/40 shadow-hologram-blue relative overflow-hidden bg-[#030611]/90 backdrop-blur-xl">
-              {/* Radar Grid Backdrop */}
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(56,189,248,0.12)_0,transparent_65%)] pointer-events-none" />
 
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                 {/* Left (Col 1-5): Large Circular Holographic Scanner */}
                 <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
-                  {/* Outer Rings & Radar Sweep Container */}
                   <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 flex items-center justify-center">
                     {/* Ring 1: Outer Calibrated Degree Ring */}
                     <div className="absolute inset-0 rounded-full border-2 border-cerulean/30 animate-spin" style={{ animationDuration: '45s' }}>
@@ -190,18 +186,17 @@ export const TeamSection: React.FC = () => {
                       {/* HUD Scan Reticle Overlay */}
                       <div className="absolute inset-2 border border-cerulean/20 rounded-full pointer-events-none" />
                       <div className="absolute top-2 left-2 text-[9px] font-mono text-[#38BDF8] bg-black/60 px-1.5 py-0.5 rounded">
-                        SCAN // 0{activeIdx + 1}
+                        ROLE // 0{activeIdx + 1}
                       </div>
                       <div className="absolute bottom-2 right-2 text-[9px] font-mono text-[#FF3B9D] bg-black/60 px-1.5 py-0.5 rounded">
-                        BIO-VERIFIED
+                        OFFICIAL
                       </div>
                     </div>
                   </div>
 
-                  {/* Scanner Status Readout */}
                   <div className="mt-4 inline-flex items-center gap-2 font-mono text-xs text-[#38BDF8] bg-[#38BDF8]/10 border border-[#38BDF8]/30 px-3 py-1 rounded-full">
                     <Scan className="w-3.5 h-3.5 animate-pulse text-[#FF3B9D]" />
-                    <span>BIOMETRIC LOCK: ACTIVE // CLEARANCE: LEVEL 5</span>
+                    <span>VISTAS ACM LEADERSHIP // AY 2026–2027</span>
                   </div>
                 </div>
 
@@ -229,7 +224,7 @@ export const TeamSection: React.FC = () => {
 
                         <span className="px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/60 font-mono text-xs flex items-center gap-1 ml-auto">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                          <span>ACM VERIFIED</span>
+                          <span>ACM CHAPTER LEADER</span>
                         </span>
                       </div>
 
@@ -241,32 +236,22 @@ export const TeamSection: React.FC = () => {
                         <div className="w-24 h-1 bg-gradient-to-r from-[#38BDF8] via-[#FF3B9D] to-transparent mt-2 rounded" />
                       </div>
 
-                      {/* Authentic Bio Paragraph */}
+                      {/* Bio */}
                       <p className="font-sans text-base sm:text-lg text-white/90 leading-relaxed max-w-xl font-normal drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
-                        {activeMember.bio || "Active ACM Executive Council member steering chapter innovation, research initiatives, and computing technology events at Vels Institute of Science, Technology and Advanced Studies."}
+                        {activeMember.bio}
                       </p>
 
-                      {/* Operative Telemetry Matrix */}
-                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-xl bg-[#071329]/90 border border-cerulean/25">
-                        <div>
-                          <div className="font-mono text-[10px] text-[#38BDF8] tracking-widest uppercase">OPERATIVE ID</div>
-                          <div className="font-mono text-sm font-bold text-white mt-0.5">VISTAS-{String(activeIdx + 1).padStart(2, '0')}</div>
-                        </div>
-                        <div>
-                          <div className="font-mono text-[10px] text-[#38BDF8] tracking-widest uppercase">AFFILIATION</div>
-                          <div className="font-mono text-sm font-bold text-white mt-0.5">ACM INDIA</div>
-                        </div>
-                        <div>
-                          <div className="font-mono text-[10px] text-[#38BDF8] tracking-widest uppercase">STATUS</div>
-                          <div className="font-mono text-sm font-bold text-emerald-400 mt-0.5">ONLINE // ACT</div>
-                        </div>
-                        <div>
-                          <div className="font-mono text-[10px] text-[#38BDF8] tracking-widest uppercase">CLEARANCE</div>
-                          <div className="font-mono text-sm font-bold text-[#FF3B9D] mt-0.5">LEVEL 5</div>
-                        </div>
+                      {/* Official Assigned Responsibilities */}
+                      <div className="p-4 rounded-xl bg-[#071329] border border-cerulean/30 space-y-1.5">
+                        <span className="font-mono text-xs text-cerulean uppercase tracking-wider block font-bold">
+                          OFFICIAL RESPONSIBILITIES:
+                        </span>
+                        <p className="font-sans text-sm text-chrome/90 leading-relaxed">
+                          {activeMember.responsibilities}
+                        </p>
                       </div>
 
-                      {/* Social & Contact Actions */}
+                      {/* Navigation & Actions */}
                       <div className="flex flex-wrap items-center gap-3 pt-2">
                         {activeMember.linkedin_url && (
                           <a
@@ -274,7 +259,7 @@ export const TeamSection: React.FC = () => {
                             target="_blank"
                             rel="noopener noreferrer"
                             onMouseEnter={() => soundEngine.playHover()}
-                            className="px-4 py-2.5 rounded-lg border border-[#38BDF8]/60 bg-[#38BDF8]/10 hover:bg-[#38BDF8]/20 text-[#38BDF8] font-mono text-xs font-bold tracking-wider flex items-center gap-2 transition-colors shadow-[0_0_12px_rgba(56,189,248,0.25)]"
+                            className="px-4 py-2 rounded-lg border border-[#38BDF8]/60 bg-[#38BDF8]/10 hover:bg-[#38BDF8]/20 text-[#38BDF8] font-mono text-xs font-bold tracking-wider flex items-center gap-2 transition-colors"
                           >
                             <Linkedin className="w-4 h-4" />
                             <span>LINKEDIN</span>
@@ -288,7 +273,7 @@ export const TeamSection: React.FC = () => {
                             target="_blank"
                             rel="noopener noreferrer"
                             onMouseEnter={() => soundEngine.playHover()}
-                            className="px-4 py-2.5 rounded-lg border border-white/20 bg-white/5 hover:bg-white/10 text-white font-mono text-xs font-bold tracking-wider flex items-center gap-2 transition-colors"
+                            className="px-4 py-2 rounded-lg border border-white/20 bg-white/5 hover:bg-white/10 text-white font-mono text-xs font-bold tracking-wider flex items-center gap-2 transition-colors"
                           >
                             <Github className="w-4 h-4" />
                             <span>GITHUB</span>
@@ -302,7 +287,7 @@ export const TeamSection: React.FC = () => {
                             target="_blank"
                             rel="noopener noreferrer"
                             onMouseEnter={() => soundEngine.playHover()}
-                            className="px-4 py-2.5 rounded-lg border border-[#FF3B9D]/50 bg-[#FF3B9D]/10 hover:bg-[#FF3B9D]/20 text-[#FF3B9D] font-mono text-xs font-bold tracking-wider flex items-center gap-2 transition-colors shadow-[0_0_12px_rgba(255,59,157,0.25)]"
+                            className="px-4 py-2 rounded-lg border border-[#FF3B9D]/50 bg-[#FF3B9D]/10 hover:bg-[#FF3B9D]/20 text-[#FF3B9D] font-mono text-xs font-bold tracking-wider flex items-center gap-2 transition-colors"
                           >
                             <Instagram className="w-4 h-4" />
                             <span>INSTAGRAM</span>
@@ -316,7 +301,7 @@ export const TeamSection: React.FC = () => {
                             onClick={handlePrev}
                             onMouseEnter={() => soundEngine.playHover()}
                             className="w-10 h-10 rounded-lg border border-cerulean/40 hover:border-cerulean bg-white/5 text-cerulean flex items-center justify-center transition-colors cursor-pointer"
-                            aria-label="Previous Operative"
+                            aria-label="Previous Member"
                           >
                             <ChevronLeft className="w-5 h-5" />
                           </button>
@@ -327,7 +312,7 @@ export const TeamSection: React.FC = () => {
                             onClick={handleNext}
                             onMouseEnter={() => soundEngine.playHover()}
                             className="w-10 h-10 rounded-lg border border-cerulean/40 hover:border-cerulean bg-white/5 text-cerulean flex items-center justify-center transition-colors cursor-pointer"
-                            aria-label="Next Operative"
+                            aria-label="Next Member"
                           >
                             <ChevronRight className="w-5 h-5" />
                           </button>
@@ -339,18 +324,18 @@ export const TeamSection: React.FC = () => {
               </div>
             </div>
 
-            {/* Crew Selector Carousel (All 10 Members) */}
+            {/* Crew Selector Carousel (All 16 Members) */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-xs text-cerulean tracking-widest uppercase">
-                  SELECT OPERATIVE // ORBITAL ROSTER
+                <span className="font-mono text-xs text-cerulean tracking-widest uppercase font-bold">
+                  SELECT LEADER // 16 OFFICIAL POSITIONS
                 </span>
                 <span className="font-mono text-[11px] text-[#94a3b8]">
-                  Click to scan operative telemetry
+                  Click to inspect responsibilities
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-8 gap-2.5">
                 {members.map((member, i) => {
                   const isSelected = i === activeIdx;
                   return (
@@ -358,18 +343,17 @@ export const TeamSection: React.FC = () => {
                       key={member.id}
                       onClick={() => handleSelectMember(i)}
                       onMouseEnter={() => soundEngine.playHover()}
-                      className={`p-3 rounded-xl border text-left transition-all duration-200 cursor-pointer flex items-center gap-3 relative overflow-hidden ${
+                      className={`p-2.5 rounded-xl border text-left transition-all duration-200 cursor-pointer flex items-center gap-2.5 relative overflow-hidden ${
                         isSelected
                           ? 'border-[#38BDF8] bg-[#38BDF8]/15 shadow-[0_0_20px_rgba(56,189,248,0.35)]'
                           : 'border-[#1b2a47] bg-[#071329]/80 hover:border-cerulean/60 hover:bg-[#071329]'
                       }`}
                     >
-                      {/* Active indicator dot */}
                       {isSelected && (
-                        <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#FF3B9D] shadow-[0_0_8px_#FF3B9D]" />
+                        <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#FF3B9D] shadow-[0_0_8px_#FF3B9D]" />
                       )}
 
-                      <div className="w-11 h-11 rounded-full overflow-hidden border border-cerulean/50 flex-shrink-0 bg-black">
+                      <div className="w-10 h-10 rounded-full overflow-hidden border border-cerulean/50 flex-shrink-0 bg-black">
                         <img
                           src={member.image_url}
                           alt={member.name}
@@ -381,7 +365,7 @@ export const TeamSection: React.FC = () => {
                         <div className="font-heading text-xs font-bold text-white truncate uppercase">
                           {member.name}
                         </div>
-                        <div className="font-mono text-[10px] text-[#38BDF8] truncate uppercase">
+                        <div className="font-mono text-[9px] text-[#38BDF8] truncate uppercase">
                           {member.designation}
                         </div>
                       </div>
@@ -394,7 +378,7 @@ export const TeamSection: React.FC = () => {
         )}
 
         {/* -------------------------------------------------------------
-            VIEW 2: ALL OPERATIVES GRID VIEW (10 Real Members)
+            VIEW 2: ALL OPERATIVES GRID VIEW (16 Members)
             ------------------------------------------------------------- */}
         {viewMode === 'grid' && (
           <div className="space-y-6">
@@ -418,7 +402,7 @@ export const TeamSection: React.FC = () => {
               ))}
             </div>
 
-            {/* Grid of All 10 Authentic Team Members */}
+            {/* Grid of All 16 Members */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredMembers.map((member) => (
                 <motion.div
@@ -428,14 +412,10 @@ export const TeamSection: React.FC = () => {
                   transition={{ duration: 0.3 }}
                   className="hud-card p-6 rounded-2xl border-cerulean/30 hover:border-cerulean/70 transition-all duration-300 flex flex-col justify-between group bg-[#030611]/90 backdrop-blur-md relative overflow-hidden"
                 >
-                  {/* Top Holographic Corner Accents */}
-                  <div className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-cerulean/50" />
-                  <div className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-cerulean/50" />
-
                   <div>
                     {/* Header: Photo + Badges */}
                     <div className="flex items-start gap-4 mb-4">
-                      <div className="w-20 h-20 rounded-2xl overflow-hidden border-2 border-cerulean/50 flex-shrink-0 bg-[#071329] group-hover:border-rose transition-colors shadow-[0_0_15px_rgba(56,189,248,0.3)]">
+                      <div className="w-18 h-18 rounded-2xl overflow-hidden border-2 border-cerulean/50 flex-shrink-0 bg-[#071329] group-hover:border-rose transition-colors shadow-[0_0_15px_rgba(56,189,248,0.3)]">
                         <img
                           src={member.image_url}
                           alt={member.name}
@@ -444,7 +424,7 @@ export const TeamSection: React.FC = () => {
                       </div>
 
                       <div className="min-w-0 flex-1">
-                        <span className="inline-block px-2 py-0.5 rounded bg-rose/15 border border-rose/40 text-rose font-mono text-[10px] font-bold tracking-wider uppercase mb-1.5">
+                        <span className="inline-block px-2 py-0.5 rounded bg-rose/15 border border-rose/40 text-rose font-mono text-[10px] font-bold tracking-wider uppercase mb-1">
                           {member.designation}
                         </span>
                         <h4 className="font-heading text-xl font-bold text-white uppercase tracking-wide truncate group-hover:text-cerulean transition-colors">
@@ -456,16 +436,16 @@ export const TeamSection: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Bio Description */}
-                    <p className="font-sans text-xs sm:text-sm text-chrome/90 leading-relaxed mb-6 line-clamp-3">
-                      {member.bio || "Active ACM Executive Council member steering chapter innovation, research initiatives, and computing technology events at VISTAS."}
+                    {/* Official Responsibilities */}
+                    <p className="font-sans text-xs sm:text-sm text-chrome/90 leading-relaxed mb-6">
+                      {member.responsibilities}
                     </p>
                   </div>
 
-                  {/* Footer: Social Actions */}
+                  {/* Footer */}
                   <div className="flex items-center justify-between pt-4 border-t border-white/10">
                     <span className="font-mono text-[10px] text-cerulean tracking-widest uppercase">
-                      VISTAS // ACM CREW
+                      VISTAS // ACM LEADERSHIP
                     </span>
 
                     <div className="flex items-center gap-2">

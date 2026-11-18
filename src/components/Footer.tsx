@@ -1,7 +1,7 @@
 import React from 'react';
 import { soundEngine } from '../audio/soundEngine';
 import { CHAPTER_INFO } from '../data/chapterData';
-import { Instagram, ArrowUp, Terminal } from 'lucide-react';
+import { Instagram, ArrowUp } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (sectionId: string) => void;
@@ -12,6 +12,19 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
     soundEngine.playClick();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const footerLinks = [
+    { id: 'mission', label: 'Mission' },
+    { id: 'profile', label: 'Profile' },
+    { id: 'vision', label: 'Vision' },
+    { id: 'domains', label: 'Galaxy' },
+    { id: 'events', label: 'Launches' },
+    { id: 'projects', label: 'Builds' },
+    { id: 'governance', label: 'Governance' },
+    { id: 'team', label: 'Crew' },
+    { id: 'gallery', label: 'Gallery' },
+    { id: 'contact', label: 'Contact' },
+  ];
 
   return (
     <footer className="relative border-t border-cerulean/20 bg-jet pt-16 pb-12 px-4 md:px-8 text-chrome overflow-hidden">
@@ -32,17 +45,17 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   VISTAS ACM
                 </b>
                 <small className="font-mono text-[9px] text-cerulean tracking-[0.2em] uppercase mt-0.5">
-                  STUDENT CHAPTER
+                  Student Chapter
                 </small>
               </div>
             </div>
 
             <p className="font-sans text-xs md:text-sm text-chrome/80 leading-relaxed max-w-sm">
-              Official student chapter of the Association for Computing Machinery at Vels Institute of Science, Technology and Advanced Studies (VISTAS), Chennai.
+              Department of Computer Science and Engineering, School of Engineering, Vels Institute of Science, Technology and Advanced Studies (VISTAS).
             </p>
 
-            <div className="font-mono text-xs text-rose tracking-wider">
-              BUILD · LEAD · CREATE · CONNECT
+            <div className="font-mono text-xs text-rose tracking-wider font-bold">
+              BUILD / LEAD / CREATE / CONNECT.
             </div>
           </div>
 
@@ -52,16 +65,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               CHAPTER NAVIGATION
             </span>
             <div className="grid grid-cols-2 gap-2 text-xs font-sans font-medium">
-              {[
-                { id: 'about', label: 'About' },
-                { id: 'domains', label: 'Domains' },
-                { id: 'events', label: 'Events' },
-                { id: 'projects', label: 'Projects' },
-                { id: 'governance', label: 'Governance' },
-                { id: 'team', label: 'Team' },
-                { id: 'gallery', label: 'Gallery' },
-                { id: 'contact', label: 'Contact' },
-              ].map((item) => (
+              {footerLinks.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => {
@@ -73,14 +77,23 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   {item.label}
                 </button>
               ))}
+              <a
+                href={CHAPTER_INFO.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-left text-chrome/70 hover:text-rose transition-colors py-1 flex items-center gap-1.5"
+              >
+                <span>Instagram</span>
+                <span className="text-[10px]">↗</span>
+              </a>
             </div>
           </div>
 
-          {/* Telemetry & Social Actions */}
+          {/* Communication Links & Back to Top */}
           <div className="md:col-span-3 flex flex-col justify-between">
             <div>
               <span className="font-mono text-xs text-rose tracking-widest uppercase block mb-3 font-semibold">
-                COMMUNICATION LINKS
+                COMMUNICATION
               </span>
               <div className="space-y-2 text-xs font-mono">
                 <a
@@ -90,15 +103,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   className="flex items-center gap-2 text-chrome hover:text-rose transition-colors"
                 >
                   <Instagram className="w-4 h-4 text-rose" />
-                  <span>Instagram @vistas_acm ↗</span>
+                  <span>@vistas_acm ↗</span>
                 </a>
-                <a
-                  href={`mailto:${CHAPTER_INFO.facultyCoordinatorEmail}`}
-                  className="flex items-center gap-2 text-chrome hover:text-cerulean transition-colors"
-                >
-                  <Terminal className="w-4 h-4 text-cerulean" />
-                  <span className="truncate">{CHAPTER_INFO.facultyCoordinatorEmail}</span>
-                </a>
+                <div className="text-[11px] text-chrome/60 pt-1">
+                  ACM Chapter Group ID 199704
+                </div>
               </div>
             </div>
 
@@ -107,7 +116,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <button
                 onClick={scrollToTop}
                 onMouseEnter={() => soundEngine.playHover()}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-cerulean/30 hover:border-cerulean text-xs font-mono text-cerulean transition-colors cursor-pointer"
+                className="flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-cerulean/30 hover:border-cerulean text-xs font-mono text-cerulean transition-colors cursor-pointer"
               >
                 <ArrowUp className="w-3.5 h-3.5" />
                 <span>RETURN TO TOP</span>
@@ -119,12 +128,12 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         {/* Bottom Attribution */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] font-mono text-chrome/50 gap-4">
           <div>
-            © {new Date().getFullYear()} VISTAS ACM STUDENT CHAPTER · CHARTERED MAY 19, 2025.
+            © VISTAS ACM · Build / Lead / Create / Connect
           </div>
-          <div className="flex items-center gap-4">
-            <span>ACM INDIA COUNCIL</span>
+          <div className="flex items-center gap-2">
+            <span>Department of Computer Science and Engineering</span>
             <span>·</span>
-            <span>VELS UNIVERSITY (VISTAS)</span>
+            <span>School of Engineering, VISTAS</span>
           </div>
         </div>
       </div>

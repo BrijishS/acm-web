@@ -1,351 +1,598 @@
 import { Domain, EventItem, ProjectItem, GalleryItem } from '../types';
 
+// ============================================================================
+// 1. OFFICIAL CHAPTER IDENTITY (Section 1 & 2)
+// ============================================================================
 export const CHAPTER_INFO = {
   name: "VISTAS ACM",
   fullName: "VISTAS ACM Student Chapter",
   organization: "Association for Computing Machinery (ACM)",
   institution: "Vels Institute of Science, Technology and Advanced Studies (VISTAS)",
-  location: "Pallavaram, Chennai, Tamil Nadu 600117, India",
-  charterDate: "May 19, 2025",
-  chapterId: "VISTAS-ACM-STUDENT",
-  headline: "ENGINEERING THE FUTURE. INNOVATING TOGETHER.",
-  subheadline: "Explore technology, build solutions, collaborate with innovators and shape the future through VISTAS ACM.",
-  lead: "A community for curious minds, practical ideas, and better things built together. Chartered under the world's largest educational and scientific computing society.",
+  school: "School of Engineering",
+  department: "Department of Computer Science and Engineering",
+  professionalSociety: "Association for Computing Machinery (ACM)",
+  groupId: "199704",
+  academicYear: "2026–2027",
+  chapterId: "199704",
+  tagline: "Build. Lead. Create.",
+  headline: "VISTAS ACM Student Chapter",
+  subheadline: "VISTAS ACM · Ideas into impact",
+  lead: "VISTAS ACM Student Chapter — a community for curious minds, practical ideas, and better things built together. Build. Lead. Create. School of Engineering · Department of Computer Science and Engineering · Academic Year 2026–2027 · ACM Chapter Group ID 199704.",
+  intro: "VISTAS ACM is a place to connect with people who enjoy asking questions and building useful things. We make room for learning at every level and for ideas to grow through collaboration.",
+  location: "Department of Computer Science and Engineering, School of Engineering, Vels Institute of Science, Technology and Advanced Studies (VISTAS), Pallavaram, Chennai, Tamil Nadu 600117, India",
+  campusLocationStatus: "To be confirmed",
+  email: "To be confirmed",
+  facultyCoordinatorEmail: "nudayakumar.se@vistas.ac.in",
   instagramUrl: "https://www.instagram.com/vistas_acm/",
   instagramHandle: "@vistas_acm",
-  facultyCoordinatorEmail: "nudayakumar.se@vistas.ac.in",
+  facultyAdvisor: {
+    name: "Mr. N. Udayakumar",
+    designation: "Assistant Professor, Department of Computer Science and Engineering",
+    responsibilities: "Provides overall guidance and mentoring, coordinates with the department and ACM, reviews chapter activities, and monitors documentation and progress."
+  },
   logoUrl: "/assets/vistas-acm-blue-logo.jpg",
   introVideoUrl: "/assets/vistas-intro-loader.mp4"
 };
 
+// ============================================================================
+// 2. PURPOSE AND OBJECTIVES (Section 5)
+// Title: Bridging Academic Learning and Professional Computing Practice.
+// ============================================================================
+export const CHAPTER_OBJECTIVES = [
+  "Promoting awareness of emerging technologies and developments in computing.",
+  "Encouraging participation in technical workshops, seminars, hackathons and competitions.",
+  "Providing opportunities for interaction with industry experts, researchers and academic professionals.",
+  "Developing student leadership, teamwork, communication and organizational skills.",
+  "Encouraging research, innovation and project-based learning.",
+  "Promoting ACM membership and participation in professional computing communities.",
+  "Supporting lifelong learning and continuous professional development."
+];
+
+// ============================================================================
+// 3. MEMBERSHIP INFORMATION (Section 6 & 10)
+// ============================================================================
+export const MEMBERSHIP_DATA = {
+  activeMembersInInterface: 1598,
+  activeAcmMembers: 9,
+  originalMembersInAdmin: 2935,
+  status: "In good standing · confirmed by the ACM Chapter Program Manager, November 2026 · Status active as of 2 October 2026.",
+  documentation: "The chapter maintains membership information, student office-bearer details, activity reports, participation records, photographs and feedback documentation."
+};
+
+// ============================================================================
+// 4. VISION AND MISSION (Section 7 & 3)
+// ============================================================================
+export const VISION_MISSION = {
+  visionTitle: "Competent, ethical, collaborative graduates.",
+  visionText: "To nurture technically competent, ethical, collaborative and professionally responsible computing graduates through active engagement with a recognized professional society.",
+  missionTitle: "Enrichment, networking and leadership.",
+  missionText: "To provide students with opportunities for technical enrichment, professional networking, leadership, teamwork, communication and continuous learning through chapter activities."
+};
+
+// ============================================================================
+// 5. ABOUT US (Curiosity makes. / Learn it. Make it real.)
+// ============================================================================
+export const ABOUT_DATA = {
+  title: "Curiosity makes.",
+  lead: "A student community where computing is explored through shared learning, ambitious ideas, and hands-on making.",
+  subheading: "Learn it. Make it real.",
+  pillars: [
+    {
+      id: "explore",
+      title: "Explore",
+      description: "Discover a new topic, ask a better question, and learn alongside your peers.",
+      icon: "Compass"
+    },
+    {
+      id: "make",
+      title: "Make",
+      description: "Turn a thought into a prototype, a project, or a shared experience.",
+      icon: "Code"
+    },
+    {
+      id: "share",
+      title: "Share",
+      description: "Exchange what you know and make the community stronger for the next person.",
+      icon: "Share2"
+    }
+  ],
+  ideasHeading: "Ideas into impact.",
+  coreValues: ["Discover", "Experiment", "Collaborate", "Contribute"],
+  mission: "Mission: Make learning active.",
+  vision: "Vision: Make ideas matter.",
+  tenet: "Build, Lead, Create and Connect."
+};
+
+// ============================================================================
+// 6. TECHNICAL DOMAINS (Section 8 & 4)
+// 5 Official Domains with Detailed Sub-Technologies and Activities
+// ============================================================================
 export const DOMAINS_DATA: Domain[] = [
   {
     id: "ai-ml",
     code: "DOM-01",
-    title: "Artificial Intelligence & ML",
-    highlight: "Autonomous Cognition",
+    title: "AI & Machine Learning",
+    highlight: "Intelligent Systems",
     category: "INTELLIGENT SYSTEMS",
     symbol: "✳",
-    description: "Architecting neural network pipelines, deep predictive computation, computer vision telemetry, and agentic LLM systems designed to solve real-world engineering bottlenecks.",
-    tags: ["Machine Learning", "Neural Architectures", "Computer Vision", "Agentic AI", "NLP"],
+    description: "Intelligent systems and data-driven ideas.",
+    tags: ["Machine Learning", "Generative AI", "Neural Networks"],
+    technologies: ["Machine Learning", "Generative AI", "Neural Networks"],
+    activities: [
+      "Machine learning model design and predictive training",
+      "Generative AI experimentation and prompt workflows",
+      "Neural network exploration and deep learning workshops"
+    ],
     specs: [
-      { label: "Core Focus", value: "Neural Inference & Agents" },
-      { label: "Hardware Stack", value: "CUDA / Tensor Cores" },
-      { label: "Lab Status", value: "Active Telemetry" }
+      { label: "Domain", value: "AI & Machine Learning" },
+      { label: "Technologies", value: "Machine Learning, Generative AI, Neural Networks" },
+      { label: "Focus", value: "Intelligent Systems & Data-Driven Ideas" }
     ],
     hologramColor: "cerulean"
   },
   {
-    id: "web-systems",
+    id: "web-app",
     code: "DOM-02",
-    title: "Web & Full-Stack Systems",
-    highlight: "Distributed Interfaces",
-    category: "DIGITAL EXPERIENCES",
+    title: "Web & App Development",
+    highlight: "Thoughtful Engineering",
+    category: "SOFTWARE ENGINEERING",
     symbol: "</>",
-    description: "Developing scalable, high-concurrency cloud-native web architectures, reactive micro-frontends, and cinematic WebGL interfaces that elevate user experiences.",
-    tags: ["React / Next.js", "TypeScript", "Three.js", "Cloud Backends", "Distributed APIs"],
+    description: "Design, code and thoughtful engineering.",
+    tags: ["Frontend", "Backend", "Mobile Apps"],
+    technologies: ["Frontend", "Backend", "Mobile Apps"],
+    activities: [
+      "Modern reactive frontend interfaces and design systems",
+      "Scalable backend architecture, REST APIs and microservices",
+      "Native and cross-platform mobile application engineering"
+    ],
     specs: [
-      { label: "Latency Benchmark", value: "< 25ms" },
-      { label: "Architecture", value: "Micro-Frontend Edge" },
-      { label: "Lab Status", value: "Deploying V2" }
+      { label: "Domain", value: "Web & App Development" },
+      { label: "Technologies", value: "Frontend, Backend, Mobile Apps" },
+      { label: "Focus", value: "Design, Code & Thoughtful Engineering" }
     ],
     hologramColor: "rose"
   },
   {
     id: "cybersecurity",
     code: "DOM-03",
-    title: "Cybersecurity & Defense",
-    highlight: "Cryptographic Shield",
+    title: "Cybersecurity",
+    highlight: "Digital Trust",
     category: "SYSTEMS SECURITY",
     symbol: "⌁",
-    description: "Investigating zero-trust security topologies, protocol verification, defensive vulnerability research, and ethical red/blue team defensive exercises.",
-    tags: ["Network Forensics", "Cryptography", "Penetration Auditing", "Zero-Trust", "Reverse Engineering"],
+    description: "Digital trust and safer technology.",
+    tags: ["Network Security", "Ethical Hacking", "Digital Forensics"],
+    technologies: ["Network Security", "Ethical Hacking", "Digital Forensics"],
+    activities: [
+      "Defensive network security audits and protocol analysis",
+      "Ethical hacking drills, capture-the-flag competitions and security review",
+      "Digital forensics investigation and threat analysis"
+    ],
     specs: [
-      { label: "Threat Level", value: "Zero-Day Monitoring" },
-      { label: "Encryption", value: "Post-Quantum Standards" },
-      { label: "Lab Status", value: "Shield Active" }
+      { label: "Domain", value: "Cybersecurity" },
+      { label: "Technologies", value: "Network Security, Ethical Hacking, Digital Forensics" },
+      { label: "Focus", value: "Digital Trust & Safer Technology" }
     ],
     hologramColor: "cerulean"
   },
   {
     id: "data-cloud",
     code: "DOM-04",
-    title: "Data Science & Cloud",
-    highlight: "Planetary Scale",
+    title: "Data & Cloud",
+    highlight: "Organised & Scaled",
     category: "INFORMATION SYSTEMS",
     symbol: "▥",
-    description: "Transforming high-throughput unstructured data lakes into actionable computational intelligence through scalable container orchestration and distributed streaming pipelines.",
-    tags: ["Data Pipelines", "Kubernetes", "Snowflake / BigQuery", "Vector Stores", "Cloud Ops"],
+    description: "Information organised and scaled.",
+    tags: ["Data Analytics", "Cloud Computing", "Databases"],
+    technologies: ["Data Analytics", "Cloud Computing", "Databases"],
+    activities: [
+      "Data analytics pipelines and pattern visualisations",
+      "Cloud computing deployment, containerization and DevOps",
+      "Relational and distributed database architecture design"
+    ],
     specs: [
-      { label: "Data Throughput", value: "Real-Time Streaming" },
-      { label: "Fault Tolerance", value: "99.99% Multi-Region" },
-      { label: "Lab Status", value: "Syncing Nodes" }
+      { label: "Domain", value: "Data & Cloud" },
+      { label: "Technologies", value: "Data Analytics, Cloud Computing, Databases" },
+      { label: "Focus", value: "Information Organised and Scaled" }
     ],
     hologramColor: "cerulean"
   },
   {
-    id: "robotics-iot",
+    id: "emerging-tech",
     code: "DOM-05",
-    title: "Robotics & Hardware Labs",
-    highlight: "Physical Computing",
-    category: "AUTONOMOUS MACHINES",
-    symbol: "⚙",
-    description: "Bridging code with physical hardware through kinematic robotic arm kinematics, embedded microcontroller programming, edge micro-sensors, and autonomous rovers.",
-    tags: ["ROS 2", "Kinematic Servos", "ESP32 / ARM Cortex", "Lidar SLAM", "Embedded C++"],
-    specs: [
-      { label: "Control Loop", value: "1000 Hz Real-Time" },
-      { label: "Sensory Array", value: "Lidar + IMU + Vision" },
-      { label: "Lab Status", value: "Servos Calibrated" }
-    ],
-    hologramColor: "rose"
-  },
-  {
-    id: "mobile-ecosystem",
-    code: "DOM-06",
-    title: "App & Edge Ecosystems",
-    highlight: "Ubiquitous Access",
-    category: "MOBILE INTELLIGENCE",
-    symbol: "📱",
-    description: "Designing performant mobile applications engineered with offline-first synchronization, low battery telemetry, native device hardware utilization, and adaptive UI.",
-    tags: ["Flutter / React Native", "Kotlin", "Swift", "Offline First", "BLE Sensors"],
-    specs: [
-      { label: "Frame Rate", value: "120 FPS Fluidity" },
-      { label: "Footprint", value: "Optimized Binary" },
-      { label: "Lab Status", value: "Live Builds" }
-    ],
-    hologramColor: "cerulean"
-  },
-  {
-    id: "iot-embedded",
-    code: "DOM-07",
-    title: "IoT & Smart Telemetry",
-    highlight: "Connected Sensors",
-    category: "EDGE TELEMETRY",
-    symbol: "📡",
-    description: "Building resilient wireless mesh networks, low-power industrial sensor arrays, and remote environmental monitoring frameworks powered by MQTT and LoRa protocols.",
-    tags: ["LoRaWAN", "MQTT Broker", "Edge Computing", "Hardware PCB", "Sensor Meshes"],
-    specs: [
-      { label: "Range Coverage", value: "Campus-Wide Mesh" },
-      { label: "Power Efficiency", value: "Ultra-Low Sleep" },
-      { label: "Lab Status", value: "Telemetry Online" }
-    ],
-    hologramColor: "cerulean"
-  },
-  {
-    id: "research-innovation",
-    code: "DOM-08",
-    title: "Research & Innovation",
-    highlight: "Frontier Computing",
-    category: "THEORY & SCHOLARSHIP",
+    title: "Emerging Tech",
+    highlight: "New Tools",
+    category: "FRONTIER COMPUTING",
     symbol: "⌘",
-    description: "Fostering academic paper publication, algorithmic optimization, quantum computing simulations, and patenting novel computational paradigms through ACM Digital Library.",
-    tags: ["ACM Digital Library", "Algorithmic Rigor", "Quantum Simulation", "Peer Review", "Tech Papers"],
+    description: "New tools and where they lead.",
+    tags: ["IoT", "AR/VR", "Blockchain"],
+    technologies: ["IoT", "AR/VR", "Blockchain"],
+    activities: [
+      "Internet of Things (IoT) sensors and embedded hardware",
+      "Immersive AR/VR spatial environments and user interaction",
+      "Decentralized ledger protocols and blockchain concepts"
+    ],
     specs: [
-      { label: "Academic Peer", value: "ACM India Council" },
-      { label: "Focus", value: "Next-Gen Computing" },
-      { label: "Lab Status", value: "Papers In Review" }
+      { label: "Domain", value: "Emerging Tech" },
+      { label: "Technologies", value: "IoT, AR/VR, Blockchain" },
+      { label: "Focus", value: "New Tools & Where They Lead" }
     ],
     hologramColor: "rose"
   }
 ];
 
+// ============================================================================
+// 7. CHAPTER ACTIVITIES – WHAT WE DO (Section 9 & 5)
+// The 8 official activities
+// ============================================================================
+export const CHAPTER_ACTIVITIES = [
+  {
+    id: "act-01",
+    title: "Technical Workshops",
+    description: "Technical workshops and hands-on training programmes."
+  },
+  {
+    id: "act-02",
+    title: "Guest Lectures",
+    description: "Guest lectures and expert interaction sessions."
+  },
+  {
+    id: "act-03",
+    title: "Seminars",
+    description: "Seminars on emerging computing technologies."
+  },
+  {
+    id: "act-04",
+    title: "Hackathons & Contests",
+    description: "Hackathons and coding competitions."
+  },
+  {
+    id: "act-05",
+    title: "Research & Innovation",
+    description: "Research and innovation activities."
+  },
+  {
+    id: "act-06",
+    title: "Projects & Demos",
+    description: "Project development and technical demonstrations."
+  },
+  {
+    id: "act-07",
+    title: "Industry Interaction",
+    description: "Industry interaction and career guidance programmes."
+  },
+  {
+    id: "act-08",
+    title: "Training",
+    description: "Training and professional development initiatives."
+  }
+];
+
+// ============================================================================
+// 8. UPCOMING EVENTS (Section 10 & 6)
+// The 6 events
+// ============================================================================
 export const EVENTS_DATA: EventItem[] = [
   {
     id: "evt-01",
-    title: "VISTAS ACM HACK-VORTEX: 24-Hour Innovation Hackathon",
-    slug: "hack-vortex-2026",
-    description: "Flagship 24-hour non-stop rapid prototyping marathon bringing together multi-disciplinary student engineers to build solutions for real-world civic, AI, and sustainability challenges.",
+    title: "Hack the Vel",
+    slug: "hack-the-vel",
+    description: "24-hour hackathon. Bring your ideas, form a team, and build working solutions overnight.",
     event_date: "2026-12-18T09:00:00Z",
-    venue: "Main Innovation Center & Computing Labs, VISTAS Campus",
+    venue: "School of Engineering, VISTAS",
     category: "Hackathon",
     status: "upcoming",
-    attendeesEstimate: "250+ Innovators",
+    attendeesEstimate: "Chapter Hackathon",
     featured: true,
     registration_url: "https://www.instagram.com/vistas_acm/"
   },
   {
     id: "evt-02",
-    title: "Autonomous Agents & LLM Fine-Tuning Bootcamp",
-    slug: "autonomous-agents-bootcamp",
-    description: "Hands-on technical workshop dissecting modern tool-calling agent architectures, local model quantization on edge hardware, and autonomous decision pipelines.",
-    event_date: "2026-11-28T10:00:00Z",
-    venue: "School of Engineering Lab 402, VISTAS",
-    category: "Workshop",
+    title: "Cipher Quest",
+    slug: "cipher-quest",
+    description: "Cryptic hunt testing logic, problem-solving, and cryptographic puzzle solving.",
+    event_date: "2026-11-20T10:00:00Z",
+    venue: "Department of Computer Science and Engineering, VISTAS",
+    category: "Competition",
     status: "upcoming",
-    attendeesEstimate: "80 Engineers",
+    attendeesEstimate: "Cryptic Hunt",
     featured: false,
     registration_url: "https://www.instagram.com/vistas_acm/"
   },
   {
     id: "evt-03",
-    title: "Cyber Defense: Defensive Architecture & Threat Hunting",
-    slug: "cyber-defense-symposium",
-    description: "Deep dive into incident response telemetry, packet level inspection, post-quantum ciphers, and simulated penetration testing scenarios.",
-    event_date: "2026-10-14T11:00:00Z",
-    venue: "VISTAS Auditorium Hall B",
-    category: "Seminar",
-    status: "completed",
-    attendeesEstimate: "140 Students",
+    title: "Byte Brawl",
+    slug: "byte-brawl",
+    description: "Competitive coding sprint with algorithmic problem solving under time pressure.",
+    event_date: "2026-11-28T14:00:00Z",
+    venue: "Department of Computer Science and Engineering, VISTAS",
+    category: "Competition",
+    status: "upcoming",
+    attendeesEstimate: "Coding Contest",
     featured: false,
     registration_url: "https://www.instagram.com/vistas_acm/"
   },
   {
     id: "evt-04",
-    title: "Robotics Hardware Interfacing & ROS2 Hands-on",
-    slug: "ros2-robotics-hands-on",
-    description: "Physical computing workshop covering micro-ROS telemetry, motor encoder calibration, and multi-sensor fusion for robotic exploration rovers.",
-    event_date: "2026-09-22T09:30:00Z",
-    venue: "Mechatronics & Robotics Lab, VISTAS",
+    title: "Neural Nights",
+    slug: "neural-nights",
+    description: "Hands-on AI workshop exploring model architecture, prompt engineering, and neural pipelines.",
+    event_date: "2026-12-05T17:00:00Z",
+    venue: "School of Engineering, VISTAS",
     category: "Workshop",
-    status: "completed",
-    attendeesEstimate: "65 Attendees",
+    status: "upcoming",
+    attendeesEstimate: "AI Workshop",
     featured: false,
     registration_url: "https://www.instagram.com/vistas_acm/"
   },
   {
     id: "evt-05",
-    title: "ACM Chapter Inaugural Symposium: Horizons of Computing",
-    slug: "chapter-inaugural-symposium",
-    description: "Official inaugural assembly celebrating the charter of the VISTAS ACM Student Chapter with keynote addresses from industry architects and senior ACM leaders.",
-    event_date: "2025-05-19T10:00:00Z",
-    venue: "VISTAS Central Auditorium",
+    title: "Pixel Forge",
+    slug: "pixel-forge",
+    description: "Design sprint and frontend development workshop on modern UI/UX and reactive web apps.",
+    event_date: "2026-12-12T10:30:00Z",
+    venue: "School of Engineering, VISTAS",
+    category: "Workshop",
+    status: "upcoming",
+    attendeesEstimate: "Design Sprint",
+    featured: false,
+    registration_url: "https://www.instagram.com/vistas_acm/"
+  },
+  {
+    id: "evt-06",
+    title: "Orbit Outreach",
+    slug: "orbit-outreach",
+    description: "School and community programme introducing foundational computing, code, and digital tools.",
+    event_date: "2026-12-22T09:00:00Z",
+    venue: "School of Engineering, VISTAS",
     category: "Tech Talk",
-    status: "completed",
-    attendeesEstimate: "300+ Students & Faculty",
+    status: "upcoming",
+    attendeesEstimate: "School Outreach",
     featured: false,
     registration_url: "https://www.instagram.com/vistas_acm/"
   }
 ];
 
+// ============================================================================
+// 9. STUDENT PROJECTS / BUILDS (Section 11 & 7)
+// Title: What We've Built / Made to matter.
+// ============================================================================
 export const PROJECTS_DATA: ProjectItem[] = [
   {
-    id: "proj-01",
-    title: "Aegis-Vision: Real-Time Edge Video Telemetry",
-    category: "Artificial Intelligence",
-    description: "Compact neural inference engine performing multi-object spatial classification and hazard alerts directly on low-power ARM microcomputers without cloud latency.",
-    tags: ["YOLOv8", "TensorRT", "C++", "Edge AI", "OpenCV"],
+    id: "payload-01",
+    title: "PAYLOAD-01: Campus Companion",
+    category: "Web & App Development",
+    description: "Timetables, notes and club updates for VISTAS in one app.",
+    tags: ["Campus App", "Timetables", "Club Updates", "VISTAS"],
     status: "Active",
     metrics: [
-      { label: "Inference Latency", value: "14 ms" },
-      { label: "FPS on Edge", value: "58 FPS" },
-      { label: "Accuracy", value: "96.4% mAP" }
+      { label: "Target", value: "VISTAS Students" },
+      { label: "Utility", value: "Campus Companion" },
+      { label: "Status", value: "Operational" }
     ],
-    github_url: "https://github.com",
-    project_url: "#",
     featured: true
   },
   {
-    id: "proj-02",
-    title: "Campus-Pulse: LoRa Distributed Sensor Mesh",
-    category: "IoT & Hardware",
-    description: "Decentralized mesh of solar-powered environmental sensor pods collecting humidity, temperature, air quality, and acoustic indices across the VISTAS campus.",
-    tags: ["LoRaWAN", "ESP32", "InFluxDB", "Grafana", "Hardware PCB"],
+    id: "payload-02",
+    title: "PAYLOAD-02: Exam Vault",
+    category: "Data & Cloud",
+    description: "A student-built archive of past papers with smart search.",
+    tags: ["Archive", "Smart Search", "Past Papers"],
     status: "Active",
     metrics: [
-      { label: "Active Nodes", value: "24 Pods" },
-      { label: "Battery Life", value: "480 Days" },
-      { label: "Packet Drop", value: "< 0.2%" }
+      { label: "Target", value: "VISTAS Students" },
+      { label: "Utility", value: "Exam Vault" },
+      { label: "Status", value: "Operational" }
     ],
-    github_url: "https://github.com",
-    project_url: "#",
     featured: true
   },
   {
-    id: "proj-03",
-    title: "Neural-Synth: JARVIS Holographic Voice Core",
-    category: "Speech & Audio AI",
-    description: "Client-side Web Audio synthesis and semantic natural language routing interface providing automated command center telemetry for student innovators.",
-    tags: ["Web Audio API", "WebAssembly", "TypeScript", "LLM Integration"],
-    status: "Research Prototype",
+    id: "payload-03",
+    title: "PAYLOAD-03: Rural Learn Kit",
+    category: "Emerging Tech",
+    description: "Offline-friendly learning tools for low-resource classrooms.",
+    tags: ["Offline-Friendly", "Learning Tools", "Low-Resource"],
+    status: "Active",
     metrics: [
-      { label: "Speech Latency", value: "32 ms" },
-      { label: "Offline Mode", value: "100% Client" }
+      { label: "Target", value: "Low-Resource Classrooms" },
+      { label: "Utility", value: "Rural Learn Kit" },
+      { label: "Status", value: "Operational" }
     ],
-    github_url: "https://github.com",
-    project_url: "#",
-    featured: false
-  },
-  {
-    id: "proj-04",
-    title: "Sentinel-Zero: Microservice Security Scanner",
-    category: "Cybersecurity",
-    description: "Automated container security scanner inspecting Docker layers and Kubernetes ingress configurations for privilege escalations and insecure ports.",
-    tags: ["Go", "Docker API", "eBPF", "Kubernetes", "Linux Security"],
-    status: "Completed",
-    metrics: [
-      { label: "Scan Velocity", value: "4.2s / Image" },
-      { label: "CVE Coverage", value: "99.8%" }
-    ],
-    github_url: "https://github.com",
-    project_url: "#",
     featured: false
   }
 ];
 
+// ============================================================================
+// 10. FUNCTIONS OF THE STUDENT COMMITTEE (Section 13 & 9)
+// 7 Responsibilities
+// ============================================================================
+export const COMMITTEE_RESPONSIBILITIES = [
+  "Promote awareness of professional practices, emerging computing technologies and developments in the discipline.",
+  "Encourage students to participate in technical seminars, workshops, conferences and competitions.",
+  "Strengthen programming, problem-solving, design, research and innovation skills.",
+  "Provide opportunities to practise communication, teamwork, leadership and event-management skills.",
+  "Facilitate interaction with academicians, researchers, alumni and industry professionals.",
+  "Encourage ethical conduct, responsible computing and lifelong learning.",
+  "Create a platform for students to share knowledge and collaborate on technical initiatives."
+];
+
+// ============================================================================
+// 11. DETAILED COMMITTEE FUNCTIONS (Section 14 & 9)
+// 10 Functions
+// ============================================================================
+export const DETAILED_COMMITTEE_FUNCTIONS = [
+  {
+    number: "01",
+    title: "Annual Activity Planning",
+    description: "Prepare and coordinate the annual activity plan, identifying relevant technical, professional, research and co-curricular activities for students."
+  },
+  {
+    number: "02",
+    title: "Technical and Professional Activities",
+    description: "Organize technical workshops, guest lectures, seminars, hackathons, coding competitions and other professional development programmes."
+  },
+  {
+    number: "03",
+    title: "ACM Membership and Engagement",
+    description: "Encourage students to become members of ACM and actively participate in ACM-sponsored programmes, professional networking opportunities and technical initiatives."
+  },
+  {
+    number: "04",
+    title: "Industry and Academic Interaction",
+    description: "Coordinate with industry experts, resource persons, researchers and academic professionals to facilitate knowledge sharing and industry–academia interaction."
+  },
+  {
+    number: "05",
+    title: "Research and Innovation",
+    description: "Promote research activities, innovative project development, technical presentations, paper writing and participation in research-oriented events."
+  },
+  {
+    number: "06",
+    title: "Student Skill Development",
+    description: "Facilitate training programmes, technical learning sessions, project-based activities and initiatives that enhance technical, communication, leadership and teamwork skills."
+  },
+  {
+    number: "07",
+    title: "Event Documentation",
+    description: "Maintain attendance records, event reports, photographs, feedback forms, participation details and other supporting documents for every chapter activity."
+  },
+  {
+    number: "08",
+    title: "Committee Meetings and Coordination",
+    description: "Conduct student committee meetings, assign responsibilities, review activity progress and maintain records of meeting discussions and decisions."
+  },
+  {
+    number: "09",
+    title: "Publicity and Communication",
+    description: "Promote chapter activities through announcements, posters, digital platforms, social media and other communication channels."
+  },
+  {
+    number: "10",
+    title: "Participation Monitoring and Improvement",
+    description: "Review student participation, collect feedback, assess activity effectiveness and identify opportunities for improving future chapter activities."
+  }
+];
+
+// ============================================================================
+// 12. GOVERNANCE AND REVIEW (Section 15 & 9)
+// 7 Stages
+// ============================================================================
+export const GOVERNANCE_STAGES = [
+  {
+    stage: 1,
+    title: "Activity Plan Review",
+    description: "The Faculty Advisor reviews the proposed annual activity plan and provides guidance on the relevance and implementation of planned activities."
+  },
+  {
+    stage: 2,
+    title: "Role-Based Coordination",
+    description: "The Student Chairperson, Vice Chairperson, Secretary, Treasurer and functional heads coordinate activities according to their assigned responsibilities."
+  },
+  {
+    stage: 3,
+    title: "Periodic Progress Monitoring",
+    description: "The Faculty Advisor periodically reviews the progress of planned activities, student participation and the functioning of the student committee."
+  },
+  {
+    stage: 4,
+    title: "Documentation and Record Maintenance",
+    description: "The Secretary and respective activity coordinators maintain meeting minutes, attendance records, event reports, photographs, feedback and other relevant evidence."
+  },
+  {
+    stage: 5,
+    title: "Feedback and Evaluation",
+    description: "Feedback from participating students and resource persons is reviewed to identify strengths, limitations and areas requiring improvement."
+  },
+  {
+    stage: 6,
+    title: "Continuous Improvement",
+    description: "Observations from activity reviews and feedback are considered while preparing subsequent activity plans to improve student engagement and effectiveness."
+  },
+  {
+    stage: 7,
+    title: "Departmental Review",
+    description: "Relevant chapter records, activity reports and supporting evidence are submitted for departmental review and institutional documentation."
+  }
+];
+
+// ============================================================================
+// 13. GALLERY (Moments together.)
+// ============================================================================
 export const GALLERY_DATA: GalleryItem[] = [
   {
     id: "gal-01",
-    title: "Chapter Chartering & Presidential Keynote",
-    event_name: "ACM Inauguration",
-    description: "Official charter ceremony establishing the VISTAS ACM Student Chapter at Vels Institute of Science, Technology and Advanced Studies.",
+    title: "VISTAS ACM Student Chapter Badge",
+    description: "Official insignia and emblem of the VISTAS ACM Student Chapter (Group ID 199704).",
+    event_name: "Chapter Identity",
     media_url: "/assets/vistas-acm-blue-logo.jpg",
-    category: "Charter"
+    category: "Identity",
+    date: "2026–2027"
   },
   {
     id: "gal-02",
-    title: "Collaborative Code Sprint & Architecture Ideation",
-    event_name: "Hack-Vortex Labs",
-    description: "Student teams prototyping distributed algorithms under mentorship from chapter leads.",
+    title: "Department of Computer Science & Engineering",
+    description: "School of Engineering, Vels Institute of Science, Technology and Advanced Studies (VISTAS).",
+    event_name: "Institutional Foundation",
     media_url: "/assets/vistas-acm-blue-logo.jpg",
-    category: "Hackathon"
+    category: "Institution",
+    date: "2026–2027"
   },
   {
     id: "gal-03",
-    title: "Hardware Robotics Testing & Sensor Calibration",
-    event_name: "Hardware Lab Session",
-    description: "Calibrating autonomous rover telemetry and servo kinematics in the VISTAS computing labs.",
-    media_url: "/assets/vistas-acm-blue-logo.jpg",
-    category: "Robotics"
+    title: "Student Leadership Council",
+    description: "Executive council operatives and functional heads coordinating chapter activities.",
+    event_name: "Leadership Roster",
+    media_url: "https://zwxjuhologbhmicfzrvx.supabase.co/storage/v1/object/public/vistas-media/team/d9e9e807-e97e-45b6-aac7-b105069b64f8.png",
+    category: "Crew",
+    date: "2026–2027"
   },
   {
     id: "gal-04",
-    title: "Cyber Defense Workshop & Live Network Capture",
-    event_name: "Defensive Security",
-    description: "Analyzing packet telemetry and defending servers in a controlled sandbox environment.",
-    media_url: "/assets/vistas-acm-blue-logo.jpg",
-    category: "Workshops"
+    title: "Innovation & Research Lab",
+    description: "Platform for technical learning, peer interaction and collaborative making.",
+    event_name: "Technical Exploration",
+    media_url: "https://zwxjuhologbhmicfzrvx.supabase.co/storage/v1/object/public/vistas-media/team/93e261f2-55b2-4f68-acf7-e667f2584912.png",
+    category: "Research",
+    date: "2026–2027"
   }
 ];
 
+// ============================================================================
+// 14. ASSISTANT KNOWLEDGE BASE
+// ============================================================================
 export const ASSISTANT_KNOWLEDGE = [
   {
     triggers: ["who are you", "what is this", "what is jarvis", "assistant"],
-    response: "I am the ACM INTELLIGENCE SYSTEM — your holographic guide to the VISTAS ACM Future Innovation Command Center. I can navigate sections, brief you on technical domains, upcoming hackathons, and explain how to join our chapter.",
-    suggestions: ["Explore Domains", "Check Events", "How to Join", "About ACM"]
+    response: "I am the intelligence assistant for the VISTAS ACM Student Chapter (Group ID 199704), Department of Computer Science and Engineering, School of Engineering, Vels Institute of Science, Technology and Advanced Studies (VISTAS).",
+    suggestions: ["Explore Domains", "Chapter Profile", "Meet Team", "Governance Structure"]
   },
   {
     triggers: ["join", "membership", "how to join", "participate", "register"],
-    response: "Joining VISTAS ACM connects you with an elite community of student builders, hackathons, technical domains, and international ACM resources. Navigate to our Connect Terminal or click 'Join Chapter' to submit your details.",
-    suggestions: ["Go to Contact Terminal", "View Domains", "Follow Instagram"]
+    response: "VISTAS ACM welcomes students across the School of Engineering. Connect with us on Instagram @vistas_acm or send a message via our contact form.",
+    suggestions: ["Join Chapter", "View Domains", "Follow @vistas_acm"]
   },
   {
     triggers: ["domains", "technology", "divisions", "what do you do", "topics"],
-    response: "VISTAS ACM operates across 8 specialized technology divisions: Artificial Intelligence & ML, Web & Full-Stack Systems, Cybersecurity, Data & Cloud, Robotics & Hardware, Mobile Ecosystems, IoT Telemetry, and Computing Research.",
-    suggestions: ["Explore Domains Section", "AI & ML", "Robotics Lab"]
+    response: "VISTAS ACM focuses on 5 official technical domains: AI & Machine Learning, Web & App Development, Cybersecurity, Data & Cloud, and Emerging Tech.",
+    suggestions: ["Explore Domains", "AI & ML", "Cybersecurity", "What We Do"]
   },
   {
     triggers: ["events", "hackathon", "workshops", "when is the next event"],
-    response: "Our event command center features upcoming technical workshops, hackathons, and guest seminars. Up next: HACK-VORTEX (24-Hour Innovation Marathon) and our Autonomous Agents Bootcamp. Check the Events section for full schedules.",
-    suggestions: ["Open Events Section", "Register on Instagram"]
+    response: "Our activities include Hack the Vel (24-hour hackathon), Cipher Quest, Byte Brawl, Neural Nights, Pixel Forge, and Orbit Outreach. Check our launches section.",
+    suggestions: ["View Events", "Follow @vistas_acm"]
   },
   {
-    triggers: ["team", "who is the team", "members", "leads"],
-    response: "TEAM PROFILES // COMING SOON. VISTAS ACM is an innovation-driven community. Our complete holographic crew roster and leadership profiles will be announced soon. Stay tuned to our official transmission feeds.",
-    suggestions: ["View Team Command", "Follow @vistas_acm"]
+    triggers: ["team", "chairperson", "advisor", "leads", "crew"],
+    response: "Our chapter operates under Faculty Advisor Mr. N. Udayakumar (Assistant Professor, Dept. of CSE) and Student Chairperson Mr. Brijish S, alongside 15 student office bearers.",
+    suggestions: ["Meet the Team", "View Crew Roster", "View Governance"]
   },
   {
-    triggers: ["vistas", "vels", "where is", "location"],
-    response: "VISTAS ACM is based at Vels Institute of Science, Technology and Advanced Studies (VISTAS) in Pallavaram, Chennai, Tamil Nadu, India. Chartered on May 19, 2025 under ACM India.",
-    suggestions: ["About Chapter", "Contact Terminal"]
+    triggers: ["governance", "committee", "functions", "structure", "sponsor"],
+    response: "The student committee operates under the Faculty Advisor with 7 core responsibilities, 10 detailed operational functions, and a 7-stage review process.",
+    suggestions: ["View Governance", "View Functions", "Crew Roster"]
+  },
+  {
+    triggers: ["vistas", "vels", "where is", "institution", "location"],
+    response: "VISTAS ACM is based at the Department of Computer Science and Engineering, School of Engineering, Vels Institute of Science, Technology and Advanced Studies (VISTAS), Pallavaram, Chennai, Tamil Nadu, India. ACM Chapter Group ID 199704.",
+    suggestions: ["Chapter Profile", "Contact"]
   }
 ];
