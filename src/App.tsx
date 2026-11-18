@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { CinematicIntro } from './components/CinematicIntro';
 import { Navigation } from './components/Navigation';
 import { HomeSection } from './components/sections/HomeSection';
 import { AboutSection } from './components/sections/AboutSection';
@@ -22,45 +21,10 @@ import { GlobalBackgroundAnimation } from './components/GlobalBackgroundAnimatio
 import { soundEngine } from './audio/soundEngine';
 
 export function App() {
-  // Check if intro has already been experienced in this session
-  const [showIntro, setShowIntro] = useState<boolean>(() => {
-    try {
-      return sessionStorage.getItem('vistas_intro_seen') !== 'true';
-    } catch {
-      return true;
-    }
-  });
-
   const [activeSection, setActiveSection] = useState<string>('home');
   const [isSoundMuted, setIsSoundMuted] = useState<boolean>(soundEngine.getIsMuted());
   const [isAdminOpen, setIsAdminOpen] = useState<boolean>(false);
   const [isAriaOpen, setIsAriaOpen] = useState<boolean>(false);
-
-  // Lock body scroll while entry animation is active
-  useEffect(() => {
-    if (showIntro) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [showIntro]);
-
-  const handleIntroComplete = (targetSectionId?: string) => {
-    setShowIntro(false);
-    try {
-      sessionStorage.setItem('vistas_intro_seen', 'true');
-    } catch {
-      // Ignore sessionStorage errors
-    }
-    if (targetSectionId) {
-      setTimeout(() => {
-        handleNavigate(targetSectionId);
-      }, 200);
-    }
-  };
 
   const handleNavigate = (sectionId: string) => {
     // Map section aliases
@@ -132,27 +96,15 @@ export function App() {
       {/* Sci-Fi Target Custom Cursor */}
       <CustomCursor />
 
-      {/* Cinematic Website Opening Sequence */}
-      {showIntro && (
-        <CinematicIntro
-          onComplete={handleIntroComplete}
-          isSoundMuted={isSoundMuted}
-          onToggleSound={handleToggleSound}
-        />
-      )}
-
       {/* Full-Width Mission Control Header */}
-      {!showIntro && (
-        <Navigation
-          activeSection={activeSection}
-          onNavigate={handleNavigate}
-          isSoundMuted={isSoundMuted}
-          onToggleSound={handleToggleSound}
-          onReplayIntro={() => setShowIntro(true)}
-          onOpenAdmin={() => setIsAdminOpen(true)}
-          onOpenAria={() => setIsAriaOpen(true)}
-        />
-      )}
+      <Navigation
+        activeSection={activeSection}
+        onNavigate={handleNavigate}
+        isSoundMuted={isSoundMuted}
+        onToggleSound={handleToggleSound}
+        onOpenAdmin={() => setIsAdminOpen(true)}
+        onOpenAria={() => setIsAriaOpen(true)}
+      />
 
       {/* Main Mission Control Experience */}
       <main id="command-center-root">
@@ -200,15 +152,13 @@ export function App() {
       <Footer onNavigate={handleNavigate} />
 
       {/* A.R.I.A. Advanced Responsive Intelligence Assistant */}
-      {!showIntro && (
-        <AriaInterface
-          isOpen={isAriaOpen}
-          onClose={() => setIsAriaOpen(false)}
-          onNavigateSection={handleNavigate}
-          onOpenAdmin={() => setIsAdminOpen(true)}
-          isAdminAuthenticated={typeof window !== 'undefined' && sessionStorage.getItem('vistas_admin_auth') === 'true'}
-        />
-      )}
+      <AriaInterface
+        isOpen={isAriaOpen}
+        onClose={() => setIsAriaOpen(false)}
+        onNavigateSection={handleNavigate}
+        onOpenAdmin={() => setIsAdminOpen(true)}
+        isAdminAuthenticated={typeof window !== 'undefined' && sessionStorage.getItem('vistas_admin_auth') === 'true'}
+      />
 
       {/* Protected Administrator Dashboard */}
       <AdminDashboard

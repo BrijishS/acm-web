@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { soundEngine } from '../audio/soundEngine';
 import { CHAPTER_INFO } from '../data/chapterData';
-import { Menu, X, Volume2, VolumeX, Instagram, Shield, Sparkles, Terminal } from 'lucide-react';
+import { Menu, X, Volume2, VolumeX, Instagram, Shield, Terminal } from 'lucide-react';
 
 interface NavigationProps {
   activeSection: string;
   onNavigate: (sectionId: string) => void;
   isSoundMuted: boolean;
   onToggleSound: () => void;
-  onReplayIntro?: () => void;
   onOpenAdmin?: () => void;
   onOpenAria?: () => void;
 }
@@ -32,7 +31,6 @@ export const Navigation: React.FC<NavigationProps> = ({
   onNavigate,
   isSoundMuted,
   onToggleSound,
-  onReplayIntro,
   onOpenAdmin,
   onOpenAria
 }) => {
@@ -162,22 +160,6 @@ export const Navigation: React.FC<NavigationProps> = ({
             </button>
           )}
 
-          {/* Replay Cinematic Intro */}
-          {onReplayIntro && (
-            <button
-              onClick={() => {
-                soundEngine.playClick();
-                onReplayIntro();
-              }}
-              onMouseEnter={() => soundEngine.playHover()}
-              className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-full border border-cerulean/40 text-cerulean hover:text-white bg-[#0B1018] hover:bg-cerulean/20 transition-all font-mono text-[11px] font-bold tracking-wider cursor-pointer shadow-[0_0_10px_rgba(0,123,255,0.25)]"
-              title="Replay Cinematic Website Opening"
-            >
-              <Sparkles className="w-3 h-3 text-rose" />
-              <span>INTRO</span>
-            </button>
-          )}
-
           {/* Admin Dashboard Trigger */}
           {onOpenAdmin && (
             <button
@@ -285,32 +267,18 @@ export const Navigation: React.FC<NavigationProps> = ({
               </button>
             )}
 
-            <div className="flex items-center gap-2">
-              {onOpenAdmin && (
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    onOpenAdmin();
-                  }}
-                  className="flex-1 py-2 px-3 rounded-lg border border-rose/50 bg-rose/10 text-rose font-mono text-xs font-bold flex items-center justify-center gap-1.5"
-                >
-                  <Shield className="w-3.5 h-3.5" />
-                  <span>ADMIN CONSOLE</span>
-                </button>
-              )}
-              {onReplayIntro && (
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    onReplayIntro();
-                  }}
-                  className="flex-1 py-2 px-3 rounded-lg border border-cerulean/50 bg-cerulean/10 text-cerulean font-mono text-xs font-bold flex items-center justify-center gap-1.5"
-                >
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>REPLAY INTRO</span>
-                </button>
-              )}
-            </div>
+            {onOpenAdmin && (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenAdmin();
+                }}
+                className="w-full py-2 px-3 rounded-lg border border-rose/50 bg-rose/10 text-rose font-mono text-xs font-bold flex items-center justify-center gap-1.5"
+              >
+                <Shield className="w-3.5 h-3.5" />
+                <span>ADMIN CONSOLE</span>
+              </button>
+            )}
           </div>
         </div>
       )}
