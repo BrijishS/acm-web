@@ -5,8 +5,12 @@ import { Instagram, Radio } from 'lucide-react';
 
 export const InstagramSection: React.FC = () => {
   return (
-    <section id="instagram" className="relative py-24 px-4 sm:px-6 md:px-8 border-t border-cerulean/15 bg-[#020408]">
-      <div className="max-w-6xl mx-auto">
+    <section id="instagram" className="relative py-24 px-4 sm:px-6 md:px-8 border-t border-cerulean/15 bg-transparent overflow-hidden">
+      {/* Animated Blueprint coordinate grid */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,rgba(255,46,136,0.06)_0%,transparent_75%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,46,136,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.03)_1px,transparent_1px)] bg-[size:44px_44px] animate-grid-drift pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Holographic Social Radar Container */}
         <div className="hud-card-rose p-8 md:p-12 rounded-3xl border-rose/30 shadow-hologram-rose relative overflow-hidden bg-[#030611]/90 backdrop-blur-xl">
           {/* Subtle Ambient Radial Glow */}

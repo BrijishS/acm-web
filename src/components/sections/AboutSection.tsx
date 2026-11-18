@@ -30,10 +30,13 @@ export const AboutSection: React.FC = () => {
       {/* =========================================================
           PART 1: CURIOSITY MAKES / LEARN IT. MAKE IT REAL.
       ========================================================= */}
-      <section className="py-24 px-4 sm:px-6 md:px-8 bg-[#020408]">
-        {/* Blueprint grid background */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_20%,rgba(14,35,71,0.45)_0%,transparent_75%)] pointer-events-none" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.04)_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none" />
+      <section className="relative py-24 px-4 sm:px-6 md:px-8 bg-transparent overflow-hidden">
+        {/* Animated Blueprint grid background */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_20%,rgba(14,35,71,0.35)_0%,transparent_75%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.05)_1px,transparent_1px)] bg-[size:44px_44px] animate-grid-drift pointer-events-none" />
+
+        {/* Floating Ambient Glowing Halo */}
+        <div className="absolute top-1/4 right-[5%] w-[450px] h-[450px] rounded-full bg-cerulean/10 blur-[120px] pointer-events-none animate-pulse" style={{ animationDuration: '8s' }} />
 
         <div className="max-w-6xl mx-auto relative z-10 space-y-16">
           {/* Section Header */}
@@ -155,8 +158,15 @@ export const AboutSection: React.FC = () => {
       {/* =========================================================
           PART 2: CHAPTER PROFILE & WHO WE ARE (#profile)
       ========================================================= */}
-      <section id="profile" className="py-24 px-4 sm:px-6 md:px-8 bg-[#030611] border-t border-cerulean/15">
-        <div className="max-w-6xl mx-auto space-y-16">
+      <section id="profile" className="relative py-24 px-4 sm:px-6 md:px-8 bg-transparent border-t border-cerulean/15 overflow-hidden">
+        {/* Animated grid background */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_20%,rgba(14,35,71,0.35)_0%,transparent_75%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.04)_1px,transparent_1px)] bg-[size:44px_44px] animate-grid-drift pointer-events-none" />
+        
+        {/* Sweeping Laser Scan Line */}
+        <div className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-cerulean/35 to-transparent pointer-events-none animate-laser-sweep" />
+
+        <div className="max-w-6xl mx-auto relative z-10 space-y-16">
           {/* Section Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-cerulean/15">
             <div>
@@ -371,8 +381,12 @@ export const AboutSection: React.FC = () => {
       {/* =========================================================
           PART 3: VISION & MISSION (#vision)
       ========================================================= */}
-      <section id="vision" className="py-20 px-4 sm:px-6 md:px-8 bg-[#020408] border-t border-cerulean/15">
-        <div className="max-w-6xl mx-auto space-y-12">
+      <section id="vision" className="relative py-20 px-4 sm:px-6 md:px-8 bg-transparent border-t border-cerulean/15 overflow-hidden">
+        {/* Animated grid background */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_20%,rgba(255,46,136,0.06)_0%,transparent_75%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,46,136,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.03)_1px,transparent_1px)] bg-[size:44px_44px] animate-grid-drift pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto relative z-10 space-y-12">
           {/* Section Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-cerulean/15">
             <div>

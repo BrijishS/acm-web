@@ -28,8 +28,12 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   ];
 
   return (
-    <footer className="relative border-t border-cerulean/20 bg-[#050505] pt-16 pb-12 px-4 md:px-8 text-[#A5ADBA] overflow-hidden">
-      <div className="max-w-7xl mx-auto">
+    <footer className="relative border-t border-cerulean/20 bg-transparent pt-16 pb-12 px-4 md:px-8 text-[#A5ADBA] overflow-hidden">
+      {/* Animated Blueprint coordinate grid */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,rgba(0,123,255,0.06)_0%,transparent_75%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,123,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,123,255,0.03)_1px,transparent_1px)] bg-[size:44px_44px] animate-grid-drift pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-cerulean/15">
           {/* Brand & Identity */}
           <div className="md:col-span-5 flex flex-col gap-4">

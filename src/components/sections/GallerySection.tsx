@@ -77,10 +77,13 @@ export const GallerySection: React.FC = () => {
   const activeItem = activeIdx !== null ? filteredItems[activeIdx] : null;
 
   return (
-    <section id="gallery" className="relative py-24 px-4 sm:px-6 md:px-8 border-t border-cerulean/20 bg-[#050505]">
-      {/* Blueprint grid background */}
+    <section id="gallery" className="relative py-24 px-4 sm:px-6 md:px-8 border-t border-cerulean/20 bg-transparent overflow-hidden">
+      {/* Animated Blueprint grid background */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,rgba(0,123,255,0.08)_0%,transparent_75%)] pointer-events-none" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,123,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,123,255,0.03)_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,123,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,123,255,0.04)_1px,transparent_1px)] bg-[size:44px_44px] animate-grid-drift pointer-events-none" />
+
+      {/* Sweeping Laser Scan Line */}
+      <div className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-rose/35 to-transparent pointer-events-none animate-laser-sweep" />
 
       <div className="max-w-7xl mx-auto relative z-10 space-y-12">
         {/* Section Header */}

@@ -19,11 +19,22 @@ export const DomainsSection: React.FC = () => {
   };
 
   return (
-    <section id="domains" className="relative py-24 px-4 sm:px-6 md:px-8 border-t border-cerulean/15 bg-[#020408]">
+    <section id="domains" className="relative py-24 px-4 sm:px-6 md:px-8 border-t border-cerulean/15 bg-transparent overflow-hidden">
       <div id="galaxy" className="absolute top-0 pointer-events-none" />
-      {/* Blueprint grid background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,rgba(14,35,71,0.5)_0%,transparent_75%)] pointer-events-none" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.04)_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none" />
+      {/* Animated Blueprint grid background */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,rgba(14,35,71,0.35)_0%,transparent_75%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.05)_1px,transparent_1px)] bg-[size:44px_44px] animate-grid-drift pointer-events-none" />
+
+      {/* Futuristic Orbit Radar Rings Background Animation */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-cerulean/10 pointer-events-none animate-spin" style={{ animationDuration: '45s' }}>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-cerulean rounded-full shadow-[0_0_12px_#38BDF8]" />
+      </div>
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[950px] h-[950px] rounded-full border border-dashed border-rose/10 pointer-events-none animate-spin" style={{ animationDuration: '65s', animationDirection: 'reverse' }}>
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-2.5 h-2.5 bg-rose rounded-full shadow-[0_0_10px_#FF3B9D]" />
+      </div>
+
+      {/* Sweeping Laser Scan Line */}
+      <div className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-cerulean/40 to-transparent pointer-events-none animate-laser-sweep" />
 
       <div className="max-w-6xl mx-auto relative z-10 space-y-20">
         {/* =========================================================

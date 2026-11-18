@@ -18,6 +18,7 @@ import { Footer } from './components/Footer';
 import { JarvisAssistant } from './components/JarvisAssistant';
 import { AdminDashboard } from './components/AdminDashboard';
 import { CustomCursor } from './components/CustomCursor';
+import { GlobalBackgroundAnimation } from './components/GlobalBackgroundAnimation';
 import { soundEngine } from './audio/soundEngine';
 
 export function App() {
@@ -123,7 +124,10 @@ export function App() {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#050505] text-[#C0C0C0] selection:bg-rose selection:text-white">
+    <div className="relative min-h-screen bg-[#030407] text-[#C0C0C0] selection:bg-rose selection:text-white">
+      {/* Dynamic Global Background Sci-Fi Animation (Constellation Web + Laser Radar + Pulsing Nebulae) */}
+      <GlobalBackgroundAnimation />
+
       {/* Sci-Fi Target Custom Cursor */}
       <CustomCursor />
 

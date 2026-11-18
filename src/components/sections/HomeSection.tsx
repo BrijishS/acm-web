@@ -27,13 +27,13 @@ export const HomeSection: React.FC<HomeSectionProps> = ({ onNavigate }) => {
   }, []);
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center pt-24 pb-16 px-4 md:px-8 overflow-hidden bg-[#050505]">
+    <section id="home" className="relative min-h-screen flex items-center justify-center pt-24 pb-16 px-4 md:px-8 overflow-hidden bg-transparent">
       {/* Target anchor */}
       <div id="mission" className="absolute top-0 pointer-events-none" />
 
       {/* Blueprint Coordinate Grid Overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,rgba(0,123,255,0.12)_0%,rgba(5,5,5,0.98)_100%)] pointer-events-none" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,123,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,123,255,0.04)_1px,transparent_1px)] bg-[size:48px_48px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,rgba(0,123,255,0.12)_0%,transparent_100%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,123,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,123,255,0.04)_1px,transparent_1px)] bg-[size:48px_48px] animate-grid-drift pointer-events-none" />
 
       {/* Top Left HUD Corner Reticle & Telemetry */}
       <div className="absolute top-20 left-4 sm:left-8 z-20 flex items-start gap-2 text-cerulean pointer-events-none select-none">

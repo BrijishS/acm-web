@@ -22,10 +22,13 @@ import {
 
 export const GovernanceSection: React.FC = () => {
   return (
-    <section id="governance" className="relative py-24 px-4 sm:px-6 md:px-8 border-t border-cerulean/15 bg-[#020408]">
-      {/* Blueprint coordinate grid */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_20%,rgba(14,35,71,0.5)_0%,transparent_75%)] pointer-events-none" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.04)_1px,transparent_1px)] bg-[size:36px_36px] pointer-events-none" />
+    <section id="governance" className="relative py-24 px-4 sm:px-6 md:px-8 border-t border-cerulean/15 bg-transparent overflow-hidden">
+      {/* Animated Blueprint coordinate grid */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_20%,rgba(14,35,71,0.35)_0%,transparent_75%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.04)_1px,transparent_1px)] bg-[size:44px_44px] animate-grid-drift pointer-events-none" />
+
+      {/* Sweeping Laser Scan Line */}
+      <div className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-cerulean/35 to-transparent pointer-events-none animate-laser-sweep" />
 
       <div className="max-w-6xl mx-auto relative z-10 space-y-20">
         {/* Section Header */}
