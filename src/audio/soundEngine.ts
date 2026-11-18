@@ -5,6 +5,11 @@ class SoundEngine {
   private ambientGain: GainNode | null = null;
   private ambientOsc: OscillatorNode | null = null;
   private isAmbientPlaying: boolean = false;
+  private soundtrackTimer: ReturnType<typeof setInterval> | null = null;
+  private isSoundtrackPlaying: boolean = false;
+  private soundtrackGain: GainNode | null = null;
+  private chargeOsc: OscillatorNode | null = null;
+  private chargeGain: GainNode | null = null;
 
   private initContext() {
     if (!this.ctx && typeof window !== 'undefined') {
@@ -260,6 +265,211 @@ class SoundEngine {
       this.ambientOsc = null;
     }
     this.isAmbientPlaying = false;
+  }
+
+  // Chapter navigation whoosh
+  public playChapterWhoosh() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const filter = this.ctx.createBiquadFilter();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(180, now);
+      osc.frequency.exponentialRampToValueAtTime(750, now + 0.12);
+      osc.frequency.exponentialRampToValueAtTime(120, now + 0.35);
+
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(900, now);
+
+      gain.gain.setValueAtTime(0.01, now);
+      gain.gain.linearRampToValueAtTime(this.volume * 0.14, now + 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.36);
+    } catch {}
+  }
+
+  // Interactive portal charging hum (called continuously during Touch & Hold)
+  public startPortalCharging() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    if (!this.chargeOsc) {
+      try {
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(90, now);
+
+        gain.gain.setValueAtTime(0.01, now);
+        gain.gain.linearRampToValueAtTime(this.volume * 0.12, now + 0.1);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(now);
+        this.chargeOsc = osc;
+        this.chargeGain = gain;
+      } catch {}
+    }
+  }
+
+  public updatePortalChargePitch(ratio: number) {
+    if (this.chargeOsc && this.ctx) {
+      try {
+        const now = this.ctx.currentTime;
+        const targetFreq = 120 + ratio * 800; // pitch climbs from 120Hz to 920Hz
+        this.chargeOsc.frequency.setTargetAtTime(targetFreq, now, 0.05);
+      } catch {}
+    }
+  }
+
+  public stopPortalCharging() {
+    if (this.chargeOsc) {
+      try {
+        this.chargeOsc.stop();
+        this.chargeOsc.disconnect();
+      } catch {}
+      this.chargeOsc = null;
+      this.chargeGain = null;
+    }
+  }
+
+  // Explosive portal warp burst sound
+  public playPortalBurst() {
+    this.stopPortalCharging();
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+
+      // Sub-bass detonation impact
+      const subOsc = this.ctx.createOscillator();
+      const subGain = this.ctx.createGain();
+      subOsc.type = 'triangle';
+      subOsc.frequency.setValueAtTime(260, now);
+      subOsc.frequency.exponentialRampToValueAtTime(32, now + 0.6);
+
+      subGain.gain.setValueAtTime(this.volume * 0.45, now);
+      subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+
+      subOsc.connect(subGain);
+      subGain.connect(this.ctx.destination);
+      subOsc.start(now);
+      subOsc.stop(now + 0.66);
+
+      // Resonant energy shimmer
+      const chord = [523.25, 659.25, 783.99, 1046.5, 1318.5]; // C major cyber chord
+      chord.forEach((freq, idx) => {
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.04);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.5, now + 0.8);
+
+        gain.gain.setValueAtTime(this.volume * 0.1, now + idx * 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.9);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now + idx * 0.04);
+        osc.stop(now + 0.92);
+      });
+    } catch {}
+  }
+
+  // Continuous ambient cyberpunk soundtrack generator
+  public startSoundtrack() {
+    if (this.isSoundtrackPlaying) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    this.isSoundtrackPlaying = true;
+    const chords = [
+      [146.83, 220.00, 261.63, 329.63], // Dm9
+      [130.81, 196.00, 246.94, 293.66], // Cmaj9
+      [116.54, 174.61, 220.00, 261.63], // Bbmaj7
+      [110.00, 164.81, 220.00, 277.18], // A7
+    ];
+    let step = 0;
+
+    const playChordStep = () => {
+      if (!this.isSoundtrackPlaying || !this.ctx) return;
+      if (this.isMuted) return;
+
+      try {
+        const now = this.ctx.currentTime;
+        const currentChord = chords[step % chords.length];
+        step++;
+
+        currentChord.forEach((f, i) => {
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          const filter = this.ctx.createBiquadFilter();
+
+          osc.type = i === 0 ? 'sawtooth' : 'triangle';
+          osc.frequency.setValueAtTime(f, now);
+
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(450 + i * 80, now);
+          filter.Q.setValueAtTime(2, now);
+
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.linearRampToValueAtTime(this.volume * 0.035, now + 0.8);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 3.2);
+
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          osc.start(now);
+          osc.stop(now + 3.3);
+        });
+      } catch {}
+    };
+
+    playChordStep();
+    this.soundtrackTimer = setInterval(playChordStep, 3200);
+  }
+
+  public stopSoundtrack() {
+    if (this.soundtrackTimer) {
+      clearInterval(this.soundtrackTimer);
+      this.soundtrackTimer = null;
+    }
+    this.isSoundtrackPlaying = false;
+  }
+
+  public toggleSoundtrack(): boolean {
+    if (this.isSoundtrackPlaying) {
+      this.stopSoundtrack();
+      return false;
+    } else {
+      this.startSoundtrack();
+      return true;
+    }
+  }
+
+  public isSoundtrackActive(): boolean {
+    return this.isSoundtrackPlaying;
   }
 }
 

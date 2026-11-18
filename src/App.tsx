@@ -20,25 +20,14 @@ import { soundEngine } from './audio/soundEngine';
 import { aiVoiceEngine, SectionAiBriefing } from './audio/aiVoiceEngine';
 
 export function App() {
-  const [showIntro, setShowIntro] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return sessionStorage.getItem('vistas_intro_seen') !== 'true';
-    }
-    return true;
-  });
-
+  const [showIntro, setShowIntro] = useState(true);
   const [activeSection, setActiveSection] = useState('mission');
   const [isSoundMuted, setIsSoundMuted] = useState(soundEngine.getIsMuted());
   const [aiTransmission, setAiTransmission] = useState<SectionAiBriefing | null>(null);
   const [isAiSpeaking, setIsAiSpeaking] = useState(false);
   const aiTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleIntroComplete = () => {
-    sessionStorage.setItem('vistas_intro_seen', 'true');
-    setShowIntro(false);
-  };
-
-  // Lock body scroll while cinematic intro entry is active
+  // Lock body scroll while entry animation is active
   useEffect(() => {
     if (showIntro) {
       document.body.style.overflow = 'hidden';
@@ -49,6 +38,15 @@ export function App() {
       document.body.style.overflow = '';
     };
   }, [showIntro]);
+
+  const handleIntroComplete = (targetSectionId?: string) => {
+    setShowIntro(false);
+    if (targetSectionId) {
+      setTimeout(() => {
+        handleNavigate(targetSectionId);
+      }, 200);
+    }
+  };
 
   const handleNavigate = (sectionId: string, triggerAiVoice: boolean = true) => {
     // Map aliases
@@ -156,13 +154,19 @@ export function App() {
 
   return (
     <div className="relative min-h-screen bg-[#030611] text-chrome selection:bg-rose selection:text-white">
-      {/* Cinematic Intro Modal */}
-      {showIntro && <CinematicIntro onComplete={handleIntroComplete} />}
-
       {/* Sci-Fi Target Custom Cursor */}
       <CustomCursor />
 
-      {/* Full-Width Mission Control Header: Hidden during entry, visible once experience entered */}
+      {/* Arrival Entry Animation: Only this as entry animation, matching user's screenshot! */}
+      {showIntro && (
+        <CinematicIntro
+          onComplete={handleIntroComplete}
+          isSoundMuted={isSoundMuted}
+          onToggleSound={handleToggleSound}
+        />
+      )}
+
+      {/* Full-Width Mission Control Header */}
       {!showIntro && (
         <>
           <Navigation
@@ -170,6 +174,7 @@ export function App() {
             onNavigate={handleNavigate}
             isSoundMuted={isSoundMuted}
             onToggleSound={handleToggleSound}
+            onReplayIntro={() => setShowIntro(true)}
           />
 
           {/* AI Voice & Holographic Animation Transmission HUD */}
@@ -221,7 +226,7 @@ export function App() {
       {/* Chapter Footer */}
       <Footer onNavigate={handleNavigate} />
 
-      {/* JARVIS ACM Intelligence Floating System: Only visible in main website */}
+      {/* JARVIS ACM Intelligence Floating System: Available on the website */}
       {!showIntro && (
         <JarvisAssistant
           onNavigateSection={handleNavigate}

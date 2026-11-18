@@ -8,6 +8,7 @@ interface NavigationProps {
   onNavigate: (sectionId: string) => void;
   isSoundMuted: boolean;
   onToggleSound: () => void;
+  onReplayIntro?: () => void;
 }
 
 export const MISSION_NAV_ITEMS = [
@@ -40,7 +41,8 @@ export const Navigation: React.FC<NavigationProps> = ({
   activeSection,
   onNavigate,
   isSoundMuted,
-  onToggleSound
+  onToggleSound,
+  onReplayIntro
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [elapsedSeconds, setElapsedSeconds] = useState(19);
@@ -158,6 +160,21 @@ export const Navigation: React.FC<NavigationProps> = ({
 
         {/* Right: Audio Toggle, Instagram, Join Mission Button & Mission Elapsed Time */}
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          {/* Replay Entry Animation Button */}
+          {onReplayIntro && (
+            <button
+              onClick={() => {
+                soundEngine.playClick();
+                onReplayIntro();
+              }}
+              onMouseEnter={() => soundEngine.playHover()}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#38BDF8] text-[#38BDF8] hover:text-white bg-[#030611] hover:bg-[#38BDF8]/20 transition-all font-mono text-xs font-bold tracking-wider cursor-pointer shadow-[0_0_12px_rgba(56,189,248,0.3)]"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8] animate-ping" />
+              <span>ENTRY INTRO</span>
+            </button>
+          )}
+
           {/* Mission Elapsed Time (MET) counter from Reference Screenshot */}
           <div
             className="hidden sm:flex font-mono text-xs text-[#fbbf24] font-bold tracking-widest select-none items-center gap-1.5 px-2.5 py-1.5 rounded bg-[#fbbf24]/10 border border-[#fbbf24]/30 shadow-[0_0_10px_rgba(251,191,36,0.2)]"
