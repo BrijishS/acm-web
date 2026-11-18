@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { soundEngine } from '../../audio/soundEngine';
 import { CHAPTER_INFO } from '../../data/chapterData';
 import { CommandCenter3D } from '../3d/CommandCenter3D';
-import { Terminal, ArrowDown, Compass, Calendar, Rocket, Sparkles, Crosshair, Laptop, ShieldCheck } from 'lucide-react';
+import { Terminal, ArrowDown, Compass, Calendar, Sparkles } from 'lucide-react';
 
 interface HomeSectionProps {
   onNavigate: (sectionId: string) => void;
@@ -31,9 +31,9 @@ export const HomeSection: React.FC<HomeSectionProps> = ({ onNavigate }) => {
       {/* Target anchor */}
       <div id="mission" className="absolute top-0 pointer-events-none" />
 
-      {/* Blueprint Coordinate Grid Overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,rgba(0,123,255,0.12)_0%,transparent_100%)] pointer-events-none" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,123,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,123,255,0.04)_1px,transparent_1px)] bg-[size:48px_48px] animate-grid-drift pointer-events-none" />
+      {/* Subtle Atmospheric Vignette & Depth Mask */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,rgba(0,123,255,0.06)_0%,transparent_100%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,123,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,123,255,0.015)_1px,transparent_1px)] bg-[size:56px_56px] pointer-events-none" />
 
       {/* Top Left HUD Corner Reticle & Telemetry */}
       <div className="absolute top-20 left-4 sm:left-8 z-20 flex items-start gap-2 text-cerulean pointer-events-none select-none">
@@ -43,48 +43,7 @@ export const HomeSection: React.FC<HomeSectionProps> = ({ onNavigate }) => {
         </div>
       </div>
 
-      {/* Celestial Moon / Planet accent */}
-      <div className="absolute top-1/3 left-4 sm:left-12 -translate-y-1/2 pointer-events-none z-10 hidden sm:block">
-        <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white shadow-[0_0_50px_rgba(255,255,255,0.8),0_0_90px_rgba(0,123,255,0.5)] animate-pulse" />
-        <div className="absolute -inset-4 bg-gradient-to-tr from-transparent via-white/20 to-transparent rotate-45 pointer-events-none" />
-      </div>
-
-      {/* Floating Laptop Icon */}
-      <motion.div
-        animate={{ y: [0, -14, 0], rotate: [-6, 6, -6] }}
-        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-28 left-[38%] pointer-events-none z-10 hidden md:flex items-center justify-center p-3 rounded-xl bg-[#0B1018]/80 border border-cerulean/30 shadow-[0_0_20px_rgba(0,123,255,0.25)] backdrop-blur-md"
-      >
-        <Laptop className="w-6 h-6 text-cerulean" />
-      </motion.div>
-
-      {/* Floating Code Hash symbol */}
-      <motion.div
-        animate={{ y: [0, 16, 0], rotate: [0, -10, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-        className="absolute top-44 left-[46%] pointer-events-none z-10 hidden md:block font-mono text-2xl font-bold text-rose/70 drop-shadow-[0_0_10px_#FF2E88]"
-      >
-        #
-      </motion.div>
-
-      {/* Space Rocket launching upwards */}
-      <motion.div
-        animate={{ y: [0, -25, 0], x: [0, 5, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute bottom-28 right-8 sm:right-16 pointer-events-none z-10 flex flex-col items-center"
-      >
-        <div className="p-2.5 rounded-full bg-[#0B1018]/90 border border-rose/50 shadow-[0_0_20px_rgba(255,46,136,0.4)]">
-          <Rocket className="w-6 h-6 text-rose -rotate-45" />
-        </div>
-        <div className="w-1 h-8 bg-gradient-to-b from-rose via-amber-400 to-transparent blur-[1px] animate-pulse" />
-      </motion.div>
-
-      {/* Target Reticle Crosshair */}
-      <div className="absolute top-28 right-4 sm:right-6 pointer-events-none z-10 hidden sm:flex items-center justify-center w-12 h-12 rounded-full border border-cerulean/60">
-        <Crosshair className="w-6 h-6 text-cerulean animate-spin" style={{ animationDuration: '20s' }} />
-      </div>
-
-      {/* Three.js Interactive 3D WebGL Background Scene */}
+      {/* Three.js Interactive 3D Cinematic AI Command Environment */}
       <CommandCenter3D />
 
       {/* Center Main Typographic Statement */}

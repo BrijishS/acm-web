@@ -1,10 +1,15 @@
-import React, { useRef, useMemo, Component, ErrorInfo, ReactNode } from 'react';
+// ============================================================================
+// VISTAS ACM — Mission Control 2.0
+// Cinematic 3D AI Command Environment (Iron Man Holographic Command Center)
+// ============================================================================
+
+import React, { useRef, useMemo, useEffect, useState, Component, ErrorInfo, ReactNode } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-// -------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // WebGL Error Boundary Fallback
-// -------------------------------------------------------------
+// ----------------------------------------------------------------------------
 interface ErrorBoundaryProps {
   children: ReactNode;
   fallback: ReactNode;
@@ -32,375 +37,381 @@ export class WebGLErrorBoundary extends Component<ErrorBoundaryProps, ErrorBound
   }
 }
 
-// -------------------------------------------------------------
-// 1. Quantum Holographic Core (Tony Stark Arc Reactor Inspired)
-// -------------------------------------------------------------
-function QuantumCore() {
-  const outerRingRef = useRef<THREE.Group>(null);
-  const midRingRef = useRef<THREE.Group>(null);
-  const innerRingRef = useRef<THREE.Group>(null);
-  const coreRef = useRef<THREE.Mesh>(null);
-  const energyBeamsRef = useRef<THREE.Points>(null);
+// ----------------------------------------------------------------------------
+// 1. Distant Holographic Orbital Structures (Layer 1: Depth z = -6 to -10)
+// ----------------------------------------------------------------------------
+function DistantOrbitalStructures({ reducedMotion }: { reducedMotion: boolean }) {
+  const ring1Ref = useRef<THREE.Group>(null);
+  const ring2Ref = useRef<THREE.Group>(null);
+  const ring3Ref = useRef<THREE.Group>(null);
 
   useFrame((state, delta) => {
+    if (reducedMotion) return;
     const t = state.clock.getElapsedTime();
-    if (outerRingRef.current) {
-      outerRingRef.current.rotation.z += delta * 0.45;
-      outerRingRef.current.rotation.x = Math.sin(t * 0.5) * 0.2;
+
+    if (ring1Ref.current) {
+      ring1Ref.current.rotation.z += delta * 0.08;
+      ring1Ref.current.rotation.x = Math.sin(t * 0.15) * 0.15;
     }
-    if (midRingRef.current) {
-      midRingRef.current.rotation.z -= delta * 0.65;
-      midRingRef.current.rotation.y = Math.cos(t * 0.6) * 0.25;
+    if (ring2Ref.current) {
+      ring2Ref.current.rotation.y -= delta * 0.06;
+      ring2Ref.current.rotation.z = Math.cos(t * 0.18) * 0.12;
     }
-    if (innerRingRef.current) {
-      innerRingRef.current.rotation.x += delta * 0.8;
-      innerRingRef.current.rotation.y += delta * 0.4;
-    }
-    if (coreRef.current) {
-      const scale = 1 + Math.sin(t * 3.5) * 0.08;
-      coreRef.current.scale.set(scale, scale, scale);
-    }
-    if (energyBeamsRef.current) {
-      energyBeamsRef.current.rotation.y += delta * 0.3;
+    if (ring3Ref.current) {
+      ring3Ref.current.rotation.x += delta * 0.05;
+      ring3Ref.current.rotation.y += delta * 0.07;
     }
   });
 
   return (
-    <group position={[0, -1.3, -2.4]} scale={[0.78, 0.78, 0.78]}>
-      {/* Central Quantum Core - Obsidian finish, non-blinding */}
-      <mesh ref={coreRef}>
-        <icosahedronGeometry args={[0.85, 2]} />
-        <meshBasicMaterial color="#38BDF8" wireframe transparent opacity={0.25} />
-      </mesh>
-
-      <mesh>
-        <sphereGeometry args={[0.42, 24, 24]} />
-        <meshStandardMaterial color="#030816" metalness={0.9} roughness={0.7} />
-      </mesh>
-
-      {/* Point lights for real-time metallic illumination */}
-      <pointLight color="#38BDF8" intensity={2.5} distance={15} />
-      <pointLight color="#FF3B9D" intensity={1.8} distance={10} position={[0, 1.5, 1]} />
-
-      {/* Outer Metallic Gimbal Ring */}
-      <group ref={outerRingRef}>
+    <group position={[0, -0.4, -7.5]}>
+      {/* Primary Distant Macro-Orbital Ring (Diameter ~14 units) */}
+      <group ref={ring1Ref}>
         <mesh>
-          <torusGeometry args={[2.2, 0.045, 16, 64]} />
-          <meshStandardMaterial color="#C5CBD3" metalness={0.9} roughness={0.2} />
+          <torusGeometry args={[7.2, 0.025, 16, 96]} />
+          <meshBasicMaterial color="#007BFF" transparent opacity={0.22} />
         </mesh>
-        {/* Cerulean LED nodes along the ring */}
-        {[0, 1, 2, 3, 4, 5].map((i) => {
-          const angle = (i * Math.PI) / 3;
+        {/* Subtle LED telemetry notches along the perimeter */}
+        {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => {
+          const angle = (i * Math.PI) / 4;
           return (
-            <mesh key={i} position={[Math.cos(angle) * 2.2, Math.sin(angle) * 2.2, 0]}>
-              <boxGeometry args={[0.12, 0.12, 0.12]} />
-              <meshBasicMaterial color="#38BDF8" />
+            <mesh key={i} position={[Math.cos(angle) * 7.2, Math.sin(angle) * 7.2, 0]}>
+              <boxGeometry args={[0.08, 0.08, 0.08]} />
+              <meshBasicMaterial color="#00CFFF" transparent opacity={0.55} />
             </mesh>
           );
         })}
       </group>
 
-      {/* Middle Rotating Segment Ring (Neon Rose Accents) */}
-      <group ref={midRingRef}>
+      {/* Secondary Counter-Rotating Ring (Diameter ~11 units) */}
+      <group ref={ring2Ref}>
         <mesh>
-          <torusGeometry args={[1.7, 0.035, 16, 48]} />
-          <meshStandardMaterial color="#38BDF8" metalness={0.8} roughness={0.3} wireframe />
-        </mesh>
-        {[0, 1, 2, 3].map((i) => {
-          const angle = (i * Math.PI) / 2 + Math.PI / 4;
-          return (
-            <mesh key={i} position={[Math.cos(angle) * 1.7, Math.sin(angle) * 1.7, 0]}>
-              <sphereGeometry args={[0.07, 8, 8]} />
-              <meshBasicMaterial color="#FF3B9D" />
-            </mesh>
-          );
-        })}
-      </group>
-
-      {/* Inner Fast Gyro Ring */}
-      <group ref={innerRingRef}>
-        <mesh>
-          <torusGeometry args={[1.25, 0.025, 12, 36]} />
-          <meshBasicMaterial color="#38BDF8" transparent opacity={0.6} />
+          <torusGeometry args={[5.5, 0.02, 16, 72]} />
+          <meshBasicMaterial color="#00CFFF" transparent opacity={0.18} />
         </mesh>
       </group>
 
-      {/* Holographic Concentric Grid Disc */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2, 0]}>
-        <ringGeometry args={[0.8, 3.8, 32]} />
-        <meshBasicMaterial color="#38BDF8" wireframe transparent opacity={0.15} side={THREE.DoubleSide} />
+      {/* Tertiary Tilted Gyro Ring (Diameter ~8 units) */}
+      <group ref={ring3Ref}>
+        <mesh rotation={[Math.PI / 3, 0, 0]}>
+          <torusGeometry args={[4.2, 0.018, 12, 64]} />
+          <meshBasicMaterial color="#C0C0C0" transparent opacity={0.15} />
+        </mesh>
+      </group>
+
+      {/* Faint Concentric Coordinate Disc Grid */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2.5, 0]}>
+        <ringGeometry args={[2.5, 9.5, 48]} />
+        <meshBasicMaterial color="#007BFF" wireframe transparent opacity={0.06} side={THREE.DoubleSide} />
       </mesh>
     </group>
   );
 }
 
-// -------------------------------------------------------------
-// 2. Articulated Robotics Arm with Gripper & Laser Pointer
-// -------------------------------------------------------------
-function RoboticArm({ position, side }: { position: [number, number, number]; side: 'left' | 'right' }) {
-  const armBaseRef = useRef<THREE.Group>(null);
-  const lowerArmRef = useRef<THREE.Group>(null);
-  const upperArmRef = useRef<THREE.Group>(null);
-  const gripperLeftRef = useRef<THREE.Mesh>(null);
-  const gripperRightRef = useRef<THREE.Mesh>(null);
-  const laserRef = useRef<THREE.Mesh>(null);
-
-  useFrame((state) => {
-    const t = state.clock.getElapsedTime();
-    const multiplier = side === 'left' ? 1 : -1;
-
-    if (armBaseRef.current) {
-      armBaseRef.current.rotation.y = Math.sin(t * 0.6) * 0.4 * multiplier;
-    }
-    if (lowerArmRef.current) {
-      lowerArmRef.current.rotation.z = (Math.sin(t * 0.8) * 0.25 - 0.2) * multiplier;
-    }
-    if (upperArmRef.current) {
-      upperArmRef.current.rotation.z = (Math.cos(t * 0.7) * 0.35 + 0.3) * multiplier;
-    }
-    if (gripperLeftRef.current && gripperRightRef.current) {
-      const grip = 0.08 + Math.sin(t * 1.8) * 0.04;
-      gripperLeftRef.current.position.x = -grip;
-      gripperRightRef.current.position.x = grip;
-    }
-    if (laserRef.current) {
-      laserRef.current.scale.y = 1 + Math.sin(t * 4) * 0.1;
-    }
-  });
-
-  return (
-    <group ref={armBaseRef} position={position}>
-      {/* Heavy Industrial Pedestal */}
-      <mesh position={[0, -1.8, 0]}>
-        <cylinderGeometry args={[0.55, 0.7, 0.4, 16]} />
-        <meshStandardMaterial color="#1a2333" metalness={0.85} roughness={0.3} />
-      </mesh>
-
-      {/* Rotating Base Turret */}
-      <mesh position={[0, -1.45, 0]}>
-        <cylinderGeometry args={[0.42, 0.45, 0.35, 16]} />
-        <meshStandardMaterial color="#C5CBD3" metalness={0.9} roughness={0.2} />
-      </mesh>
-
-      {/* Shoulder Joint Servo */}
-      <mesh position={[0, -1.15, 0]} rotation={[0, 0, Math.PI / 2]}>
-        <cylinderGeometry args={[0.22, 0.22, 0.5, 16]} />
-        <meshStandardMaterial color="#0e1726" metalness={0.7} roughness={0.4} />
-      </mesh>
-
-      {/* Lower Arm Bicep */}
-      <group ref={lowerArmRef} position={[0, -1.15, 0]}>
-        <mesh position={[0, 0.9, 0]}>
-          <boxGeometry args={[0.22, 1.7, 0.25]} />
-          <meshStandardMaterial color="#1f293d" metalness={0.8} roughness={0.25} />
-        </mesh>
-        {/* Hydraulic Piston Cylinders */}
-        <mesh position={[0.15, 0.9, 0]}>
-          <cylinderGeometry args={[0.04, 0.04, 1.4, 8]} />
-          <meshStandardMaterial color="#38BDF8" metalness={0.95} roughness={0.1} />
-        </mesh>
-
-        {/* Elbow Joint */}
-        <mesh position={[0, 1.75, 0]} rotation={[0, 0, Math.PI / 2]}>
-          <cylinderGeometry args={[0.18, 0.18, 0.4, 16]} />
-          <meshStandardMaterial color="#C5CBD3" metalness={0.9} roughness={0.2} />
-        </mesh>
-
-        {/* Upper Arm Forearm */}
-        <group ref={upperArmRef} position={[0, 1.75, 0]}>
-          <mesh position={[0, 0.75, 0]}>
-            <boxGeometry args={[0.18, 1.4, 0.2]} />
-            <meshStandardMaterial color="#151e2e" metalness={0.8} roughness={0.3} />
-          </mesh>
-
-          {/* Wrist Assembly */}
-          <mesh position={[0, 1.5, 0]}>
-            <cylinderGeometry args={[0.14, 0.14, 0.18, 16]} />
-            <meshStandardMaterial color="#FF3B9D" metalness={0.7} roughness={0.3} />
-          </mesh>
-
-          {/* Gripper Tool Head */}
-          <group position={[0, 1.65, 0]}>
-            {/* Left mechanical gripper finger */}
-            <mesh ref={gripperLeftRef} position={[-0.08, 0.12, 0]}>
-              <boxGeometry args={[0.05, 0.25, 0.08]} />
-              <meshStandardMaterial color="#C5CBD3" metalness={0.9} roughness={0.2} />
-            </mesh>
-            {/* Right mechanical gripper finger */}
-            <mesh ref={gripperRightRef} position={[0.08, 0.12, 0]}>
-              <boxGeometry args={[0.05, 0.25, 0.08]} />
-              <meshStandardMaterial color="#C5CBD3" metalness={0.9} roughness={0.2} />
-            </mesh>
-
-            {/* Scanning Laser Beam projecting downwards */}
-            <mesh ref={laserRef} position={[0, -0.6, 0]}>
-              <cylinderGeometry args={[0.015, 0.08, 1.2, 8]} />
-              <meshBasicMaterial color={side === 'left' ? '#38BDF8' : '#FF3B9D'} transparent opacity={0.65} />
-            </mesh>
-          </group>
-        </group>
-      </group>
-    </group>
-  );
-}
-
-// -------------------------------------------------------------
-// 3. Cybernetic Holographic HUD Panels Floating in 3D Space
-// -------------------------------------------------------------
-function FloatingHudPanel({ position, rotation, label, color = '#38BDF8' }: {
+// ----------------------------------------------------------------------------
+// 2. Peripheral Floating Holographic Geometric Crystals (Layer 2: Outer Flanks)
+// Kept away from screen center to maintain pristine text legibility
+// ----------------------------------------------------------------------------
+function FloatingHoloCrystal({
+  position,
+  rotationSpeed = 0.3,
+  scale = 1.0,
+  color = '#00CFFF',
+  reducedMotion = false
+}: {
   position: [number, number, number];
-  rotation: [number, number, number];
-  label: string;
+  rotationSpeed?: number;
+  scale?: number;
   color?: string;
+  reducedMotion?: boolean;
 }) {
-  const panelRef = useRef<THREE.Group>(null);
+  const groupRef = useRef<THREE.Group>(null);
+  const basePosY = position[1];
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
+    if (reducedMotion || !groupRef.current) return;
     const t = state.clock.getElapsedTime();
-    if (panelRef.current) {
-      panelRef.current.position.y = position[1] + Math.sin(t * 1.5 + position[0]) * 0.12;
-    }
+    groupRef.current.rotation.y += delta * rotationSpeed;
+    groupRef.current.rotation.x += delta * (rotationSpeed * 0.6);
+    groupRef.current.position.y = basePosY + Math.sin(t * 1.2 + position[0]) * 0.18;
   });
 
   return (
-    <group ref={panelRef} position={position} rotation={rotation}>
-      {/* Glass Pane */}
+    <group ref={groupRef} position={position} scale={[scale, scale, scale]}>
+      {/* Outer Wireframe Icosahedron */}
       <mesh>
-        <planeGeometry args={[1.6, 0.95]} />
-        <meshBasicMaterial color="#08101e" transparent opacity={0.75} side={THREE.DoubleSide} />
+        <icosahedronGeometry args={[0.7, 1]} />
+        <meshBasicMaterial color={color} wireframe transparent opacity={0.35} />
       </mesh>
-      {/* Hologram Border */}
-      <lineSegments>
-        <edgesGeometry args={[new THREE.PlaneGeometry(1.6, 0.95)]} />
-        <lineBasicMaterial color={color} transparent opacity={0.8} />
-      </lineSegments>
-      {/* Internal UI lines */}
-      <mesh position={[0, 0.25, 0.01]}>
-        <planeGeometry args={[1.3, 0.04]} />
-        <meshBasicMaterial color={color} transparent opacity={0.9} />
+      {/* Inner Dense Core */}
+      <mesh>
+        <octahedronGeometry args={[0.35, 0]} />
+        <meshStandardMaterial color="#071522" roughness={0.3} metalness={0.9} />
       </mesh>
-      <mesh position={[-0.4, -0.1, 0.01]}>
-        <planeGeometry args={[0.5, 0.02]} />
-        <meshBasicMaterial color="#C5CBD3" transparent opacity={0.6} />
-      </mesh>
-      <mesh position={[0.2, -0.1, 0.01]}>
-        <planeGeometry args={[0.6, 0.02]} />
-        <meshBasicMaterial color="#FF3B9D" transparent opacity={0.7} />
-      </mesh>
-      <mesh position={[0, -0.25, 0.01]}>
-        <planeGeometry args={[1.1, 0.02]} />
-        <meshBasicMaterial color={color} transparent opacity={0.4} />
-      </mesh>
+      {/* Peripheral Accent Point Light */}
+      <pointLight color={color} intensity={1.2} distance={3.5} />
     </group>
   );
 }
 
-// -------------------------------------------------------------
-// 4. Volumetric Particle Network & Laser Scanning Plane
-// -------------------------------------------------------------
-function ParticleField() {
-  const count = 350;
+// ----------------------------------------------------------------------------
+// 3. Animated Digital Energy Streams (Continuous Vertical/Diagonal Data Flow)
+// ----------------------------------------------------------------------------
+function DigitalEnergyStream({
+  x,
+  z,
+  speed = 1.8,
+  length = 3.5,
+  color = '#00CFFF',
+  reducedMotion = false
+}: {
+  x: number;
+  z: number;
+  speed?: number;
+  length?: number;
+  color?: string;
+  reducedMotion?: boolean;
+}) {
+  const meshRef = useRef<THREE.Mesh>(null);
+
+  useFrame((state, delta) => {
+    if (reducedMotion || !meshRef.current) return;
+    meshRef.current.position.y += delta * speed;
+    if (meshRef.current.position.y > 6.0) {
+      meshRef.current.position.y = -6.0;
+    }
+  });
+
+  return (
+    <mesh ref={meshRef} position={[x, (Math.random() - 0.5) * 8, z]}>
+      <cylinderGeometry args={[0.015, 0.015, length, 8]} />
+      <meshBasicMaterial color={color} transparent opacity={0.35} />
+    </mesh>
+  );
+}
+
+// ----------------------------------------------------------------------------
+// 4. Peripheral Neural Constellation Network with Connecting Glowing Lines
+// Positioned exclusively on left and right wings (x <= -3.2 or x >= 3.2)
+// ----------------------------------------------------------------------------
+function PeripheralNeuralNetwork({ reducedMotion }: { reducedMotion: boolean }) {
+  const groupRef = useRef<THREE.Group>(null);
+  const nodeCount = 42;
+
+  // Generate nodes strictly on the outer flanks
+  const { nodePositions, linePositions } = useMemo(() => {
+    const nodes: THREE.Vector3[] = [];
+    for (let i = 0; i < nodeCount; i++) {
+      const isLeft = i % 2 === 0;
+      const x = isLeft ? -3.4 - Math.random() * 3.8 : 3.4 + Math.random() * 3.8;
+      const y = (Math.random() - 0.5) * 6.5;
+      const z = -1.5 - Math.random() * 4.5;
+      nodes.push(new THREE.Vector3(x, y, z));
+    }
+
+    // Connect close neighbors
+    const linePairs: number[] = [];
+    const maxDist = 2.4;
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        if (nodes[i].distanceTo(nodes[j]) < maxDist) {
+          linePairs.push(nodes[i].x, nodes[i].y, nodes[i].z);
+          linePairs.push(nodes[j].x, nodes[j].y, nodes[j].z);
+        }
+      }
+    }
+
+    const posArray = new Float32Array(nodes.length * 3);
+    for (let i = 0; i < nodes.length; i++) {
+      posArray[i * 3] = nodes[i].x;
+      posArray[i * 3 + 1] = nodes[i].y;
+      posArray[i * 3 + 2] = nodes[i].z;
+    }
+
+    return {
+      nodePositions: posArray,
+      linePositions: new Float32Array(linePairs)
+    };
+  }, [nodeCount]);
+
+  useFrame((state, delta) => {
+    if (reducedMotion || !groupRef.current) return;
+    const t = state.clock.getElapsedTime();
+    groupRef.current.position.y = Math.sin(t * 0.4) * 0.08;
+  });
+
+  return (
+    <group ref={groupRef}>
+      {/* Glowing Neural Nodes */}
+      <points>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" count={nodePositions.length / 3} array={nodePositions} itemSize={3} />
+        </bufferGeometry>
+        <pointsMaterial size={0.08} color="#00CFFF" transparent opacity={0.75} blending={THREE.AdditiveBlending} />
+      </points>
+
+      {/* Connective Laser Synapse Lines */}
+      <lineSegments>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" count={linePositions.length / 3} array={linePositions} itemSize={3} />
+        </bufferGeometry>
+        <lineBasicMaterial color="#007BFF" transparent opacity={0.22} />
+      </lineSegments>
+    </group>
+  );
+}
+
+// ----------------------------------------------------------------------------
+// 5. Ambient 3D Micro-Particle Field (Spatial Depth & Pointer Reaction)
+// ----------------------------------------------------------------------------
+function AmbientAtmosphericDust({
+  count = 220,
+  reducedMotion = false
+}: {
+  count?: number;
+  reducedMotion?: boolean;
+}) {
   const pointsRef = useRef<THREE.Points>(null);
 
-  const [positions, colors] = useMemo(() => {
+  const [positions, speeds] = useMemo(() => {
     const pos = new Float32Array(count * 3);
-    const col = new Float32Array(count * 3);
-    const colorCerulean = new THREE.Color('#38BDF8');
-    const colorRose = new THREE.Color('#FF3B9D');
-    const colorSilver = new THREE.Color('#C5CBD3');
-
+    const spd = new Float32Array(count);
     for (let i = 0; i < count; i++) {
-      const radius = 3 + Math.random() * 8;
-      const theta = Math.random() * Math.PI * 2;
-      const y = (Math.random() - 0.5) * 8;
-
-      pos[i * 3] = Math.cos(theta) * radius;
-      pos[i * 3 + 1] = y;
-      pos[i * 3 + 2] = Math.sin(theta) * radius;
-
-      const choice = Math.random();
-      const c = choice > 0.6 ? colorCerulean : choice > 0.35 ? colorSilver : colorRose;
-      col[i * 3] = c.r;
-      col[i * 3 + 1] = c.g;
-      col[i * 3 + 2] = c.b;
+      // Disperse across wide frustum
+      pos[i * 3] = (Math.random() - 0.5) * 18;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 12;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 12;
+      spd[i] = 0.15 + Math.random() * 0.45;
     }
-    return [pos, col];
-  }, []);
+    return [pos, spd];
+  }, [count]);
 
   useFrame((state, delta) => {
-    if (pointsRef.current) {
-      pointsRef.current.rotation.y += delta * 0.08;
-      pointsRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.2) * 0.05;
+    if (reducedMotion || !pointsRef.current) return;
+    const { x, y } = state.pointer;
+    pointsRef.current.rotation.y += delta * 0.035;
+    pointsRef.current.rotation.x = THREE.MathUtils.lerp(pointsRef.current.rotation.x, -y * 0.08, 0.05);
+    pointsRef.current.rotation.z = THREE.MathUtils.lerp(pointsRef.current.rotation.z, x * 0.08, 0.05);
+
+    const arr = pointsRef.current.geometry.attributes.position.array as Float32Array;
+    for (let i = 0; i < count; i++) {
+      arr[i * 3 + 1] += speeds[i] * delta * 0.4;
+      if (arr[i * 3 + 1] > 6) arr[i * 3 + 1] = -6;
     }
+    pointsRef.current.geometry.attributes.position.needsUpdate = true;
   });
 
   return (
     <points ref={pointsRef}>
       <bufferGeometry>
-        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
-        <bufferAttribute attach="attributes-color" args={[colors, 3]} />
+        <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
       </bufferGeometry>
-      <pointsMaterial size={0.075} vertexColors transparent opacity={0.8} sizeAttenuation />
+      <pointsMaterial
+        size={0.055}
+        color="#00CFFF"
+        transparent
+        opacity={0.65}
+        blending={THREE.AdditiveBlending}
+      />
     </points>
   );
 }
 
-// -------------------------------------------------------------
-// 5. Interactive Camera Rig with Mouse Parallax
-// -------------------------------------------------------------
-function CameraRig() {
+// ----------------------------------------------------------------------------
+// 6. Interactive Multi-Layer Camera Rig with Pointer Parallax
+// ----------------------------------------------------------------------------
+function ParallaxCameraRig({ reducedMotion }: { reducedMotion: boolean }) {
   useFrame((state) => {
+    if (reducedMotion) return;
     const { x, y } = state.pointer;
-    state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, x * 1.0, 0.04);
-    state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, y * 0.4 + 0.4, 0.04);
-    state.camera.lookAt(0, -0.3, 0);
+    // Smooth natural damping
+    state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, x * 0.75, 0.04);
+    state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, y * 0.4 + 0.2, 0.04);
+    state.camera.lookAt(0, 0, -2);
   });
   return null;
 }
 
-// -------------------------------------------------------------
-// Master 3D Command Center Component
-// -------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// Master 3D Command Center Background Component
+// ----------------------------------------------------------------------------
 export function CommandCenter3D() {
+  const [reducedMotion, setReducedMotion] = useState<boolean>(false);
+  const [particleDensity, setParticleDensity] = useState<number>(220);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        setReducedMotion(true);
+      }
+      // Responsive density scaling
+      if (window.innerWidth < 640) {
+        setParticleDensity(80); // Mobile
+      } else if (window.innerWidth < 1024) {
+        setParticleDensity(140); // Tablet
+      } else {
+        setParticleDensity(240); // Desktop
+      }
+    }
+  }, []);
+
   return (
-    <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+    <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden select-none">
+      {/* 1. Deep Space Atmospheric Radial Glow (Clean Center, Glowing Periphery) */}
+      <div className="absolute top-1/4 -left-20 w-[600px] h-[600px] rounded-full bg-[#007BFF]/10 blur-[150px] pointer-events-none" />
+      <div className="absolute top-1/3 -right-20 w-[550px] h-[550px] rounded-full bg-[#00CFFF]/10 blur-[150px] pointer-events-none" />
+      <div className="absolute bottom-10 left-1/3 w-[500px] h-[500px] rounded-full bg-[#071522]/30 blur-[140px] pointer-events-none" />
+
+      {/* 2. WebGL 3D Spatial Environment */}
       <WebGLErrorBoundary
         fallback={
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-b from-jet via-jet-surface to-jet">
-            <div className="w-96 h-96 rounded-full border border-cerulean/30 border-dashed animate-rotate-slow flex items-center justify-center">
-              <div className="w-64 h-64 rounded-full border border-rose/30 animate-rotate-reverse flex items-center justify-center">
-                <div className="w-32 h-32 rounded-full bg-cerulean/10 border border-cerulean shadow-hologram-blue" />
-              </div>
-            </div>
+          <div className="w-full h-full flex items-center justify-center bg-transparent">
+            <div className="w-[600px] h-[600px] rounded-full border border-cerulean/20 border-dashed animate-spin pointer-events-none" style={{ animationDuration: '45s' }} />
           </div>
         }
       >
         <Canvas
-          camera={{ position: [0, 0.6, 6.2], fov: 48 }}
-          dpr={[1, 1.8]}
+          camera={{ position: [0, 0.2, 5.8], fov: 46 }}
+          dpr={[1, 1.75]}
           gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+          className="w-full h-full block"
         >
-          <CameraRig />
-          <ambientLight intensity={0.4} />
-          <directionalLight position={[4, 8, 4]} intensity={1.2} color="#FFFFFF" />
-          <directionalLight position={[-4, -3, 2]} intensity={0.8} color="#38BDF8" />
+          {/* Volumetric Blue Atmosphere Fog */}
+          <color attach="background" args={['#030609']} />
+          <fogExp2 attach="fog" args={['#030609', 0.055]} />
 
-          {/* Quantum Arc Reactor Core */}
-          <QuantumCore />
+          {/* Interactive Parallax Camera Rig */}
+          <ParallaxCameraRig reducedMotion={reducedMotion} />
 
-          {/* Left and Right Industrial Robotic Arms */}
-          <RoboticArm position={[-3.8, -0.6, -1]} side="left" />
-          <RoboticArm position={[3.8, -0.6, -1]} side="right" />
+          {/* Volumetric Lights */}
+          <ambientLight intensity={0.5} />
+          <directionalLight position={[5, 6, 3]} intensity={1.0} color="#00CFFF" />
+          <directionalLight position={[-5, -4, 2]} intensity={0.8} color="#007BFF" />
 
-          {/* Floating Telemetry HUD Panes */}
-          <FloatingHudPanel position={[-2.8, 1.4, 0.5]} rotation={[0, 0.35, 0]} label="TELEMETRY 01" color="#38BDF8" />
-          <FloatingHudPanel position={[2.8, 1.4, 0.5]} rotation={[0, -0.35, 0]} label="DIAGNOSTICS" color="#FF3B9D" />
+          {/* LAYER 1: Distant Orbital Structures (z = -7.5) */}
+          <DistantOrbitalStructures reducedMotion={reducedMotion} />
 
-          {/* Particle Network */}
-          <ParticleField />
+          {/* LAYER 2: Peripheral Neural Network with Glowing Synapse Lines */}
+          <PeripheralNeuralNetwork reducedMotion={reducedMotion} />
+
+          {/* LAYER 2: Floating Holographic Geometric Crystals (Left & Right Flanks) */}
+          <FloatingHoloCrystal position={[-4.5, 1.8, -2.5]} rotationSpeed={0.35} scale={0.9} color="#00CFFF" reducedMotion={reducedMotion} />
+          <FloatingHoloCrystal position={[-5.2, -1.6, -3.2]} rotationSpeed={0.25} scale={0.75} color="#007BFF" reducedMotion={reducedMotion} />
+          <FloatingHoloCrystal position={[4.6, 1.5, -2.8]} rotationSpeed={0.3} scale={0.85} color="#00CFFF" reducedMotion={reducedMotion} />
+          <FloatingHoloCrystal position={[5.4, -1.8, -3.5]} rotationSpeed={0.28} scale={0.7} color="#007BFF" reducedMotion={reducedMotion} />
+
+          {/* LAYER 2: Vertical Digital Energy Streams (Peripheral Data Uplinks) */}
+          <DigitalEnergyStream x={-4.8} z={-2.2} speed={1.6} length={3.2} color="#00CFFF" reducedMotion={reducedMotion} />
+          <DigitalEnergyStream x={-3.6} z={-3.5} speed={2.2} length={2.5} color="#007BFF" reducedMotion={reducedMotion} />
+          <DigitalEnergyStream x={4.8} z={-2.4} speed={1.8} length={3.0} color="#00CFFF" reducedMotion={reducedMotion} />
+          <DigitalEnergyStream x={3.8} z={-3.2} speed={2.4} length={2.8} color="#007BFF" reducedMotion={reducedMotion} />
+
+          {/* LAYER 3: Small Ambient Cyan & Silver Dust Particles (Depth & Pointer Reactivity) */}
+          <AmbientAtmosphericDust count={particleDensity} reducedMotion={reducedMotion} />
         </Canvas>
       </WebGLErrorBoundary>
     </div>
   );
 }
+
 export default CommandCenter3D;

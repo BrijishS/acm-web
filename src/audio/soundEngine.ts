@@ -425,6 +425,99 @@ class SoundEngine {
   }
 
   // Continuous ambient cyberpunk soundtrack generator
+  public playReactorIgnition() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      // Low-frequency reactor surge
+      const subOsc = this.ctx.createOscillator();
+      const subGain = this.ctx.createGain();
+      subOsc.type = 'sine';
+      subOsc.frequency.setValueAtTime(65, now);
+      subOsc.frequency.exponentialRampToValueAtTime(140, now + 0.9);
+
+      subGain.gain.setValueAtTime(0.001, now);
+      subGain.gain.linearRampToValueAtTime(this.volume * 0.35, now + 0.3);
+      subGain.gain.exponentialRampToValueAtTime(0.001, now + 1.1);
+
+      subOsc.connect(subGain);
+      subGain.connect(this.ctx.destination);
+      subOsc.start(now);
+      subOsc.stop(now + 1.15);
+
+      // Resonant harmonic pulse
+      const harmOsc = this.ctx.createOscillator();
+      const harmGain = this.ctx.createGain();
+      harmOsc.type = 'triangle';
+      harmOsc.frequency.setValueAtTime(220, now + 0.1);
+      harmOsc.frequency.exponentialRampToValueAtTime(440, now + 0.8);
+
+      harmGain.gain.setValueAtTime(0.001, now + 0.1);
+      harmGain.gain.linearRampToValueAtTime(this.volume * 0.15, now + 0.4);
+      harmGain.gain.exponentialRampToValueAtTime(0.001, now + 0.9);
+
+      harmOsc.connect(harmGain);
+      harmGain.connect(this.ctx.destination);
+      harmOsc.start(now + 0.1);
+      harmOsc.stop(now + 0.95);
+    } catch {}
+  }
+
+  public playParticleConvergence() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(1800, now);
+      osc.frequency.exponentialRampToValueAtTime(420, now + 0.45);
+
+      gain.gain.setValueAtTime(this.volume * 0.1, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.48);
+    } catch {}
+  }
+
+  public playWarpTransition() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(120, now);
+      osc.frequency.exponentialRampToValueAtTime(880, now + 0.5);
+
+      gain.gain.setValueAtTime(this.volume * 0.22, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(800, now);
+      filter.frequency.exponentialRampToValueAtTime(3200, now + 0.5);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.62);
+    } catch {}
+  }
+
   public startSoundtrack() {
     if (this.isSoundtrackPlaying) return;
     this.initContext();

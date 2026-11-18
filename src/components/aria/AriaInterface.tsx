@@ -9,7 +9,6 @@ import {
   AriaCoreState,
   AriaMessage,
   AriaSettings,
-  AriaMode,
   AriaPanelType
 } from '../../types/aria';
 import { AriaCore3D } from './AriaCore3D';
@@ -28,8 +27,6 @@ import {
   MicOff,
   Send,
   X,
-  Minimize2,
-  Maximize2,
   Settings,
   Volume2,
   VolumeX,
@@ -74,8 +71,6 @@ export const AriaInterface: React.FC<AriaInterfaceProps> = ({
   onOpenAdmin,
   isAdminAuthenticated = false
 }) => {
-  // Mode: 'fullscreen' or 'docked'
-  const [mode, setMode] = useState<AriaMode>('fullscreen');
   const [coreState, setCoreState] = useState<AriaCoreState>('standby');
   const [inputText, setInputText] = useState<string>('');
   const [waveform, setWaveform] = useState<number[]>(new Array(24).fill(0.05));
@@ -153,9 +148,6 @@ export const AriaInterface: React.FC<AriaInterfaceProps> = ({
     const unsubWakeWord = ariaVoiceSystem.onWakeWord(() => {
       if (settings.wakeWordEnabled) {
         soundEngine.playJarvisChirp();
-        if (mode === 'docked') {
-          setMode('fullscreen');
-        }
         ariaVoiceSystem.speak("A.R.I.A. active. I am listening.");
       }
     });
@@ -168,7 +160,7 @@ export const AriaInterface: React.FC<AriaInterfaceProps> = ({
       ariaVoiceSystem.stopSpeaking();
       ariaVoiceSystem.stopListening();
     };
-  }, [settings.wakeWordEnabled, mode]);
+  }, [settings.wakeWordEnabled]);
 
   // Handle User Input Submission
   const handleUserSubmit = async (textToSend?: string) => {
@@ -270,64 +262,8 @@ export const AriaInterface: React.FC<AriaInterfaceProps> = ({
   if (!isOpen) return null;
 
   // -------------------------------------------------------------
-  // DOCKED / MINIMIZED FLOATING HUD MODE
-  // -------------------------------------------------------------
-  if (mode === 'docked') {
-    return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.8, y: 20 }}
-        className="fixed bottom-6 right-6 z-[95] flex items-center gap-3 select-none"
-      >
-        {/* Holographic Status Pill */}
-        <div
-          onClick={() => {
-            if (settings.soundEffects) soundEngine.playClick();
-            setMode('fullscreen');
-          }}
-          className="hud-card px-4 py-2 rounded-full border-cerulean/40 hover:border-cerulean flex items-center gap-2.5 cursor-pointer shadow-[0_0_25px_rgba(0,123,255,0.4)] backdrop-blur-xl group"
-        >
-          <div className="relative w-3.5 h-3.5">
-            <div className="absolute inset-0 rounded-full bg-cerulean animate-ping opacity-60" />
-            <div className="w-3.5 h-3.5 rounded-full bg-cerulean shadow-[0_0_10px_#38BDF8]" />
-          </div>
-          <span className="font-heading text-xs font-bold text-white tracking-widest uppercase group-hover:text-cerulean transition-colors">
-            A.R.I.A. ONLINE
-          </span>
-          <span className="font-mono text-[9px] text-chrome/50">EXPAND</span>
-        </div>
-
-        {/* Quick Mic Button */}
-        <button
-          onClick={handleToggleMic}
-          className={`p-3 rounded-full border shadow-lg transition-all ${
-            coreState === 'listening'
-              ? 'bg-[#00F0FF] border-[#00F0FF] text-black shadow-[0_0_20px_#00F0FF] animate-pulse'
-              : 'bg-[#071322] border-cerulean/40 text-cerulean hover:border-cerulean'
-          }`}
-          title="Push to speak with A.R.I.A."
-        >
-          <Mic className="w-5 h-5" />
-        </button>
-
-        {/* Maximize Button */}
-        <button
-          onClick={() => {
-            if (settings.soundEffects) soundEngine.playClick();
-            setMode('fullscreen');
-          }}
-          className="p-3 rounded-full bg-[#071322] border border-cerulean/40 text-white hover:border-cerulean shadow-lg"
-          title="Open Full-Screen Command Center"
-        >
-          <Maximize2 className="w-5 h-5 text-cerulean" />
-        </button>
-      </motion.div>
-    );
-  }
-
-  // -------------------------------------------------------------
   // FULL-SCREEN HOLOGRAPHIC COMMAND CENTER
+  // -------------------------------------------------------------
   // -------------------------------------------------------------
   return (
     <AnimatePresence>
@@ -400,18 +336,6 @@ export const AriaInterface: React.FC<AriaInterfaceProps> = ({
               <Settings className="w-4 h-4 text-cerulean" />
             </button>
 
-            {/* Minimize / Dock Button */}
-            <button
-              onClick={() => {
-                if (settings.soundEffects) soundEngine.playClick();
-                setMode('docked');
-              }}
-              className="p-2 rounded-lg border border-cerulean/20 text-chrome hover:text-white hover:border-cerulean transition-colors"
-              title="Minimize into Floating Dock"
-            >
-              <Minimize2 className="w-4 h-4 text-cerulean" />
-            </button>
-
             {/* Close */}
             <button
               onClick={() => {
@@ -420,8 +344,8 @@ export const AriaInterface: React.FC<AriaInterfaceProps> = ({
                 ariaVoiceSystem.stopListening();
                 onClose();
               }}
-              className="p-2 rounded-lg border border-rose/30 text-rose hover:bg-rose/20 transition-colors"
-              title="Terminate Session"
+              className="p-2 rounded-lg border border-rose/30 text-rose hover:bg-rose/20 transition-colors cursor-pointer"
+              title="Close Holographic Interface"
             >
               <X className="w-4 h-4" />
             </button>
