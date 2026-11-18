@@ -143,17 +143,6 @@ function RainAndMist({ count = 350 }: { count?: number }) {
   );
 }
 
-// Stepper items that map directly to website sections
-const STEPPER_ITEMS = [
-  { id: 'mission', num: '01', title: 'ARRIVAL', active: true },
-  { id: 'profile', num: '02', title: 'THE STORY', active: false },
-  { id: 'vision', num: '03', title: 'VISTAS', active: false },
-  { id: 'domains', num: '04', title: 'DOMAINS', active: false },
-  { id: 'projects', num: '05', title: 'BUILDS', active: false },
-  { id: 'events', num: '06', title: 'EVENTS', active: false },
-  { id: 'governance', num: '07', title: 'GOVERNANCE', active: false },
-  { id: 'team', num: '08', title: 'CREW', active: false }
-];
 
 // -------------------------------------------------------------
 // Master Arrival Entry Animation Component
@@ -337,59 +326,6 @@ export const CinematicIntro: React.FC<CinematicIntroProps> = ({
         </div>
       </header>
 
-      {/* ----------------------------------------------------------- */}
-      {/* Right Stepper HUD (matches screenshot) */}
-      {/* ----------------------------------------------------------- */}
-      <aside className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-20 flex flex-col items-end select-none font-mono text-xs">
-        <div className="flex flex-col items-end gap-3.5 relative py-2">
-          {STEPPER_ITEMS.map((item) => (
-            <button
-              key={item.num}
-              onClick={() => handleEnter(item.id)}
-              onMouseEnter={() => soundEngine.playHover()}
-              className="group flex items-center gap-3 cursor-pointer focus:outline-none transition-all duration-200"
-              title={`Jump to ${item.title}`}
-            >
-              <span
-                className={`text-[10px] sm:text-[11px] tracking-[0.25em] uppercase font-semibold transition-all duration-300 ${
-                  item.active
-                    ? 'opacity-100 text-[#F97316]'
-                    : 'opacity-0 group-hover:opacity-100 text-[#94a3b8] group-hover:text-white translate-x-1 group-hover:translate-x-0 hidden sm:inline-block'
-                }`}
-              >
-                {item.title}
-              </span>
-
-              <div className="flex items-center gap-2">
-                <span
-                  className={`text-xs font-bold transition-colors ${
-                    item.active
-                      ? 'text-[#F97316]'
-                      : 'text-[#475569] group-hover:text-[#94a3b8]'
-                  }`}
-                >
-                  {item.num}
-                </span>
-
-                <span
-                  className={`w-2.5 h-[2px] rounded-full transition-all ${
-                    item.active
-                      ? 'bg-[#F97316] w-4 shadow-[0_0_8px_rgba(249,115,22,0.8)]'
-                      : 'bg-[#334155] group-hover:bg-[#94a3b8]'
-                  }`}
-                />
-              </div>
-            </button>
-          ))}
-        </div>
-
-        {/* 02% percentage readout at bottom */}
-        <div className="mt-4 pt-3 border-t border-[#1e293b]/80 text-right">
-          <span className="text-[#F97316] font-bold text-xs tracking-widest">
-            02%
-          </span>
-        </div>
-      </aside>
 
       {/* ----------------------------------------------------------- */}
       {/* Center Brand & Enter Trigger (matches screenshot) */}
