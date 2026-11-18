@@ -1,10 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
-import { EventItem, ProjectItem, GalleryItem } from '../types';
+import { EventItem, ProjectItem, GalleryItem, MembershipSubmission } from '../types';
 import { EVENTS_DATA, PROJECTS_DATA, GALLERY_DATA } from './chapterData';
 import { TeamMember, ACTUAL_TEAM_MEMBERS } from './teamData';
 
-const SUPABASE_URL = "https://zwxjuhologbhmicfzrvx.supabase.co";
-const SUPABASE_KEY = "sb_publishable_dPVQ_pAVEZw18c4uw2mX7Q__qP5Uk-e";
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "https://zwxjuhologbhmicfzrvx.supabase.co";
+const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || "sb_publishable_dPVQ_pAVEZw18c4uw2mX7Q__qP5Uk-e";
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -44,10 +44,32 @@ export async function fetchLiveTeam(): Promise<TeamMember[]> {
 }
 
 export async function fetchLiveEvents(): Promise<EventItem[]> {
+  try {
+    const { data } = await supabase
+      .from('events')
+      .select('*')
+      .eq('status', 'published');
+    if (data && data.length > 0) {
+      return data as EventItem[];
+    }
+  } catch {
+    // Return verified local records
+  }
   return EVENTS_DATA;
 }
 
 export async function fetchLiveProjects(): Promise<ProjectItem[]> {
+  try {
+    const { data } = await supabase
+      .from('projects')
+      .select('*')
+      .eq('status', 'published');
+    if (data && data.length > 0) {
+      return data as ProjectItem[];
+    }
+  } catch {
+    // Return verified local records
+  }
   return PROJECTS_DATA;
 }
 

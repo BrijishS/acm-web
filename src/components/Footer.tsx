@@ -1,7 +1,7 @@
 import React from 'react';
 import { soundEngine } from '../audio/soundEngine';
 import { CHAPTER_INFO } from '../data/chapterData';
-import { Instagram, ArrowUp } from 'lucide-react';
+import { Instagram, ArrowUp, Shield } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (sectionId: string) => void;
@@ -14,26 +14,27 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   };
 
   const footerLinks = [
-    { id: 'mission', label: 'Mission' },
-    { id: 'profile', label: 'Profile' },
-    { id: 'vision', label: 'Vision' },
-    { id: 'domains', label: 'Galaxy' },
-    { id: 'events', label: 'Launches' },
-    { id: 'projects', label: 'Builds' },
-    { id: 'governance', label: 'Governance' },
-    { id: 'team', label: 'Crew' },
+    { id: 'home', label: 'Home' },
+    { id: 'about', label: 'About ACM' },
+    { id: 'events', label: 'Events' },
+    { id: 'activities', label: 'Activities' },
+    { id: 'crew', label: 'Our Crew' },
+    { id: 'projects', label: 'Projects' },
     { id: 'gallery', label: 'Gallery' },
+    { id: 'achievements', label: 'Achievements' },
+    { id: 'timeline', label: 'Timeline' },
+    { id: 'join', label: 'Join ACM' },
     { id: 'contact', label: 'Contact' },
   ];
 
   return (
-    <footer className="relative border-t border-cerulean/20 bg-jet pt-16 pb-12 px-4 md:px-8 text-chrome overflow-hidden">
-      <div className="max-w-6xl mx-auto">
+    <footer className="relative border-t border-cerulean/20 bg-[#050505] pt-16 pb-12 px-4 md:px-8 text-[#A5ADBA] overflow-hidden">
+      <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-cerulean/15">
           {/* Brand & Identity */}
           <div className="md:col-span-5 flex flex-col gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full border border-cerulean/50 p-0.5 overflow-hidden">
+              <div className="w-10 h-10 rounded-full border border-cerulean/60 p-0.5 overflow-hidden bg-[#0B1018]">
                 <img
                   src={CHAPTER_INFO.logoUrl}
                   alt="VISTAS ACM Chapter Logo"
@@ -45,17 +46,17 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   VISTAS ACM
                 </b>
                 <small className="font-mono text-[9px] text-cerulean tracking-[0.2em] uppercase mt-0.5">
-                  Student Chapter
+                  Mission Control 2.0
                 </small>
               </div>
             </div>
 
-            <p className="font-sans text-xs md:text-sm text-chrome/80 leading-relaxed max-w-sm">
+            <p className="font-sans text-xs md:text-sm text-[#A5ADBA] leading-relaxed max-w-sm">
               Department of Computer Science and Engineering, School of Engineering, Vels Institute of Science, Technology and Advanced Studies (VISTAS).
             </p>
 
-            <div className="font-mono text-xs text-rose tracking-wider font-bold">
-              BUILD / LEAD / CREATE / CONNECT.
+            <div className="font-heading text-base text-rose tracking-widest font-black uppercase">
+              INNOVATE · CREATE · LEAD
             </div>
           </div>
 
@@ -72,7 +73,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                     soundEngine.playClick();
                     onNavigate(item.id);
                   }}
-                  className="text-left text-chrome/70 hover:text-cerulean transition-colors cursor-pointer py-1"
+                  className="text-left text-[#A5ADBA] hover:text-cerulean transition-colors cursor-pointer py-1"
                 >
                   {item.label}
                 </button>
@@ -81,7 +82,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 href={CHAPTER_INFO.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-left text-chrome/70 hover:text-rose transition-colors py-1 flex items-center gap-1.5"
+                className="text-left text-[#A5ADBA] hover:text-rose transition-colors py-1 flex items-center gap-1.5"
               >
                 <span>Instagram</span>
                 <span className="text-[10px]">↗</span>
@@ -100,13 +101,16 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   href={CHAPTER_INFO.instagramUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-chrome hover:text-rose transition-colors"
+                  className="flex items-center gap-2 text-[#C0C0C0] hover:text-rose transition-colors"
                 >
                   <Instagram className="w-4 h-4 text-rose" />
                   <span>@vistas_acm ↗</span>
                 </a>
-                <div className="text-[11px] text-chrome/60 pt-1">
+                <div className="text-[11px] text-[#A5ADBA]/70 pt-1">
                   ACM Chapter Group ID 199704
+                </div>
+                <div className="text-[11px] text-[#A5ADBA]/70">
+                  Status: Good Standing (Nov 2026)
                 </div>
               </div>
             </div>
@@ -126,9 +130,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         </div>
 
         {/* Bottom Attribution */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] font-mono text-chrome/50 gap-4">
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] font-mono text-[#A5ADBA]/60 gap-4">
           <div>
-            © VISTAS ACM · Build / Lead / Create / Connect
+            © VISTAS ACM Student Chapter · Innovate. Create. Lead.
           </div>
           <div className="flex items-center gap-2">
             <span>Department of Computer Science and Engineering</span>

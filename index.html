@@ -3,9 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#030407" />
-    <title>VISTAS ACM - Mission Control</title>
-    <meta name="description" content="Official Student Chapter of the Association for Computing Machinery at Vels Institute of Science, Technology and Advanced Studies (VISTAS). Engineering the future. Innovating together." />
+    <meta name="theme-color" content="#050505" />
+    <title>VISTAS ACM – MISSION CONTROL 2.0</title>
+    <meta name="description" content="VISTAS ACM Student Chapter (Group ID 199704) – INNOVATE. CREATE. LEAD. Empowering students through technology, collaboration, research and innovation." />
+    <meta name="keywords" content="VISTAS ACM, ACM Student Chapter, Vels University, Chennai, Computer Science, AI, Web Development, Cybersecurity, Hackathons" />
+    <meta name="author" content="VISTAS ACM Leadership" />
+
+    <!-- Open Graph Metadata -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://acm-web-mocha.vercel.app/" />
+    <meta property="og:title" content="VISTAS ACM – MISSION CONTROL 2.0" />
+    <meta property="og:description" content="INNOVATE. CREATE. LEAD. Empowering students through technology, collaboration, research and innovation." />
+    <meta property="og:image" content="/assets/vistas-acm-blue-logo.jpg" />
+
+    <!-- Twitter Card Metadata -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="VISTAS ACM – MISSION CONTROL 2.0" />
+    <meta name="twitter:description" content="INNOVATE. CREATE. LEAD. Empowering students through technology, collaboration, research and innovation." />
+    <meta name="twitter:image" content="/assets/vistas-acm-blue-logo.jpg" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -13,8 +28,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Manrope:wght@300;400;500;600;700;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" />
 
     <link rel="icon" type="image/jpeg" href="/assets/vistas-acm-blue-logo.jpg" />
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "VISTAS ACM Student Chapter",
+      "alternateName": "VISTAS ACM",
+      "identifier": "199704",
+      "url": "https://acm-web-mocha.vercel.app/",
+      "logo": "https://acm-web-mocha.vercel.app/assets/vistas-acm-blue-logo.jpg",
+      "description": "Official Student Chapter of the Association for Computing Machinery (ACM) at Vels Institute of Science, Technology and Advanced Studies (VISTAS).",
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "Association for Computing Machinery",
+        "url": "https://www.acm.org"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Department of Computer Science and Engineering, School of Engineering, VISTAS, Pallavaram",
+        "addressLocality": "Chennai",
+        "addressRegion": "Tamil Nadu",
+        "postalCode": "600117",
+        "addressCountry": "IN"
+      }
+    }
+    </script>
   </head>
-  <body class="bg-jet text-chrome selection:bg-rose selection:text-white overflow-x-hidden antialiased">
+  <body class="bg-obsidian text-chrome selection:bg-rose selection:text-white overflow-x-hidden antialiased">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

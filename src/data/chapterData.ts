@@ -1,4 +1,4 @@
-import { Domain, EventItem, ProjectItem, GalleryItem } from '../types';
+import { Domain, EventItem, ProjectItem, GalleryItem, TimelineItem, AchievementItem, AnnouncementItem } from '../types';
 
 // ============================================================================
 // 1. OFFICIAL CHAPTER IDENTITY (Section 1 & 2)
@@ -14,10 +14,11 @@ export const CHAPTER_INFO = {
   groupId: "199704",
   academicYear: "2026–2027",
   chapterId: "199704",
-  tagline: "Build. Lead. Create.",
+  tagline: "INNOVATE. CREATE. LEAD.",
+  supportingMessage: "Empowering students through technology, collaboration, research and innovation.",
   headline: "VISTAS ACM Student Chapter",
   subheadline: "VISTAS ACM · Ideas into impact",
-  lead: "VISTAS ACM Student Chapter — a community for curious minds, practical ideas, and better things built together. Build. Lead. Create. School of Engineering · Department of Computer Science and Engineering · Academic Year 2026–2027 · ACM Chapter Group ID 199704.",
+  lead: "VISTAS ACM Student Chapter — a community for curious minds, practical ideas, and better things built together. INNOVATE. CREATE. LEAD. School of Engineering · Department of Computer Science and Engineering · Academic Year 2026–2027 · ACM Chapter Group ID 199704.",
   intro: "VISTAS ACM is a place to connect with people who enjoy asking questions and building useful things. We make room for learning at every level and for ideas to grow through collaboration.",
   location: "Department of Computer Science and Engineering, School of Engineering, Vels Institute of Science, Technology and Advanced Studies (VISTAS), Pallavaram, Chennai, Tamil Nadu 600117, India",
   campusLocationStatus: "To be confirmed",
@@ -594,5 +595,121 @@ export const ASSISTANT_KNOWLEDGE = [
     triggers: ["vistas", "vels", "where is", "institution", "location"],
     response: "VISTAS ACM is based at the Department of Computer Science and Engineering, School of Engineering, Vels Institute of Science, Technology and Advanced Studies (VISTAS), Pallavaram, Chennai, Tamil Nadu, India. ACM Chapter Group ID 199704.",
     suggestions: ["Chapter Profile", "Contact"]
+  }
+];
+
+// ============================================================================
+// 15. CHAPTER ACHIEVEMENTS & VERIFIED STATS
+// ============================================================================
+export const CHAPTER_ACHIEVEMENTS: AchievementItem[] = [
+  {
+    id: "ach-01",
+    metric: "199704",
+    label: "ACM Chapter Group ID",
+    detail: "Officially chartered student chapter recognized by the Association for Computing Machinery.",
+    iconName: "ShieldCheck",
+    verified: true
+  },
+  {
+    id: "ach-02",
+    metric: "16",
+    label: "Council Leadership",
+    detail: "Faculty Advisor and 15 student office bearers driving technical initiatives.",
+    iconName: "Users",
+    verified: true
+  },
+  {
+    id: "ach-03",
+    metric: "05",
+    label: "Technical Domains",
+    detail: "Specialized focus across AI & ML, Web & App, Cybersecurity, Data & Cloud, and Emerging Tech.",
+    iconName: "Layers",
+    verified: true
+  },
+  {
+    id: "ach-04",
+    metric: "Good Standing",
+    label: "Active ACM Recognition",
+    detail: "Confirmed in good standing by the ACM Chapter Program Manager, November 2026.",
+    iconName: "Award",
+    verified: true
+  }
+];
+
+// ============================================================================
+// 16. CHAPTER LEGACY TIMELINE (Verified Milestones)
+// ============================================================================
+export const CHAPTER_TIMELINE: TimelineItem[] = [
+  {
+    id: "tl-01",
+    year: "2026",
+    dateStr: "OCTOBER 2026",
+    title: "Official Chapter Charter & Group ID 199704",
+    subtitle: "Department of CSE, School of Engineering",
+    description: "VISTAS ACM Student Chapter is formally recognized and chartered by the Association for Computing Machinery under Group ID 199704.",
+    category: "Foundation",
+    badge: "CHARTERED"
+  },
+  {
+    id: "tl-02",
+    year: "2026",
+    dateStr: "OCTOBER 2026",
+    title: "Faculty Advisor & Executive Council Induction",
+    subtitle: "Leadership Team Established",
+    description: "Induction of Faculty Advisor Mr. N. Udayakumar and Student Chairperson Mr. Brijish S along with 15 functional office bearers across operations, technical, and creative domains.",
+    category: "Milestone",
+    badge: "GOVERNANCE"
+  },
+  {
+    id: "tl-03",
+    year: "2026",
+    dateStr: "NOVEMBER 2026",
+    title: "Establishment of 5 Specialized Technical Domains",
+    subtitle: "AI/ML, Web/App, Cyber, Cloud & Emerging Tech",
+    description: "The chapter architected its operating domains to provide focused research, peer learning sprints, and project incubations for computing students.",
+    category: "Initiative",
+    badge: "DOMAINS"
+  },
+  {
+    id: "tl-04",
+    year: "2026",
+    dateStr: "NOVEMBER 2026",
+    title: "Good Standing Status Confirmed",
+    subtitle: "ACM Chapter Program Manager",
+    description: "Official verification received from the ACM Chapter Program Manager confirming VISTAS ACM in full good standing with complete activity and roster documentation.",
+    category: "Recognition",
+    badge: "VERIFIED"
+  },
+  {
+    id: "tl-05",
+    year: "2026–2027",
+    dateStr: "DECEMBER 2026",
+    title: "Hack the Vel & Flagship Launch Cadence",
+    subtitle: "24-Hour Chapter Hackathon & Tech Sprints",
+    description: "Deployment of Hack the Vel, Cipher Quest, Byte Brawl, Neural Nights, and Orbit Outreach to cultivate student innovation and real-world problem solving.",
+    category: "Activity",
+    badge: "FLAGSHIP"
+  }
+];
+
+// ============================================================================
+// 17. OFFICIAL ANNOUNCEMENTS & BROADCASTS
+// ============================================================================
+export const OFFICIAL_ANNOUNCEMENTS: AnnouncementItem[] = [
+  {
+    id: "ann-01",
+    title: "Registrations Open for Hack the Vel 24-Hour Hackathon",
+    content: "Team registrations for the premier chapter hackathon 'Hack the Vel' are actively accepting submissions. Form a team and build practical software & hardware solutions.",
+    category: "Event",
+    date: "November 2026",
+    pinned: true
+  },
+  {
+    id: "ann-02",
+    title: "VISTAS ACM Membership Drive AY 2026–2027",
+    content: "Explore technical domains, collaborate on student payloads, and join our active technical community at the School of Engineering.",
+    category: "Recruitment",
+    date: "Academic Year 2026–2027",
+    pinned: true
   }
 ];

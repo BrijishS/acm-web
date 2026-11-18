@@ -60,3 +60,44 @@ export interface AssistantMessage {
   suggestions?: string[];
   actionTarget?: string;
 }
+
+export interface TimelineItem {
+  id: string;
+  year: string;
+  dateStr: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  category: 'Foundation' | 'Milestone' | 'Initiative' | 'Recognition' | 'Activity';
+  badge?: string;
+}
+
+export interface AchievementItem {
+  id: string;
+  metric: string;
+  label: string;
+  detail: string;
+  iconName: string;
+  verified: boolean;
+}
+
+export interface AnnouncementItem {
+  id: string;
+  title: string;
+  content: string;
+  category: 'Urgent' | 'General' | 'Event' | 'Recruitment';
+  date: string;
+  pinned?: boolean;
+}
+
+export interface MembershipSubmission {
+  id: string;
+  fullName: string;
+  email: string;
+  department: string;
+  yearOfStudy: string;
+  domainsOfInterest: string[];
+  statement: string;
+  submittedAt: string;
+  status: 'pending' | 'reviewed' | 'approved';
+}

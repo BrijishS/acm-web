@@ -225,6 +225,35 @@ class SoundEngine {
     } catch {}
   }
 
+  public playLaserSweep() {
+    this.playScanner();
+  }
+
+  public playTelemetryBeep() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(1480, now);
+      osc.frequency.setValueAtTime(1920, now + 0.05);
+
+      gain.gain.setValueAtTime(this.volume * 0.12, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.13);
+    } catch {}
+  }
+
   // Ambient headquarters reactor hum
   public startAmbientHum() {
     if (this.isAmbientPlaying) return;

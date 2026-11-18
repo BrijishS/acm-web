@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CinematicIntro } from './components/CinematicIntro';
 import { Navigation } from './components/Navigation';
 import { HomeSection } from './components/sections/HomeSection';
@@ -9,23 +9,30 @@ import { ProjectsSection } from './components/sections/ProjectsSection';
 import { GovernanceSection } from './components/sections/GovernanceSection';
 import { TeamSection } from './components/sections/TeamSection';
 import { GallerySection } from './components/sections/GallerySection';
+import { AchievementsSection } from './components/sections/AchievementsSection';
+import { TimelineSection } from './components/sections/TimelineSection';
+import { MembershipSection } from './components/sections/MembershipSection';
 import { ContactSection } from './components/sections/ContactSection';
 import { InstagramSection } from './components/sections/InstagramSection';
 import { Footer } from './components/Footer';
 import { JarvisAssistant } from './components/JarvisAssistant';
+import { AdminDashboard } from './components/AdminDashboard';
 import { CustomCursor } from './components/CustomCursor';
-import { AiTransmissionHud } from './components/AiTransmissionHud';
-import { CinematicSectionTransition } from './components/CinematicSectionTransition';
 import { soundEngine } from './audio/soundEngine';
-import { aiVoiceEngine, SectionAiBriefing } from './audio/aiVoiceEngine';
 
 export function App() {
-  const [showIntro, setShowIntro] = useState(true);
-  const [activeSection, setActiveSection] = useState('mission');
-  const [isSoundMuted, setIsSoundMuted] = useState(soundEngine.getIsMuted());
-  const [aiTransmission, setAiTransmission] = useState<SectionAiBriefing | null>(null);
-  const [isAiSpeaking, setIsAiSpeaking] = useState(false);
-  const aiTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Check if intro has already been experienced in this session
+  const [showIntro, setShowIntro] = useState<boolean>(() => {
+    try {
+      return sessionStorage.getItem('vistas_intro_seen') !== 'true';
+    } catch {
+      return true;
+    }
+  });
+
+  const [activeSection, setActiveSection] = useState<string>('home');
+  const [isSoundMuted, setIsSoundMuted] = useState<boolean>(soundEngine.getIsMuted());
+  const [isAdminOpen, setIsAdminOpen] = useState<boolean>(false);
 
   // Lock body scroll while entry animation is active
   useEffect(() => {
@@ -41,6 +48,11 @@ export function App() {
 
   const handleIntroComplete = (targetSectionId?: string) => {
     setShowIntro(false);
+    try {
+      sessionStorage.setItem('vistas_intro_seen', 'true');
+    } catch {
+      // Ignore sessionStorage errors
+    }
     if (targetSectionId) {
       setTimeout(() => {
         handleNavigate(targetSectionId);
@@ -48,93 +60,51 @@ export function App() {
     }
   };
 
-  const handleNavigate = (sectionId: string, triggerAiVoice: boolean = true) => {
-    // Map aliases
+  const handleNavigate = (sectionId: string) => {
+    // Map section aliases
     const targetMap: Record<string, string> = {
-      home: 'mission',
+      home: 'home',
+      mission: 'home',
       about: 'about',
-      profile: 'profile',
-      vision: 'vision',
+      profile: 'about',
+      vision: 'about',
+      activities: 'domains',
+      domains: 'domains',
       galaxy: 'domains',
+      events: 'events',
       launches: 'events',
+      crew: 'crew',
+      team: 'crew',
+      projects: 'projects',
       builds: 'projects',
-      crew: 'team',
+      gallery: 'gallery',
+      achievements: 'achievements',
+      timeline: 'timeline',
+      governance: 'governance',
+      join: 'join',
+      membership: 'join',
+      contact: 'contact'
     };
+
     const targetId = targetMap[sectionId] || sectionId;
     setActiveSection(sectionId);
     const element = document.getElementById(targetId) || document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
-      // Trigger section arrival scanline & illumination animation
-      element.classList.remove('section-ai-targeted');
-      void element.offsetWidth;
-      element.classList.add('section-ai-targeted');
-      setTimeout(() => {
-        element.classList.remove('section-ai-targeted');
-      }, 2500);
     }
-
-    // Trigger AI Voice briefing and dynamic HUD animation
-    if (triggerAiVoice) {
-      if (aiTimerRef.current) {
-        clearTimeout(aiTimerRef.current);
-      }
-
-      const briefing = aiVoiceEngine.getBriefing(targetId);
-      setAiTransmission(briefing);
-
-      soundEngine.playJarvisChirp();
-
-      if (!isSoundMuted) {
-        setIsAiSpeaking(true);
-        aiVoiceEngine.speak(briefing.voiceLine, {
-          onStart: () => setIsAiSpeaking(true),
-          onEnd: () => {
-            setIsAiSpeaking(false);
-            aiTimerRef.current = setTimeout(() => {
-              setAiTransmission(null);
-            }, 1400);
-          },
-          onError: () => {
-            setIsAiSpeaking(false);
-            aiTimerRef.current = setTimeout(() => {
-              setAiTransmission(null);
-            }, 2500);
-          }
-        });
-      } else {
-        // Visual AI animation when audio is muted
-        setIsAiSpeaking(true);
-        aiTimerRef.current = setTimeout(() => {
-          setIsAiSpeaking(false);
-          aiTimerRef.current = setTimeout(() => {
-            setAiTransmission(null);
-          }, 1200);
-        }, 2800);
-      }
-    }
+    soundEngine.playClick();
   };
 
   const handleToggleSound = () => {
     const muted = soundEngine.toggleMute();
     setIsSoundMuted(muted);
-    if (muted) {
-      aiVoiceEngine.stop();
-      setIsAiSpeaking(false);
-    }
-  };
-
-  const handleDismissAiTransmission = () => {
-    aiVoiceEngine.stop();
-    setIsAiSpeaking(false);
-    setAiTransmission(null);
   };
 
   // Observe active section on scroll
   useEffect(() => {
-    const sections = ['mission', 'profile', 'vision', 'domains', 'events', 'projects', 'governance', 'team', 'gallery', 'contact'];
+    const sections = ['home', 'about', 'events', 'domains', 'crew', 'projects', 'gallery', 'achievements', 'timeline', 'governance', 'join', 'contact'];
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 250;
+      const scrollPosition = window.scrollY + 280;
       for (const sectionId of sections) {
         const el = document.getElementById(sectionId);
         if (el) {
@@ -153,11 +123,11 @@ export function App() {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#030611] text-chrome selection:bg-rose selection:text-white">
+    <div className="relative min-h-screen bg-[#050505] text-[#C0C0C0] selection:bg-rose selection:text-white">
       {/* Sci-Fi Target Custom Cursor */}
       <CustomCursor />
 
-      {/* Arrival Entry Animation: Only this as entry animation, matching user's screenshot! */}
+      {/* Cinematic Website Opening Sequence */}
       {showIntro && (
         <CinematicIntro
           onComplete={handleIntroComplete}
@@ -168,65 +138,62 @@ export function App() {
 
       {/* Full-Width Mission Control Header */}
       {!showIntro && (
-        <>
-          <Navigation
-            activeSection={activeSection}
-            onNavigate={handleNavigate}
-            isSoundMuted={isSoundMuted}
-            onToggleSound={handleToggleSound}
-            onReplayIntro={() => setShowIntro(true)}
-          />
-
-          {/* AI Voice & Holographic Animation Transmission HUD */}
-          <AiTransmissionHud
-            transmission={aiTransmission}
-            isSpeaking={isAiSpeaking}
-            onDismiss={handleDismissAiTransmission}
-            isMuted={isSoundMuted}
-          />
-
-          {/* Cinematic Section Transition Warp & Holographic Target Lock */}
-          <CinematicSectionTransition transmission={aiTransmission} />
-        </>
+        <Navigation
+          activeSection={activeSection}
+          onNavigate={handleNavigate}
+          isSoundMuted={isSoundMuted}
+          onToggleSound={handleToggleSound}
+          onReplayIntro={() => setShowIntro(true)}
+          onOpenAdmin={() => setIsAdminOpen(true)}
+        />
       )}
 
       {/* Main Mission Control Experience */}
       <main id="command-center-root">
-        {/* MISSION: Command Center Hero with Space / Telemetry Visuals */}
+        {/* 1. HERO SECTION: Dynamic 3D WebGL Background + Official Tagline */}
         <HomeSection onNavigate={handleNavigate} />
 
-        {/* PROFILE & VISION: Chapter Foundation, Operating Pillars & About ACM */}
+        {/* 2. ABOUT ACM: Mission, Vision, Curiosity Makes, 3 Action Pathways */}
         <AboutSection />
 
-        {/* GALAXY: 5 Technical Domains & Chapter Activities */}
-        <DomainsSection />
-
-        {/* LAUNCHES: Chapter Events & Hackathons */}
+        {/* 3. EVENTS: Complete Event Management System with Countdown & Registration */}
         <EventsSection />
 
-        {/* BUILDS: Student Projects & Hardware / Software Payloads */}
-        <ProjectsSection />
+        {/* 4. ACTIVITIES & DOMAINS: 5 Technical Domains & Chapter Programs */}
+        <DomainsSection />
 
-        {/* GOVERNANCE: Command Structure, Committee Functions & Review Mechanism */}
-        <GovernanceSection />
-
-        {/* CREW: Leadership & Office Bearers (16 Members) */}
+        {/* 5. OUR CREW: 16 Verified Leaders, 3D Tilt Cards & Scanner */}
         <TeamSection />
 
-        {/* GALLERY: Moments Together & Visual Archive */}
+        {/* 6. PROJECTS: Student Payloads & Innovation Showcase */}
+        <ProjectsSection />
+
+        {/* 7. GALLERY: Media Archive with Category Filters & Lightbox */}
         <GallerySection />
 
-        {/* INSTAGRAM: Social Radar & Transmissions */}
+        {/* 8. ACHIEVEMENTS: Official Good Standing & Statistics */}
+        <AchievementsSection />
+
+        {/* 9. TIMELINE: Chapter History & Milestones */}
+        <TimelineSection />
+
+        {/* 10. GOVERNANCE: Command Structure, Committee Functions & Review Mechanism */}
+        <GovernanceSection />
+
+        {/* 11. JOIN ACM: Membership Information & Interactive Registration Form */}
+        <MembershipSection />
+
+        {/* 12. INSTAGRAM: Social Radar & Transmissions */}
         <InstagramSection />
 
-        {/* CONTACT: Open a Channel & Join Chapter */}
+        {/* 13. CONTACT: Communication Channels & Verified Department Coordinates */}
         <ContactSection />
       </main>
 
       {/* Chapter Footer */}
       <Footer onNavigate={handleNavigate} />
 
-      {/* JARVIS ACM Intelligence Floating System: Available on the website */}
+      {/* ACM Digital Assistant Floating System */}
       {!showIntro && (
         <JarvisAssistant
           onNavigateSection={handleNavigate}
@@ -234,6 +201,12 @@ export function App() {
           onToggleSound={handleToggleSound}
         />
       )}
+
+      {/* Protected Administrator Dashboard */}
+      <AdminDashboard
+        isOpen={isAdminOpen}
+        onClose={() => setIsAdminOpen(false)}
+      />
     </div>
   );
 }
